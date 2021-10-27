@@ -1,15 +1,22 @@
-<div id="header-widget">
-  <span>Page Title</span>
-  <span>Time | Date</span>
-  <span>Weather Icon</span>
-  <span id="temperature-span">Temperature</span>
+<!-- The HTML itself -->
+<div id="header-widget" class="widget dark">
+  <span id="left-icon"><img src="../static/images/House.svg" /></span>
+  <span id="greeting-span">Page Title</span>
+  <span id="time-weather-span">
+    <span id="time-date-span"></span>
+    <span id="weather-icon-span"
+      ><img src="../static/images/CloudRain.svg"
+    /></span>
+    <span id="temperature-span"></span>
+  </span>
 </div>
 
+<!-- The JS Code -->
 <script>
   // Get the weather data for a certain city (for now, we assume always Princeton,
   // though maybe we pull city based on IP addr later)
 
-  function setup() {
+  function getWeather() {
     const zipCode = "08540";
     const countryCode = "us";
     // Don't just have this here lol, move to secure location later
@@ -19,13 +26,32 @@
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        console.log(data.main.temp);
         $("#temperature-span").text(Math.round(data.main.temp) + "\u00B0F");
       })
       .catch(() => {
         console.error("Error occurred when fetching weather data");
       });
+  }
+
+  function getTimeDate() {
+    let dt = new Date();
+    let datePart = dt.toLocaleDateString().replaceAll("/", ".");
+    datePart =
+      datePart.slice(0, datePart.lastIndexOf(".") + 1) +
+      datePart.slice(datePart.lastIndexOf(".") + 3);
+
+    $("#time-date-span").text(
+      dt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) +
+        " | " +
+        datePart
+    );
+  }
+
+  function setup() {
+    getWeather();
+    window.setInterval(getWeather, 30 * 60 * 1000); // Every half hour seems reasonable
+    getTimeDate();
+    window.setInterval(getTimeDate, 1000);
   }
 
   document.addEventListener("DOMContentLoaded", setup);

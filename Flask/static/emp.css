@@ -1,0 +1,168 @@
+/* Thoughts on using scss? Mainly for nesting neatness */
+
+body {
+  font-family: "Public Sans", sans-serif;
+}
+
+.dark {
+  color: #ffffff;
+}
+
+/* -------------------- Header Widget -------------------- */
+
+#header-widget {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 24px;
+
+  position: absolute;
+  width: 656px;
+
+  background: #2a2a2a;
+  border-radius: 5px;
+}
+
+#left-icon {
+  /* House */
+
+  position: static;
+  width: 24px;
+  height: 24px;
+  left: 24px;
+  top: 24px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 16px;
+}
+
+#time-weather-span {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  width: 276px;
+  height: 24px;
+  left: 356px;
+  top: 24px;
+
+  flex: none;
+  order: 2;
+  flex-grow: 1;
+  margin: 0px 16px;
+}
+
+#time-date-span {
+  /* 10:30 AM | 10.19.21 */
+
+  position: static;
+  /* width: 137px; */
+  height: 24px;
+  left: 45px;
+  top: 0px;
+
+  /* Body/Regular */
+
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  display: flex;
+  align-items: center;
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 16px;
+}
+
+#greeting-span {
+  position: static;
+  width: 276px;
+  height: 24px;
+  left: 64px;
+  top: 24px;
+
+  /* Body/Bold */
+
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1px;
+
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+  margin: 0px 16px;
+}
+
+#weather-icon-span {
+  /* CloudRain */
+
+  position: static;
+  width: 24px;
+  height: 24px;
+  left: 198px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 16px;
+}
+
+#temperature-span {
+  /* 51 °F */
+
+  position: static;
+  width: 38px;
+  height: 24px;
+  left: 238px;
+  top: 0px;
+
+  /* Body/Regular */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  display: flex;
+  align-items: center;
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  margin: 0px 16px;
+}
