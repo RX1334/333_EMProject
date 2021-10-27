@@ -19,6 +19,17 @@
         {% include 'header-widget.html' %}
         <!-- Lab Summary -->
         {% include 'lab-summary-widget.html' %}
+        <!-- Mini Fume Hood Widgets -->
+        <div class="fume-hood-widget-container widget-container">
+          {% for i in range(4) %}
+          <!-- Widgets -->
+          <span>
+            {% with fume_hood_name="Fume Hood #" + (i + 1)|string %}{% include
+            'mini-fume-hood-widget.html' %} {% endwith %}</span
+          >
+          <!-- End -->
+          {% endfor %}
+        </div>
       </div>
     </div>
 

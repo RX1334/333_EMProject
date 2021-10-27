@@ -32,6 +32,14 @@ body {
   line-height: 18px;
 }
 
+.nav-small {
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+}
+
 .widget-medium {
   font-family: Public Sans;
   font-style: normal;
@@ -44,9 +52,13 @@ body {
   margin-bottom: 16px;
 }
 
-/* ----------------------------------------------------------- */
-/* Dashboard                                                   */
-/* ----------------------------------------------------------- */
+.widget-container {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------------------- */
+/* Dashboard                                                                     */
+/* ----------------------------------------------------------------------------- */
 #dashboard {
   /* Multiple Lab Dashboard */
 
@@ -58,7 +70,7 @@ body {
   padding: 56px 56px 32px;
 
   position: relative;
-  width: 768px;
+  /* width: 768px; */
   height: 1024px;
 
   background: linear-gradient(
@@ -70,9 +82,9 @@ body {
   /* Note: backdrop-filter has minimal browser support */
 }
 
-/* ----------------------------------------------------------- */
-/* Header Widget                                               */
-/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------------------------- */
+/* Header Widget                                                                 */
+/* ----------------------------------------------------------------------------- */
 
 #header-widget {
   display: flex;
@@ -80,7 +92,7 @@ body {
   align-items: flex-start;
   padding: 24px;
 
-  width: 656px;
+  width: auto;
 
   background: #2a2a2a;
   border-radius: 5px;
@@ -191,9 +203,9 @@ body {
   /* margin: 0px 16px; */
 }
 
-/* ----------------------------------------------------------- */
-/* Lab Summary Widget                                          */
-/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------------------------- */
+/* Lab Summary Widget                                                            */
+/* ----------------------------------------------------------------------------- */
 
 .lab-summary-widget {
   /* Lab Summary Widget - Bright */
@@ -206,7 +218,7 @@ body {
   padding: 18px 24px 24px;
 
   /* position: relative; */
-  width: 656px;
+  width: auto;
   /* height: 162px; */
 
   /* Gray/90 */
@@ -606,4 +618,207 @@ body {
   order: 0;
   flex-grow: 1;
   /* margin: 0px 32px; */
+}
+
+/* ----------------------------------------------------------------------------- */
+/* Mini Fume Hood Widget                                                         */
+/* ----------------------------------------------------------------------------- */
+
+.fume-hood-widget-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mini-fume-hood-widget {
+  /* Mini Fume Hood Widget */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+
+  position: relative;
+  /* width: 152px; */
+  height: 200px;
+
+  /* Gray/90 */
+
+  background: #2a2a2a;
+  backdrop-filter: blur(24px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 5px;
+}
+
+.mini-fume-details {
+  /* See Details */
+
+  position: static;
+  width: 74px;
+  height: 22px;
+  left: 24px;
+  top: 154px;
+
+  text-align: center;
+  text-decoration-line: underline;
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 8px 0px;
+}
+
+.mini-fume-info {
+  /* Frame 2 */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  /* width: 104px; */
+  height: 94px;
+  left: 24px;
+  top: 24px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 8px 0px;
+}
+
+.mini-fume-name {
+  /* Fume Hood #1 */
+
+  position: static;
+  /* width: 92px; */
+  height: 18px;
+  left: 0px;
+  top: 0px;
+
+  /* Body/Small */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height, or 129% */
+
+  display: flex;
+  align-items: center;
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.mini-fume-energy {
+  /* Energy Consumed */
+
+  position: static;
+  /* width: 104px; */
+  height: 34px;
+  left: 0px;
+  top: 60px;
+
+  /* Header/M */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 34px;
+  /* identical to box height, or 155% */
+
+  display: flex;
+  align-items: center;
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.mini-fume-status {
+  /* Miscellaneous Info */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 16px;
+
+  position: static;
+  width: 104px;
+  height: 34px;
+  left: 0px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.mini-fume-status-text {
+  position: static;
+  width: 62px;
+  height: 18px;
+  left: 0px;
+  top: 0px;
+
+  /* Button/Regular */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height, or 129% */
+
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+
+  /* Classic/Red */
+
+  color: #d14112;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 1;
 }
