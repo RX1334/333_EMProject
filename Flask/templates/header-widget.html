@@ -1,0 +1,32 @@
+<div id="header-widget">
+  <span>Page Title</span>
+  <span>Time | Date</span>
+  <span>Weather Icon</span>
+  <span id="temperature-span">Temperature</span>
+</div>
+
+<script>
+  // Get the weather data for a certain city (for now, we assume always Princeton,
+  // though maybe we pull city based on IP addr later)
+
+  function setup() {
+    const zipCode = "08540";
+    const countryCode = "us";
+    // Don't just have this here lol, move to secure location later
+    const apiKey = "36ec9764d698648eb0947ec40b047a8b";
+    const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},${countryCode}&appid=${apiKey}&units=imperial`;
+    let weatherData;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log(data.main.temp);
+        $("#temperature-span").text(Math.round(data.main.temp) + "\u00B0F");
+      })
+      .catch(() => {
+        console.error("Error occurred when fetching weather data");
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", setup);
+</script>
