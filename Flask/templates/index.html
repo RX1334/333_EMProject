@@ -10,9 +10,17 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <p>Temporary page for testing</p>
-    <div id="dashboard">{% include 'header-widget.html' %}</div>
+    <div class="center-screen">
+      <div id="dashboard">
+        <!-- Header -->
+        {% include 'header-widget.html' %}
+        <!-- Lab Summary -->
+        {% include 'lab-summary-widget.html' %}
+      </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   </body>

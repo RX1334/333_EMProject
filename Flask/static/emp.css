@@ -4,11 +4,75 @@ body {
   font-family: "Public Sans", sans-serif;
 }
 
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .dark {
   color: #ffffff;
 }
 
-/* -------------------- Header Widget -------------------- */
+/* Text Styles */
+.body-regular {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body-small {
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.widget-medium {
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.widget {
+  margin-bottom: 16px;
+}
+
+/* ----------------------------------------------------------- */
+/* Dashboard                                                   */
+/* ----------------------------------------------------------- */
+#dashboard {
+  /* Multiple Lab Dashboard */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 56px 32px;
+
+  position: relative;
+  width: 768px;
+  height: 1024px;
+
+  background: linear-gradient(
+    32.82deg,
+    #2a2a2a -7.28%,
+    rgba(42, 42, 42, 0.75) 107.76%
+  );
+  backdrop-filter: blur(24px);
+  /* Note: backdrop-filter has minimal browser support */
+}
+
+/* ----------------------------------------------------------- */
+/* Header Widget                                               */
+/* ----------------------------------------------------------- */
 
 #header-widget {
   display: flex;
@@ -16,7 +80,6 @@ body {
   align-items: flex-start;
   padding: 24px;
 
-  position: absolute;
   width: 656px;
 
   background: #2a2a2a;
@@ -24,9 +87,6 @@ body {
 }
 
 #left-icon {
-  /* House */
-
-  position: static;
   width: 24px;
   height: 24px;
   left: 24px;
@@ -37,7 +97,7 @@ body {
   flex: none;
   order: 0;
   flex-grow: 0;
-  margin: 0px 16px;
+  /* margin: 0px 16px; */
 }
 
 #time-weather-span {
@@ -56,35 +116,20 @@ body {
   flex: none;
   order: 2;
   flex-grow: 1;
-  margin: 0px 16px;
+  /* margin: 0px 16px; */
 }
 
 #time-date-span {
-  /* 10:30 AM | 10.19.21 */
-
   position: static;
   /* width: 137px; */
   height: 24px;
   left: 45px;
   top: 0px;
 
-  /* Body/Regular */
-
-  font-family: "Public Sans";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
-  /* identical to box height, or 150% */
-
   display: flex;
   align-items: center;
 
-  /* Brand/White */
-
   color: #ffffff;
-
-  /* Inside Auto Layout */
 
   flex: none;
   order: 0;
@@ -98,8 +143,6 @@ body {
   height: 24px;
   left: 64px;
   top: 24px;
-
-  /* Body/Bold */
 
   font-family: "Public Sans";
   font-style: normal;
@@ -118,15 +161,11 @@ body {
 }
 
 #weather-icon-span {
-  /* CloudRain */
-
   position: static;
   width: 24px;
   height: 24px;
   left: 198px;
   top: 0px;
-
-  /* Inside Auto Layout */
 
   flex: none;
   order: 1;
@@ -135,22 +174,86 @@ body {
 }
 
 #temperature-span {
-  /* 51 °F */
-
   position: static;
   width: 38px;
   height: 24px;
   left: 238px;
   top: 0px;
 
-  /* Body/Regular */
+  display: flex;
+  align-items: center;
 
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
-  /* identical to box height, or 150% */
+  color: #ffffff;
+
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  /* margin: 0px 16px; */
+}
+
+/* ----------------------------------------------------------- */
+/* Lab Summary Widget                                          */
+/* ----------------------------------------------------------- */
+
+.lab-summary-widget {
+  /* Lab Summary Widget - Bright */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 18px 24px 24px;
+
+  /* position: relative; */
+  width: 656px;
+  /* height: 162px; */
+
+  /* Gray/90 */
+
+  background: #2a2a2a;
+  backdrop-filter: blur(24px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 5px;
+}
+
+.lab-summary-title {
+  /* Widget Title */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px 0px 12px;
+
+  position: static;
+  /* width: 608px; */
+  /* height: 36px; */
+  left: 24px;
+  top: 18px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.lab-summary-title-name {
+  /* Lab Summary | Rabinowitz, Icahn 201 */
+
+  position: static;
+  width: 241px;
+  height: 18px;
+  left: 0px;
+  top: 0px;
+
+  /* identical to box height, or 129% */
 
   display: flex;
   align-items: center;
@@ -162,7 +265,345 @@ body {
   /* Inside Auto Layout */
 
   flex: none;
-  order: 2;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.lab-summary-details-options {
+  /* Frame 7 */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  /* width: 142px; */
+  height: 24px;
+  left: 466px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.lab-summary-details {
+  /* See Lab Details */
+
+  position: static;
+  /* width: 102px; */
+  height: 22px;
+  left: 0px;
+  top: 0px;
+
+  /* Nav/Small Link */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  display: flex;
+  align-items: center;
+  text-decoration-line: underline;
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
   flex-grow: 0;
   margin: 0px 16px;
+}
+
+.lab-summary-options {
+  /* GearSix */
+
+  position: static;
+  width: 24px;
+  height: 24px;
+  left: 118px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  /* margin: 0px 16px; */
+}
+
+.lab-summary-content {
+  /* Frame 6 */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  /* width: 608px; */
+  height: 80px;
+  left: 24px;
+  top: 58px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.lab-summary-today-consumption {
+  /* Energy Consumption */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  /* width: 181.33px; */
+  height: 80px;
+  left: 0px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+  /* margin: 0px 32px; */
+}
+
+.lab-summary-today-kwh {
+  /* Energy Consumed */
+
+  position: static;
+  width: 181.33px;
+  height: 40px;
+  left: 0px;
+  top: 0px;
+
+  /* Widget/Medium Text */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 40px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.lab-summary-today-text {
+  /* Today’s Energy Consumption */
+
+  position: static;
+  /* width: 181.33px; */
+  height: 36px;
+  left: 0px;
+  top: 0px;
+
+  display: flex;
+  /* align-items: center; */
+
+  /* Brand/White */
+
+  color: #ffffff;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+
+.lab-summary-current-consumption {
+  /* Power Consumption */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  /* width: 181.33px; */
+  height: 80px;
+  left: 213.33px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+  /* margin: 0px 32px; */
+}
+
+.lab-summary-current-text {
+  /* Current Power Consumption */
+
+  position: static;
+  width: 181.33px;
+  height: 36px;
+  left: 0px;
+  top: 0px;
+
+  display: flex;
+  align-items: center;
+
+  /* Classic/Green */
+
+  color: #00c08b;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+  /* margin: 0px 32px; */
+}
+
+.lab-summary-current-kw {
+  /* Energy Consumed */
+
+  position: static;
+  width: 181.33px;
+  height: 40px;
+  left: 0px;
+  top: 0px;
+
+  /* Widget/Medium Text */
+
+  font-family: Public Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 40px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+
+  /* Classic/Green */
+
+  color: #00c08b;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.lab-summary-number-active {
+  /* Power Consumption */
+
+  /* Auto Layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  width: 181.33px;
+  height: 62px;
+  left: 426.67px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  flex-grow: 1;
+  /* margin: 0px 32px; */
+}
+
+.lab-summary-number {
+  /* Energy Consumed */
+
+  position: static;
+  width: 181.33px;
+  height: 40px;
+  left: 0px;
+  top: 0px;
+
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+
+  /* Classic/Green */
+
+  color: #00c08b;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+
+.lab-summary-number-text {
+  /* Fume Hoods in Use */
+
+  position: static;
+  width: 181.33px;
+  height: 18px;
+  left: 0px;
+  top: 0px;
+
+  display: flex;
+  align-items: center;
+
+  /* Classic/Green */
+
+  color: #00c08b;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+  /* margin: 0px 32px; */
 }
