@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------
 
 import argparse
-from sys import argv, exit, stderr
+from sys import exit, stderr
 from emp import app
 
 

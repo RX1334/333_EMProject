@@ -17,7 +17,6 @@ body {
 
 /* Text Styles */
 .body-regular {
-  font-family: "Public Sans";
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -25,23 +24,42 @@ body {
 }
 
 .body-small {
-  font-family: Public Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 18px;
 }
 
+.body-bold {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+}
+
 .nav-small {
-  font-family: Public Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
+  text-decoration-line: underline;
+}
+
+.header-medium {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 34px;
+}
+
+.button-small {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .widget-medium {
-  font-family: Public Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 32px;
@@ -50,6 +68,12 @@ body {
 
 .widget {
   margin-bottom: 16px;
+  border-radius: 5px;
+
+  /* For dark mode only */
+  background: #2a2a2a;
+  backdrop-filter: blur(24px);
+  /* Note: backdrop-filter has minimal browser support */
 }
 
 .widget-container {
@@ -60,18 +84,14 @@ body {
 /* Dashboard                                                                     */
 /* ----------------------------------------------------------------------------- */
 #dashboard {
-  /* Multiple Lab Dashboard */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 56px 56px 32px;
 
-  position: relative;
-  /* width: 768px; */
-  height: 1024px;
+  width: 656px; /* 768 - 112 */
+  min-width: 656px;
+  height: 936px; /* 1024 - 56 - 32, since figma doesn't count padding for height */
 
   background: linear-gradient(
     32.82deg,
@@ -88,119 +108,29 @@ body {
 
 #header-widget {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
   padding: 24px;
-
-  width: auto;
-
-  background: #2a2a2a;
-  border-radius: 5px;
-}
-
-#left-icon {
-  width: 24px;
-  height: 24px;
-  left: 24px;
-  top: 24px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  /* margin: 0px 16px; */
 }
 
 #time-weather-span {
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
-  padding: 0px;
 
-  position: static;
-  width: 276px;
-  height: 24px;
-  left: 356px;
-  top: 24px;
-
-  flex: none;
-  order: 2;
   flex-grow: 1;
-  /* margin: 0px 16px; */
 }
 
 #time-date-span {
-  position: static;
-  /* width: 137px; */
-  height: 24px;
-  left: 45px;
-  top: 0px;
-
-  display: flex;
-  align-items: center;
-
   color: #ffffff;
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 0px 16px;
 }
 
 #greeting-span {
-  position: static;
-  width: 276px;
-  height: 24px;
-  left: 64px;
-  top: 24px;
-
-  font-family: "Public Sans";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
-
-  display: flex;
-  align-items: center;
   letter-spacing: 0.1px;
-
-  flex: none;
-  order: 1;
-  flex-grow: 1;
   margin: 0px 16px;
 }
 
-#weather-icon-span {
-  position: static;
-  width: 24px;
-  height: 24px;
-  left: 198px;
-  top: 0px;
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
+#weather-icon {
   margin: 0px 16px;
-}
-
-#temperature-span {
-  position: static;
-  width: 38px;
-  height: 24px;
-  left: 238px;
-  top: 0px;
-
-  display: flex;
-  align-items: center;
-
-  color: #ffffff;
-
-  flex: none;
-  order: 2;
-  flex-grow: 0;
-  /* margin: 0px 16px; */
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -208,416 +138,96 @@ body {
 /* ----------------------------------------------------------------------------- */
 
 .lab-summary-widget {
-  /* Lab Summary Widget - Bright */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 18px 24px 24px;
-
-  /* position: relative; */
-  width: auto;
-  /* height: 162px; */
-
-  /* Gray/90 */
-
-  background: #2a2a2a;
-  backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 5px;
 }
 
 .lab-summary-title {
-  /* Widget Title */
-
-  /* Auto Layout */
-
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 0px 0px 12px;
+  align-items: center;
+  padding: 0px 0px 16px;
 
-  position: static;
-  /* width: 608px; */
-  /* height: 36px; */
-  left: 24px;
-  top: 18px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
   align-self: stretch;
-  flex-grow: 0;
-  margin: 4px 0px;
 }
 
 .lab-summary-title-name {
-  /* Lab Summary | Rabinowitz, Icahn 201 */
-
-  position: static;
-  width: 241px;
-  height: 18px;
-  left: 0px;
-  top: 0px;
-
-  /* identical to box height, or 129% */
-
-  display: flex;
-  align-items: center;
-
-  /* Brand/White */
-
   color: #ffffff;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 0px 0px;
 }
 
 .lab-summary-details-options {
-  /* Frame 7 */
-
-  /* Auto Layout */
-
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 0px;
-
-  position: static;
-  /* width: 142px; */
-  height: 24px;
-  left: 466px;
-  top: 0px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  margin: 0px 0px;
+  align-items: center;
 }
 
 .lab-summary-details {
-  /* See Lab Details */
-
-  position: static;
-  /* width: 102px; */
-  height: 22px;
-  left: 0px;
-  top: 0px;
-
-  /* Nav/Small Link */
-
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 22px;
-  /* identical to box height, or 157% */
-
-  display: flex;
-  align-items: center;
-  text-decoration-line: underline;
-
-  /* Brand/White */
-
   color: #ffffff;
 
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
   margin: 0px 16px;
 }
 
-.lab-summary-options {
-  /* GearSix */
-
-  position: static;
-  width: 24px;
-  height: 24px;
-  left: 118px;
-  top: 0px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  /* margin: 0px 16px; */
-}
-
 .lab-summary-content {
-  /* Frame 6 */
-
-  /* Auto Layout */
-
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-  padding: 0px;
 
-  position: static;
-  /* width: 608px; */
-  height: 80px;
-  left: 24px;
-  top: 58px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 1;
   align-self: stretch;
-  flex-grow: 0;
   margin: 4px 0px;
 }
 
 .lab-summary-today-consumption {
-  /* Energy Consumption */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
 
-  position: static;
-  /* width: 181.33px; */
-  height: 80px;
-  left: 0px;
-  top: 0px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
   flex-grow: 1;
-  /* margin: 0px 32px; */
 }
 
 .lab-summary-today-kwh {
-  /* Energy Consumed */
-
-  position: static;
-  width: 181.33px;
-  height: 40px;
-  left: 0px;
-  top: 0px;
-
-  /* Widget/Medium Text */
-
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 40px;
-  /* identical to box height, or 125% */
-
-  display: flex;
-  align-items: center;
-
-  /* Brand/White */
-
   color: #ffffff;
 
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
   margin: 4px 0px;
 }
 
 .lab-summary-today-text {
-  /* Today’s Energy Consumption */
-
-  position: static;
-  /* width: 181.33px; */
-  height: 36px;
-  left: 0px;
-  top: 0px;
-
-  display: flex;
-  /* align-items: center; */
-
-  /* Brand/White */
-
   color: #ffffff;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 1;
 }
 
 .lab-summary-current-consumption {
-  /* Power Consumption */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
 
-  position: static;
-  /* width: 181.33px; */
-  height: 80px;
-  left: 213.33px;
-  top: 0px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 1;
   flex-grow: 1;
-  /* margin: 0px 32px; */
 }
 
 .lab-summary-current-text {
-  /* Current Power Consumption */
-
-  position: static;
-  width: 181.33px;
-  height: 36px;
-  left: 0px;
-  top: 0px;
-
-  display: flex;
-  align-items: center;
-
-  /* Classic/Green */
-
   color: #00c08b;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 1;
-  /* margin: 0px 32px; */
 }
 
 .lab-summary-current-kw {
-  /* Energy Consumed */
-
-  position: static;
-  width: 181.33px;
-  height: 40px;
-  left: 0px;
-  top: 0px;
-
-  /* Widget/Medium Text */
-
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 40px;
-  /* identical to box height, or 125% */
-
-  display: flex;
-  align-items: center;
-
-  /* Classic/Green */
-
   color: #00c08b;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
   margin: 4px 0px;
 }
 
 .lab-summary-number-active {
-  /* Power Consumption */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
 
-  position: static;
-  width: 181.33px;
-  height: 62px;
-  left: 426.67px;
-  top: 0px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
   order: 2;
-  flex-grow: 1;
-  /* margin: 0px 32px; */
 }
 
 .lab-summary-number {
-  /* Energy Consumed */
-
-  position: static;
-  width: 181.33px;
-  height: 40px;
-  left: 0px;
-  top: 0px;
-
-  /* identical to box height, or 125% */
-
-  display: flex;
-  align-items: center;
-
-  /* Classic/Green */
-
   color: #00c08b;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
   margin: 4px 0px;
 }
 
 .lab-summary-number-text {
-  /* Fume Hoods in Use */
-
-  position: static;
+  /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
-  height: 18px;
-  left: 0px;
-  top: 0px;
-
-  display: flex;
-  align-items: center;
-
-  /* Classic/Green */
-
   color: #00c08b;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 1;
-  /* margin: 0px 32px; */
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -626,199 +236,50 @@ body {
 
 .fume-hood-widget-container {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  width: 100%;
 }
 
 .mini-fume-hood-widget {
-  /* Mini Fume Hood Widget */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   padding: 24px;
-
-  position: relative;
-  /* width: 152px; */
-  height: 200px;
-
-  /* Gray/90 */
-
-  background: #2a2a2a;
-  backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 5px;
 }
 
 .mini-fume-details {
-  /* See Details */
-
-  position: static;
-  width: 74px;
-  height: 22px;
-  left: 24px;
-  top: 154px;
-
-  text-align: center;
-  text-decoration-line: underline;
-
   color: #ffffff;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  margin: 8px 0px;
 }
 
 .mini-fume-info {
-  /* Frame 2 */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
 
-  position: static;
-  /* width: 104px; */
-  height: 94px;
-  left: 24px;
-  top: 24px;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 8px 0px;
+  margin: 0px 0px 36px;
 }
 
 .mini-fume-name {
-  /* Fume Hood #1 */
-
-  position: static;
-  /* width: 92px; */
-  height: 18px;
-  left: 0px;
-  top: 0px;
-
-  /* Body/Small */
-
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
-  /* identical to box height, or 129% */
-
-  display: flex;
-  align-items: center;
-
-  /* Brand/White */
-
   color: #ffffff;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 0px 0px;
 }
 
 .mini-fume-energy {
-  /* Energy Consumed */
-
-  position: static;
-  /* width: 104px; */
-  height: 34px;
-  left: 0px;
-  top: 60px;
-
-  /* Header/M */
-
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 22px;
-  line-height: 34px;
-  /* identical to box height, or 155% */
-
-  display: flex;
-  align-items: center;
-
-  /* Brand/White */
-
   color: #ffffff;
-
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 2;
-  flex-grow: 0;
   margin: 4px 0px;
 }
 
 .mini-fume-status {
-  /* Miscellaneous Info */
-
-  /* Auto Layout */
-
   display: flex;
-  flex-direction: row;
   align-items: center;
   padding: 0px 0px 16px;
 
-  position: static;
   width: 104px;
-  height: 34px;
-  left: 0px;
-  top: 0px;
 
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
   flex-grow: 0;
-  margin: 4px 0px;
 }
 
 .mini-fume-status-text {
-  position: static;
-  width: 62px;
-  height: 18px;
-  left: 0px;
-  top: 0px;
-
-  /* Button/Regular */
-
-  font-family: Public Sans;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 18px;
-  /* identical to box height, or 129% */
-
-  display: flex;
-  align-items: center;
-  text-transform: uppercase;
-
-  /* Classic/Red */
-
   color: #d14112;
 
-  /* Inside Auto Layout */
-
-  flex: none;
-  order: 0;
   flex-grow: 1;
 }
