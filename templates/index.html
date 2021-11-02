@@ -33,7 +33,10 @@
           <!-- End -->
           {% endfor %}
         </div>
-        {% include 'power-consumption-widget.html' %}
+        <div class="consumption-widget-container widget-container">
+          <span> {% include 'power-consumption-widget.html' %} </span>
+          <span> {% include 'energy-consumption-widget.html' %} </span>
+        </div>
       </div>
     </div>
 

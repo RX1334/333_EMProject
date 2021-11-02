@@ -292,23 +292,19 @@ body {
 }
 
 /* ----------------------------------------------------------------------------- */
-/* Power Consumption Widget                                                      */
+/* Power/Energy Consumption Widgets                                              */
 /* ----------------------------------------------------------------------------- */
 
+.consumption-widget-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .power-consumption-widget {
-  /* Power Consumption Widget - Low */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 24px;
-
-  /* position: relative;
-  width: 320px;
-  height: 160px; */
-
   background: linear-gradient(
     75.8deg,
     #00c08b -4.3%,
@@ -320,15 +316,24 @@ body {
   border-radius: 4px;
 }
 
-.power-consumption-title {
+.energy-consumption-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+
+  background: #2a2a2a;
+  backdrop-filter: blur(24px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 4px;
+}
+
+.consumption-title {
   color: #ffffff;
 }
 
-.power-consumption-content {
-  /* Frame 8 */
-
-  /* Auto Layout */
-
+.consumption-content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -350,15 +355,11 @@ body {
   margin: 4px 0px;
 }
 
-.power-consumption-energy {
+.consumption-energy {
   color: #ffffff;
 }
 
 .power-consumption-misc {
-  /* Miscellaneous Info */
-
-  /* Auto Layout */
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -384,6 +385,10 @@ body {
   color: #ffffff;
 }
 
-.power-consumption-date {
+.consumption-date {
   color: #ffffff;
+}
+
+.energy-consumption-usage {
+  color: #d14112;
 }
