@@ -1,0 +1,33 @@
+<!-- The HTML itself -->
+<div class="widget-container">
+    <div id="header-widget-2" class="widget dark">
+      <img id="hamburger-icon" src="../static/images/List.svg" />
+      <span id="greeting-span-2" class="body-bold">Page Title</span>
+      <span id="dark-mode-span">
+        <img id="dark-mode-icon" src="../static/images/LightMode.svg" />
+      </span>
+    </div>
+  </div>
+
+  <!-- The JS Code -->
+  <script>
+    "use strict";
+    let dark_mode_on = 1;
+
+    function toggleDarkMode() {
+        // LightMode icon shows in dark mode, and vice versa
+        const dark_icon_array = ['DarkMode.svg', 'LightMode.svg'];
+        if (dark_mode_on === 0) dark_mode_on = 1;
+        else dark_mode_on = 0;
+        $('#dark-mode-icon').attr('src', '../static/images/' + dark_icon_array[dark_mode_on]);
+
+        console.log('dark mode set to ' + dark_mode_on);
+    }
+
+    function setup() {
+        $('#dark-mode-icon').on('click', toggleDarkMode);
+        console.log("setup");
+    }
+
+    $('document').ready(setup);
+  </script>

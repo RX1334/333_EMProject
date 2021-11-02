@@ -141,6 +141,32 @@ body {
 }
 
 /* ----------------------------------------------------------------------------- */
+/* Header Widget 2                                                               */
+/* ----------------------------------------------------------------------------- */
+
+#header-widget-2 {
+  display: flex;
+  align-items: flex-start;
+  padding: 24px;
+}
+
+#dark-mode-span {
+  display: flex;
+  justify-content: flex-end;
+
+  flex-grow: 1;
+}
+
+#greeting-span-2 {
+  letter-spacing: 0.1px;
+  margin: 0px 16px;
+}
+
+#dark-mode-icon {
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------------------------- */
 /* Lab Summary Widget                                                            */
 /* ----------------------------------------------------------------------------- */
 
