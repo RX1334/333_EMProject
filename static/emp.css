@@ -418,3 +418,77 @@ body {
 .energy-consumption-usage {
   color: #d14112;
 }
+
+/* ----------------------------------------------------------------------------- */
+/* Device Toggle Widgets                                                         */
+/* ----------------------------------------------------------------------------- */
+
+.device-toggle-widget-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.device-toggle-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+
+  background: #2A2A2A;
+  backdrop-filter: blur(24px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 4px;
+}
+
+.toggle-heading {
+  /* Auto Layout */
+  width: 272px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  justify-content: space-between;
+
+
+/* Inside Auto Layout */
+
+
+  align-self: stretch;
+}
+.toggle-title {
+  color: #ffffff;
+  flex-grow: 0;
+  display: flex;
+}
+
+.toggle-power {
+  color: #ffffff;
+}
+
+.toggle-info {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0px;
+
+  width: 272px;
+  height: 18px;
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 12px 0px 0px 0px;
+}
+.toggle-date {
+  color: #ffffff;
+  display: flex;
+}
+
+.toggle-switch {
+
+}
