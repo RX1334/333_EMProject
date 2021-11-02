@@ -1,6 +1,8 @@
 # 333_EMProject
 Houses code for the Energy Monitoring Project owned by Princeton University and advised by Behavioral Science Consultancy Evidn.
 
+See the web app here: https://energy-monitoring-project.herokuapp.com/
+
 ## Application Summary
 A real time, constantly updating, energy monitoring dashboard. At least for the fume hood widget, we need to update every second.
 
