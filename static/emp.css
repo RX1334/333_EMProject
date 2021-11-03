@@ -21,7 +21,7 @@ body {
 }
 
 .dark {
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 /* Text Styles */
@@ -136,9 +136,9 @@ body {
   flex-grow: 1;
 }
 
-#time-date-span {
+/* #time-date-span {
   color: #ffffff;
-}
+} */
 
 #greeting-span {
   letter-spacing: 0.1px;
@@ -210,9 +210,9 @@ body {
   align-self: stretch;
 }
 
-.lab-summary-title-name {
+/* .lab-summary-title-name {
   color: #ffffff;
-}
+} */
 
 .lab-summary-details-options {
   display: flex;
@@ -220,7 +220,7 @@ body {
 }
 
 .lab-summary-details {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 0px 16px;
 }
@@ -242,14 +242,14 @@ body {
 }
 
 .lab-summary-today-kwh {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 4px 0px;
 }
 
-.lab-summary-today-text {
+/* .lab-summary-today-text {
   color: #ffffff;
-}
+} */
 
 .lab-summary-current-consumption {
   display: flex;
@@ -304,9 +304,9 @@ body {
   padding: 24px;
 }
 
-.mini-fume-details {
+/* .mini-fume-details {
   color: #ffffff;
-}
+} */
 
 .mini-fume-info {
   display: flex;
@@ -316,12 +316,12 @@ body {
   margin: 0px 0px 36px;
 }
 
-.mini-fume-name {
+/* .mini-fume-name {
   color: #ffffff;
-}
+} */
 
 .mini-fume-energy {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
@@ -379,9 +379,9 @@ body {
   border-radius: 4px;
 }
 
-.consumption-title {
+/* .consumption-title {
   color: #ffffff;
-}
+} */
 
 .consumption-content {
   display: flex;
@@ -405,9 +405,9 @@ body {
   margin: 4px 0px;
 }
 
-.consumption-energy {
+/* .consumption-energy {
   color: #ffffff;
-}
+} */
 
 .power-consumption-misc {
   display: flex;
@@ -431,13 +431,13 @@ body {
   margin: 4px 0px;
 }
 
-.power-consumption-percent {
+/* .power-consumption-percent {
   color: #ffffff;
 }
 
 .consumption-date {
   color: #ffffff;
-}
+} */
 
 .energy-consumption-usage {
   color: #d14112;
@@ -481,13 +481,13 @@ body {
   align-self: stretch;
 }
 .toggle-title {
-  color: #ffffff;
+  /* color: #ffffff; */
   flex-grow: 0;
   display: flex;
 }
 
 .toggle-power {
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .toggle-info {
@@ -509,7 +509,7 @@ body {
   margin: 12px 0px 0px 0px;
 }
 .toggle-date {
-  color: #ffffff;
+  /* color: #ffffff; */
   display: flex;
 }
 
@@ -604,9 +604,9 @@ input:checked + .slider:before {
   align-self: stretch;
 }
 
-.fumehood-summary-title-name {
+/* .fumehood-summary-title-name {
   color: #ffffff;
-}
+} */
 
 .fumehood-summary-details-options {
   display: flex;
@@ -614,7 +614,7 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-details {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 0px 16px;
 }
@@ -636,14 +636,14 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-today-kwh {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 4px 0px;
 }
-
+/*
 .fumehood-summary-today-text {
   color: #ffffff;
-}
+} */
 
 .fumehood-summary-current-consumption {
   display: flex;
@@ -653,12 +653,12 @@ input:checked + .slider:before {
   flex-grow: 1;
 }
 
-.fumehood-summary-current-text {
+/* .fumehood-summary-current-text {
   color: #ffffff;
-}
+} */
 
 .fumehood-summary-current-kw {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
@@ -671,14 +671,14 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-number {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
 .fumehood-summary-number-text {
   /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .fumehood-open {
