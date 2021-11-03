@@ -48,7 +48,37 @@
           <span> {% include 'device-toggle-widget.html' %} </span>
         </div>
         {% include 'fumehood-summary-widget.html' %}
+        <p id="temporary_fumehood_data"></p>
       </div>
     </div>
   </body>
+
+  <script>
+    "use strict";
+
+    function handleResponse(response) {
+      $('#temporary_fumehood_data').html(response);
+    }
+
+    function get_fumehood_data() {
+      let url = '/';
+      if (request != null)
+        request.abort();
+
+      request = $.ajax(
+        {
+          type: 'GET',
+          url: url,
+          success: handleResponse
+        }
+      )
+    }
+
+    function setup() {
+      get_fumehood_data();
+      window.setInterval(get_fumehood_data, 1000);
+    }
+
+    $('document').ready(setup);
+  </script>
 </html>
