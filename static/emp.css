@@ -1,6 +1,6 @@
 /* Thoughts on using scss? Mainly for nesting neatness */
 
-body {
+body, a {
   font-family: "Public Sans", sans-serif;
   color: white;
 }

@@ -1,5 +1,6 @@
 from flask import Flask, make_response
 from flask import render_template
+from database import get_fumehood_output
 # ----------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='./templates', static_folder='./static')
@@ -10,7 +11,7 @@ app = Flask(__name__, template_folder='./templates', static_folder='./static')
 # ----------------------------------------------------------------------
 @app.route('/', methods=['GET'])
 def index():
-    fumehoods_usage = ['150', '10', 'OFF', 'OFF']
+    fumehoods_usage = get_fumehood_output()
     html = render_template('index.html', fumehoods_usage=fumehoods_usage)
     response = make_response(html)
     return response
