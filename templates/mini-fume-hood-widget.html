@@ -1,22 +1,19 @@
 <div class="mini-fume-hood-widget widget">
   <div class="mini-fume-info">
     <div class="mini-fume-status">
-        {% if fumehoods_usage[i] == 'OFF' %}
-          <span class="mini-fume-status-text button-small green">CLOSED</span>
-          <img src="../static/images/GreenDot.svg" />
-        {% else %}
-          <span class="mini-fume-status-text button-small red">OPEN</span>
-          <img src="../static/images/RedDot.svg" />
-        {% endif %}
+      {% if fumehoods_usage[i] == 'OFF' %}
+      <span class="mini-fume-status-text button-small green">CLOSED</span>
+      <img src="../static/images/GreenDot.svg" />
+      {% else %}
+      <span class="mini-fume-status-text button-small red">OPEN</span>
+      <img src="../static/images/RedDot.svg" />
+      {% endif %}
     </div>
     <div class="mini-fume-name body-small">{{fumehood_name}}</div>
-    <div class="mini-fume-energy header-medium">
-      {% if fumehoods_usage[i] == 'OFF' %}
-        0 kW
-      {% else %}
-        {{fumehoods_usage[i]}} kW
-      {% endif %}
-      </div>
+    <div id="{{fumehood_id}}" class="mini-fume-energy header-medium">
+      {% if fumehoods_usage[i] == 'OFF' %} 0 kW {% else %}
+      {{fumehoods_usage[i]}} kW {% endif %}
+    </div>
   </div>
   <a href="" class="mini-fume-details nav-small">See Details</a>
 </div>
@@ -37,5 +34,5 @@
     console.log("setup");
   }
 
-  $('document').ready(setup);
+  $("document").ready(setup);
 </script>

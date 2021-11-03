@@ -33,7 +33,8 @@
           {% for i in range(4) %}
           <!-- Widgets -->
           <span>
-            {% with fumehood_name="Fume Hood #" + (i + 1)|string %}
+            {% with fumehood_name="Fume Hood #" + (i + 1)|string,
+            fumehood_id='fumehood' + i|string %}
             <!-- Indiv Widgets -->
             {% include 'mini-fume-hood-widget.html' %}
             <!--  -->
@@ -59,23 +60,26 @@
     "use strict";
 
     function handleResponse(response) {
-      $('#temporary_fumehood_data').html(response);
-      console.log(response);
+      // $("#temporary_fumehood_data").html(response);
+      for (const [key, value] of Object.entries(response)) {
+        $("#fumehood" + key).text(value + " kW");
+        console.log(key, value);
+      }
+      // console.log(response);
     }
     let request = null;
 
     function get_fumehood_data() {
-      let url = '/';
-      if (request != null)
-        request.abort();
+      // let url = "/";
+      let url = "/fumehood_stuff";
+      if (request != null) request.abort();
 
-      request = $.ajax(
-        {
-          type: 'GET',
-          url: url,
-          success: handleResponse
-        }
-      )
+      request = $.ajax({
+        type: "GET",
+        url: url,
+
+        success: handleResponse,
+      });
     }
 
     function setup() {
@@ -83,6 +87,6 @@
       window.setInterval(get_fumehood_data, 1000);
     }
 
-    $('document').ready(setup);
+    $("document").ready(setup);
   </script>
 </html>
