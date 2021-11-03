@@ -1,8 +1,16 @@
 /* Thoughts on using scss? Mainly for nesting neatness */
 
-body {
+body, a {
   font-family: "Public Sans", sans-serif;
   color: white;
+}
+
+.red {
+  color: #d14112;
+}
+
+.green {
+  color: #00c08b;
 }
 
 .center-screen {
@@ -13,7 +21,7 @@ body {
 }
 
 .dark {
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 /* Text Styles */
@@ -128,9 +136,9 @@ body {
   flex-grow: 1;
 }
 
-#time-date-span {
+/* #time-date-span {
   color: #ffffff;
-}
+} */
 
 #greeting-span {
   letter-spacing: 0.1px;
@@ -227,9 +235,9 @@ input[type="radio"]:checked + label {
   align-self: stretch;
 }
 
-.lab-summary-title-name {
+/* .lab-summary-title-name {
   color: #ffffff;
-}
+} */
 
 .lab-summary-details-options {
   display: flex;
@@ -237,7 +245,7 @@ input[type="radio"]:checked + label {
 }
 
 .lab-summary-details {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 0px 16px;
 }
@@ -259,14 +267,14 @@ input[type="radio"]:checked + label {
 }
 
 .lab-summary-today-kwh {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 4px 0px;
 }
 
-.lab-summary-today-text {
+/* .lab-summary-today-text {
   color: #ffffff;
-}
+} */
 
 .lab-summary-current-consumption {
   display: flex;
@@ -321,9 +329,9 @@ input[type="radio"]:checked + label {
   padding: 24px;
 }
 
-.mini-fume-details {
+/* .mini-fume-details {
   color: #ffffff;
-}
+} */
 
 .mini-fume-info {
   display: flex;
@@ -333,12 +341,12 @@ input[type="radio"]:checked + label {
   margin: 0px 0px 36px;
 }
 
-.mini-fume-name {
+/* .mini-fume-name {
   color: #ffffff;
-}
+} */
 
 .mini-fume-energy {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
@@ -353,7 +361,7 @@ input[type="radio"]:checked + label {
 }
 
 .mini-fume-status-text {
-  color: #d14112;
+  /* color: #d14112; */
 
   flex-grow: 1;
 }
@@ -396,9 +404,9 @@ input[type="radio"]:checked + label {
   border-radius: 4px;
 }
 
-.consumption-title {
+/* .consumption-title {
   color: #ffffff;
-}
+} */
 
 .consumption-content {
   display: flex;
@@ -422,9 +430,9 @@ input[type="radio"]:checked + label {
   margin: 4px 0px;
 }
 
-.consumption-energy {
+/* .consumption-energy {
   color: #ffffff;
-}
+} */
 
 .power-consumption-misc {
   display: flex;
@@ -448,13 +456,13 @@ input[type="radio"]:checked + label {
   margin: 4px 0px;
 }
 
-.power-consumption-percent {
+/* .power-consumption-percent {
   color: #ffffff;
 }
 
 .consumption-date {
   color: #ffffff;
-}
+} */
 
 .energy-consumption-usage {
   color: #d14112;
@@ -498,13 +506,13 @@ input[type="radio"]:checked + label {
   align-self: stretch;
 }
 .toggle-title {
-  color: #ffffff;
+  /* color: #ffffff; */
   flex-grow: 0;
   display: flex;
 }
 
 .toggle-power {
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .toggle-info {
@@ -526,7 +534,7 @@ input[type="radio"]:checked + label {
   margin: 12px 0px 0px 0px;
 }
 .toggle-date {
-  color: #ffffff;
+  /* color: #ffffff; */
   display: flex;
 }
 
@@ -621,9 +629,9 @@ input:checked + .slider:before {
   align-self: stretch;
 }
 
-.fumehood-summary-title-name {
+/* .fumehood-summary-title-name {
   color: #ffffff;
-}
+} */
 
 .fumehood-summary-details-options {
   display: flex;
@@ -631,7 +639,7 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-details {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 0px 16px;
 }
@@ -653,14 +661,14 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-today-kwh {
-  color: #ffffff;
+  /* color: #ffffff; */
 
   margin: 4px 0px;
 }
-
+/*
 .fumehood-summary-today-text {
   color: #ffffff;
-}
+} */
 
 .fumehood-summary-current-consumption {
   display: flex;
@@ -670,12 +678,12 @@ input:checked + .slider:before {
   flex-grow: 1;
 }
 
-.fumehood-summary-current-text {
+/* .fumehood-summary-current-text {
   color: #ffffff;
-}
+} */
 
 .fumehood-summary-current-kw {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
@@ -688,14 +696,14 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-number {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
 .fumehood-summary-number-text {
   /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .fumehood-open {
