@@ -5,6 +5,14 @@ body {
   color: white;
 }
 
+.red {
+  color: #d14112;
+}
+
+.green {
+  color: #00c08b;
+}
+
 .center-screen {
   display: flex;
   justify-content: center;
@@ -328,7 +336,7 @@ body {
 }
 
 .mini-fume-status-text {
-  color: #d14112;
+  /* color: #d14112; */
 
   flex-grow: 1;
 }

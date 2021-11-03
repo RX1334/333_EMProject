@@ -1,14 +1,13 @@
 <div class="mini-fume-hood-widget widget">
   <div class="mini-fume-info">
     <div class="mini-fume-status">
-      <span class="mini-fume-status-text button-small">
         {% if fumehoods_usage[i] == 'OFF' %}
-          CLOSED
+          <span class="mini-fume-status-text button-small green">CLOSED</span>
+          <img src="../static/images/GreenDot.svg" />
         {% else %}
-          OPEN
+          <span class="mini-fume-status-text button-small red">OPEN</span>
+          <img src="../static/images/RedDot.svg" />
         {% endif %}
-      </span>
-      <img src="../static/images/closed.svg" />
     </div>
     <div class="mini-fume-name body-small">{{fumehood_name}}</div>
     <div class="mini-fume-energy header-medium">
@@ -21,3 +20,22 @@
   </div>
   <a href="" class="mini-fume-details nav-small">See Details</a>
 </div>
+
+<script>
+  "use strict";
+
+  function setup() {
+    // let fumehood_status = $('.mini-fume-status-text').html();
+    // console.log(fumehood_status);
+    // if (fumehood_status == 'OPEN') {
+    //   $('.mini-fume-status-text').addClass('red');
+    //   $('.mini-fume-status-text').removeClass('green');
+    // } else {
+    //   $('.mini-fume-status-text').removeClass('red');
+    //   $('.mini-fume-status-text').addClass('green');
+    // }
+    console.log("setup");
+  }
+
+  $('document').ready(setup);
+</script>
