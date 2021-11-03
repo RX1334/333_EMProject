@@ -18,12 +18,14 @@
         dark_mode_on = 0;
         $("body").css({"color": "black"});
         $("#dashboard").css({"background": "linear-gradient(29.82deg, #EEEEEE -3.61%, rgba(238, 238, 238, 0.5) 103.96%)"});
+        $(".widget").css({"background": "white"});
     }
 
     function setDarkMode() {
         dark_mode_on = 1;
         $("body").css({"color": "white"});
         $("#dashboard").css({"background": "linear-gradient(32.82deg, #2a2a2a -7.28%, rgba(42, 42, 42, 0.75) 107.76%)"});
+        $(".widget").css({"background": "#2a2a2a"});
     }
 
     function toggleDarkMode() {
