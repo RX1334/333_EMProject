@@ -56,6 +56,7 @@
     "use strict";
 
     function handleResponse(response) {
+      $('html').html(response);
       console.log(response);
     }
     let request = null;
