@@ -2,6 +2,7 @@
 
 body {
   font-family: "Public Sans", sans-serif;
+  color: white;
 }
 
 .center-screen {
@@ -75,7 +76,7 @@ body {
 
 .widget {
   margin-bottom: 16px;
-  border-radius: 5px;
+  border-radius: 4px;
 
   /* For dark mode only */
   background: #2a2a2a;
@@ -175,6 +176,21 @@ body {
   flex-direction: column;
   align-items: flex-start;
   padding: 18px 24px 24px;
+}
+
+.graph-widget {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+
+  width: 608px;
+  height: 280px;
+
+  /* Gray 90 */
+  background: #2A2A2A;
+  border-radius: 4px;
 }
 
 .lab-summary-title {
@@ -660,4 +676,3 @@ input:checked + .slider:before {
 .fumehood-open {
   color: #d14112;
 }
-

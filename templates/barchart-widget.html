@@ -1,0 +1,23 @@
+<div class="graph-widget">
+  <div class="body-small"> Placeholder Identifier | Placeholder Title </div>
+  <svg width="608" height="156"></svg>
+  <div style="">
+
+  </div>
+</div>
+
+<script>
+
+    var svg = d3.select("svg"),
+        margin = 24,
+        width = svg.attr("width") - margin,
+        height = svg.attr("height")
+
+
+    var xScale = d3.scaleBand().range ([margin, width]).padding(0.5),
+        yScale = d3.scaleLinear().range ([height, 0]);
+
+    var g = svg.append("g")
+               .attr("transform", "translate(" + 100 + "," + 100 + ")");
+
+</script>
