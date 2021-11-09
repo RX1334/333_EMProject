@@ -10,30 +10,31 @@ app = Flask(__name__, template_folder='./templates', static_folder='./static')
 # ----------------------------------------------------------------------
 # Routes
 # ----------------------------------------------------------------------
-@app.route('/', methods=['GET'])
-def index():
-    # fumehoods_usage = get_fumehood_output()
-    # if fumehoods_usage is None:
-    #     fumehoods_usage = ['OFF', 'OFF', 'OFF', 'OFF']
-    # key val pairs are fumehood_id and their energy use
-    fumehoods_usage = {}
-    for i in range(4):
-        fumehoods_usage[i] = random.randint(100, 200)
-    # html = render_template('index.html', fumehoods_usage=fumehoods_usage)
-    html = render_template('master_template.html')
-    response = make_response(html)
-    return response
+# @app.route('/', methods=['GET'])
+# def index():
+#     # fumehoods_usage = get_fumehood_output()
+#     # if fumehoods_usage is None:
+#     #     fumehoods_usage = ['OFF', 'OFF', 'OFF', 'OFF']
+#     # key val pairs are fumehood_id and their energy use
+#     fumehoods_usage = {}
+#     for i in range(4):
+#         fumehoods_usage[i] = random.randint(100, 200)
+#     # html = render_template('index.html', fumehoods_usage=fumehoods_usage)
+#     html = render_template('master_template.html')
+#     response = make_response(html)
+#     return response
 
-@app.route('/dashboard', methods=['GET'])
+@app.route('/', methods=['GET'])
 def lab_summaries():
-    # gets lab summaries and returns them for initial dashboard
-    html = render_template('header-widget-2.html')
-    html += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
-    html += render_template('lab-summary-widget.html')
+    # compiles widgets
+    dashboard_content = render_template('header-widget-2.html')
+    dashboard_content += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
+    dashboard_content += render_template('lab-summary-widget.html')
+
+    # renders dashboard with those widgets
+    html = render_template('master_template.html', dashboard_content=dashboard_content)
     response = make_response(html)
     return(response)
-
-
 
 @app.route('/fumehood_stuff', methods=['GET'])
 def fumehood_stuff():
@@ -77,13 +78,19 @@ def lab_summary():
     # since that's not setup yet, we're giving some dummy data instead.
 
     # First do the widg container for power and energy consump
-    html = '<div class="widget-container">'
-    html += render_template('energy-consumption-widget.html')
-    html += render_template('power-consumption-widget.html')
-    html += '</div>'
+    dashboard_content = render_template('header-widget-2.html')
+    dashboard_content += '<div class="widget-container">'
+    dashboard_content += render_template('energy-consumption-widget.html')
+    dashboard_content += render_template('power-consumption-widget.html')
+    dashboard_content += '</div>'
 
     # Next, do the moving day average widget
-    html += render_template('barchart-widget.html')
+    dashboard_content += render_template('barchart-widget.html')
+
+    # renders dashboard with those widgets
+    html = render_template('master_template.html', dashboard_content=dashboard_content)
+    response = make_response(html)
+    return(response)
 
     # Next, include the fumehood widgets (let's please limit it to 4 fumehoods per page)
     # html += '<div class="fume-hood-widget-container widget-container">'
@@ -98,5 +105,4 @@ def lab_summary():
     #     html += render_template('mini-fume-hood-widget.html')
     #     html += '</span>'
     # html += '</div>'
-    return html
 
