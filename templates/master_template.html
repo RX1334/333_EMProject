@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Energy Monitoring</title>
+        <link rel="stylesheet" href="../static/emp.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap"
+          rel="stylesheet"
+        />
+        <!-- Importing JQuery at beginning for use in everything else -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Importing d3.js at the beginning for use in data visualizations -->
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+        <div class="center-screen">
+            <div id="dashboard">
+                <!-- Content is shucked into here via AJAX requests, dynamically per page -->
+            </div>
+        </div>
+    </body>
+    <script>
+        "use strict";
+
+        let request = null;
+
+        function handle_fumehood_data(response) {
+            // $("#temporary_fumehood_data").html(response);
+            for (const [key, value] of Object.entries(response)) {
+                $("#fumehood" + key).text(value + " kW");
+                console.log(key, value);
+            }
+            // console.log(response);
+        }
+
+        function get_fumehood_data() {
+            let url = "/fumehood_stuff";
+            if (request != null) request.abort();
+
+            request = $.ajax({
+                type: "GET",
+                url: url,
+                success: handle_fumehood_data,
+            });
+        }
+
+        function handle_rerender(response) {
+            $('#dashboard').html(response)
+        }
+
+        function dashboard() {
+            let url = "/dashboard";
+            if (request != null) request.abort();
+
+            request = $.ajax({
+                type: "GET",
+                url: url,
+                success: handle_rerender,
+            });
+        }
+
+        function lab_summary() {
+            let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
+            console.log('SS');
+            if (request != null) request.abort();
+
+            request = $.ajax({
+                type: "GET",
+                url: url,
+                success: handle_rerender,
+            });
+        }
+
+        function setup() {
+            // get_fumehood_data();
+            // window.setInterval(get_fumehood_data, 1000);
+            dashboard();
+            $('.activate_rabinowitz_icahn_201').on('click', lab_summary);
+        }
+
+        $("document").ready(setup);
+    </script>
+</html>
