@@ -71,6 +71,30 @@
             });
         }
 
+        // --------------------------------------------------------
+        // Real time data fetching code
+        // --------------------------------------------------------
+
+        function handle_rt_resp(response) {
+            for (const [key, value] of Object.entries(response)) {
+                $('#' + key).text(value)
+            }
+        }
+
+        function get_rt_data() {
+            const queryString = window.location.search;
+            // console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            let url = "/real_time_data?lab_name=" + urlParams.get('lab_name')
+            url += "temp-lab-name&fumehood_id=" + urlParams.get('fumehood_id')
+
+            request = $.ajax({
+                type: "GET",
+                url: url,
+                success: handle_rerender,
+            });
+        }
+
         function setup() {
             // get_fumehood_data();
             // window.setInterval(get_fumehood_data, 1000);
