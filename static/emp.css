@@ -696,16 +696,10 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-number {
-  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
 .fumehood-summary-number-text {
   /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
-  /* color: #ffffff; */
-}
-
-.fumehood-open {
-  color: #d14112;
 }

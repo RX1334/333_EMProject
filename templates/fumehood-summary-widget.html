@@ -2,25 +2,25 @@
     <div class="fumehood-summary-widget widget">
       <div class="fumehood-summary-title">
         <span class="fumehood-summary-title-name body-bold">
-          Door Status: <span class="fumehood-open">Open</span>
+          Door Status: <span id="{{fumehood_id}}-status"></span>
         </span>
 
       </div>
       <div class="fumehood-summary-content">
         <span class="fumehood-summary-today-consumption">
-          <div class="fumehood-summary-today-kwh widget-medium">2.66 kWh</div>
+          <div class="fumehood-summary-today-kwh widget-medium" id="{{fumehood_id}}-kwh"></div>
           <div class="fumehood-summary-today-text body-small">
             Today's Energy Consumption
           </div>
         </span>
         <span class="fumehood-summary-current-consumption">
-          <div class="fumehood-summary-current-kw widget-medium">2 Hrs</div>
+          <div class="fumehood-summary-current-kw widget-medium" id="{{fumehood_id}}-today"></div>
           <div class="fumehood-summary-current-text body-small">
             Hours in Use Today
           </div>
         </span>
         <span class="fumehood-summary-number-active">
-          <div class="fumehood-summary-number widget-medium">0.25 Hrs</div>
+          <div class="fumehood-summary-number widget-medium" id="{{fumehood_id}}-avg-day"></div>
           <div class="fumehood-summary-number-text body-small">Average hours used per day over the past year</div>
         </span>
       </div>

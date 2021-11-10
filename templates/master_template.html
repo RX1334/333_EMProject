@@ -75,29 +75,65 @@
         // Real time data fetching code
         // --------------------------------------------------------
 
+        // Change to url params in the future
+        const labNames = ['rabinowitz_icahn_201']
+        const fumehoodId = 'fumehood0'
+
+        // get fumehood # from url params
+        // const queryString = window.location.search;
+        // const urlParams = new URLSearchParams(queryString);
+        // const fumehoodId = urlParams.get('fumehood_id')
+
+
         function handle_rt_resp(response) {
             for (const [key, value] of Object.entries(response)) {
-                $('#' + key).text(value)
+
+                // color fumehood open status the correct color
+
+                if (key.endsWith("-mini-status")) {
+                    $("#" + key).children("span").text(value)
+                    if (value == "CLOSED") {
+                        $("#" + key).children("span").addClass("green")
+                        $("#" + key).children("span").removeClass("red")
+                        $("#" + key).children("img").attr("src","../static/images/GreenDot.svg");
+                    } else {
+                        $("#" + key).children("span").addClass("red")
+                        $("#" + key).children("span").removeClass("green")
+                        $("#" + key).children("img").attr("src","../static/images/RedDot.svg");
+                    }
+                    continue;
+                }
+                if (key.endsWith("-status")) {
+                    if (value == "OPEN") {
+                        $("#" + key).addClass("red")
+                        $("#" + key).removeClass("green")
+                    }
+                    else {
+                        $("#" + key).addClass("green")
+                        $("#" + key).removeClass("red")
+                    }
+                }
+
+                // shunt in the correct value into the html
+                $("#" + key).text(value);
             }
         }
 
         function get_rt_data() {
-            const queryString = window.location.search;
-            // console.log(queryString);
-            const urlParams = new URLSearchParams(queryString);
-            let url = "/real_time_data?lab_name=" + urlParams.get('lab_name')
-            url += "temp-lab-name&fumehood_id=" + urlParams.get('fumehood_id')
-
-            request = $.ajax({
-                type: "GET",
-                url: url,
-                success: handle_rerender,
-            });
+            labNames.forEach((labName) => {
+                let url = "/real_time_data?lab_name=" + labName
+                url += '&fumehood_id=' + fumehoodId
+                request = $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: handle_rt_resp,
+                });
+            })
         }
 
         function setup() {
-            // get_fumehood_data();
-            // window.setInterval(get_fumehood_data, 1000);
+            get_rt_data();
+            window.setInterval(get_rt_data, 1000);
         }
 
         $("document").ready(setup);

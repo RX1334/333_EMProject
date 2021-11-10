@@ -5,24 +5,10 @@ import random
 # ----------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='./templates', static_folder='./static')
-# app = Flask(__name__, template_folder='.')
 
 # ----------------------------------------------------------------------
 # Routes
 # ----------------------------------------------------------------------
-# @app.route('/', methods=['GET'])
-# def index():
-#     # fumehoods_usage = get_fumehood_output()
-#     # if fumehoods_usage is None:
-#     #     fumehoods_usage = ['OFF', 'OFF', 'OFF', 'OFF']
-#     # key val pairs are fumehood_id and their energy use
-#     fumehoods_usage = {}
-#     for i in range(4):
-#         fumehoods_usage[i] = random.randint(100, 200)
-#     # html = render_template('index.html', fumehoods_usage=fumehoods_usage)
-#     html = render_template('master_template.html')
-#     response = make_response(html)
-#     return response
 
 @app.route('/', methods=['GET'])
 def lab_summaries():
@@ -35,10 +21,6 @@ def lab_summaries():
     html = render_template('master_template.html', dashboard_content=dashboard_content)
     response = make_response(html)
     return(response)
-
-# @app.route('/fumehood_stuff', methods=['GET'])
-# def fumehood_stuff():
-
 
 # arguments: fumehood_id, output: html of fumehood summary widgets
 @app.route('/fumehood_summary', methods=['GET'])
@@ -55,8 +37,7 @@ def fumehood_summary():
         response = make_response(html)
         return response
     dashboard_content = render_template('header-widget-2.html')
-    dashboard_content += render_template('fumehood-summary-widget.html')
-    dashboard_content += render_template('fumehood-summary-widget.html')
+    dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -84,8 +65,8 @@ def lab_summary():
     # First do the widg container for power and energy consump
     dashboard_content = render_template('header-widget-2.html')
     dashboard_content += '<div class="consumption-widget-container widget-container">'
-    dashboard_content += render_template('energy-consumption-widget.html')
-    dashboard_content += render_template('power-consumption-widget.html')
+    dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
+    dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
     dashboard_content += '</div>'
 
     # Next, do the moving day average widget
@@ -112,9 +93,6 @@ def lab_summary():
     return(response)
 
 
-
-
-
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id
 # args: optional for either lab_name or fumehood_id (if neither provided,
@@ -129,16 +107,31 @@ def real_time_data():
     lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
     data_dict = {}
+    print(fumehood_id)
     if lab_name:
         # Here, get the relevant data given a lab_name.
         # For now, we just use dummy data.
-        data_dict[lab_name + '-number'] = random.randint(0, 4)
-        data_dict[lab_name + '-current-kw'] = round(random.uniform(0.5,1.5), 2)
-        data_dict[lab_name + '-today-kwh'] = round(random.uniform(2,4), 2)
-    if fumehood_id:
+        data_dict[lab_name + '-number'] = str(random.randint(0, 4)) +  ' of 4'
+        data_dict[lab_name + '-current-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
+        data_dict[lab_name + '-today-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+    # if fumehood_id:
+    #     # We get the relevant data given an id
+    #     data_dict[fumehood_id + '-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
+    #     data_dict[fumehood_id + '-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+    #     data_dict[fumehood_id + '-today'] = str(random.randint(0, 4)) + ' Hrs'
+    #     data_dict[fumehood_id + '-avg-day'] = str(round(random.uniform(2,4), 2)) + ' Hrs'
+    #     data_dict[fumehood_id + '-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+    #     data_dict[fumehood_id + '-mini-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+
+    # HARDCODED DATA, CHANGE LATER
+    for i in range(4):
+        fumehood_id = 'fumehood' + str(i)
         # We get the relevant data given an id
-        data_dict[fumehood_id + '_cur_power'] = round(random.uniform(0.5,1.5), 2)
-        data_dict[fumehood_id + '_today_consump'] = round(random.uniform(2,4), 2)
-        data_dict[fumehood_id + '_hours_today'] = random.randint(0, 4)
-        data_dict[fumehood_id + '_ave_hours'] = round(random.uniform(2,4), 2)
+        data_dict[fumehood_id + '-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
+        data_dict[fumehood_id + '-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+        data_dict[fumehood_id + '-today'] = str(random.randint(0, 4)) + ' Hrs'
+        data_dict[fumehood_id + '-avg-day'] = str(round(random.uniform(2,4), 2)) + ' Hrs'
+        data_dict[fumehood_id + '-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+        data_dict[fumehood_id + '-mini-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+
     return data_dict
