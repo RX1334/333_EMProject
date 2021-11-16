@@ -15,19 +15,17 @@ def lab_summaries():
     # compiles widgets
     dashboard_content = render_template('header-widget-2.html')
     dashboard_content += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
-    dashboard_content += render_template('lab-summary-widget.html')
+    # dashboard_content += render_template('lab-summary-widget.html')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
     response = make_response(html)
     return(response)
 
-# arguments: fumehood_id, output: html of fumehood summary widgets
+# arguments: fumehood_id
+# output: html of fumehood summary widgets
 @app.route('/fumehood_summary', methods=['GET'])
 def fumehood_summary():
-    fumehoods_usage = {}
-    for i in range(4):
-        fumehoods_usage[i] = random.randint(100, 200)
     # return fumehoods_usage
     fumehood_id = request.args.get('fumehood_id')
 
@@ -36,8 +34,10 @@ def fumehood_summary():
         html = ''
         response = make_response(html)
         return response
+
     dashboard_content = render_template('header-widget-2.html')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
+    dashboard_content += render_template('barchart-widget.html')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -45,38 +45,31 @@ def fumehood_summary():
     return(response)
 
 
-# Args: Lab name
-# Output: HTML of Lab sum page w/ energy-consump-widget, power-consump-widget,
-# graph widget,
+# arguments: lab_name
+# output: HTML of lab sum page w/ energy, power, graph, fumehoods
 @app.route('/lab_summary', methods=['GET'])
 def lab_summary():
-    # Get the lab that's requested, use it to get the info
+    # get lab_name
     lab_name = request.args.get('lab_name')
+
+    # temp error handling
     if not lab_name:
-        # Come up with a better way to do error handling later, for now just return
-        # empty string
         html = ''
         response = make_response(html)
         return response
 
-    # Here is where we'd use the lab name to fetch data from the database, but
-    # since that's not setup yet, we're giving some dummy data instead.
-
-    # First do the widg container for power and energy consump
+    # render energy and power widgets
     dashboard_content = render_template('header-widget-2.html')
     dashboard_content += '<div class="consumption-widget-container widget-container">'
     dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
     dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
     dashboard_content += '</div>'
 
-    # Next, do the moving day average widget
+    # moving day average widget
     dashboard_content += render_template('barchart-widget.html')
 
-    # Next, include the fumehood widgets (let's please limit it to 4 fumehoods per page)
+    # include the fumehood widgets
     num_fumehoods = 4 # This should be data fetched from the database
-    # fumehoods_usage = {}
-    # for i in range(num_fumehoods):
-    #     fumehoods_usage[i] = random.randint(100, 200)
     fumehoods_usage = ['OFF', 123, 123, 123]
     dashboard_content += '<div class="fume-hood-widget-container widget-container">'
     for i in range(num_fumehoods):

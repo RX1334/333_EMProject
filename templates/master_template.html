@@ -85,12 +85,11 @@
         // const urlParams = new URLSearchParams(queryString);
         // const fumehoodId = urlParams.get('fumehood_id')
 
-
+        // try to cram data into the corresponding tag with id
         function handle_rt_resp(response) {
             for (const [key, value] of Object.entries(response)) {
 
                 // color fumehood open status the correct color
-
                 if (key.endsWith("-mini-status")) {
                     $("#" + key).children("span").text(value)
                     if (value == "CLOSED") {
