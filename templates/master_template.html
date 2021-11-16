@@ -17,7 +17,7 @@
     <body>
         <div class="center-screen">
             <div id="dashboard">
-                <!-- Content is shucked into here via AJAX requests, dynamically per page -->
+                <!-- Content is shunted into here via Jinja2 template, dynamically per page -->
                 {{dashboard_content|safe}}
             </div>
         </div>
@@ -45,20 +45,21 @@
         }
 
         function handle_rerender(response) {
-            $('#dashboard').html(response)
+            $('#dashboard').html(response);
             $('.activate_rabinowitz_icahn_201').on('click', lab_summary);
         }
 
-        function dashboard() {
-            let url = "/";
-            if (request != null) request.abort();
+        // render dashboard
+        // function dashboard() {
+        //     let url = "/";
+        //     if (request != null) request.abort();
 
-            request = $.ajax({
-                type: "GET",
-                url: url,
-                success: handle_rerender,
-            });
-        }
+        //     request = $.ajax({
+        //         type: "GET",
+        //         url: url,
+        //         success: handle_rerender,
+        //     });
+        // }
 
         function lab_summary() {
             let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
@@ -119,6 +120,7 @@
             }
         }
 
+        // retrieve real time data
         function get_rt_data() {
             labNames.forEach((labName) => {
                 let url = "/real_time_data?lab_name=" + labName
@@ -131,6 +133,7 @@
             })
         }
 
+        // set up document
         function setup() {
             get_rt_data();
             window.setInterval(get_rt_data, 1000);
