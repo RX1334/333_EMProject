@@ -17,6 +17,7 @@ BUSINESS_DAYS = 261.0
 HOURS = 8.0
 
 def occupancy(root_url, token):
+    '''total number of lab occupants'''
     occ_w = "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_RML210_OS1;"
     occ_e = "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.Local_IO.B47_RML210_OS2;"
     occ_req1 = requests.get(root_url + occ_w, headers={'Authorization': 'Bearer ' + token}, verify=False)
@@ -25,7 +26,8 @@ def occupancy(root_url, token):
     return(int((((occ_req1.json()['Properties'])[0])['Value'])['Value']) + int((((occ_req2.json()['Properties'])[0])['Value'])['Value']))
 
 def fh_open(root_url, token):
-    #fume hood percent open (proxy for on/off)
+    '''dict containing the four fumehoods and their open/closed status as strings
+    note: uses fumehood percent open as a proxy for on/off, with 5% as the threshold'''
     fh_opens = {'fh5c': 0, 'fh5d':0, 'fh6c':0, 'fh6d':0}
     points = ["System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_FH5C_FAO;", 
     "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_FH6C_FAO;", 
@@ -47,6 +49,7 @@ def fh_open(root_url, token):
     return fh_opens
 
 def lights_open(root_url, token):
+    '''returns dict of lights (east/west) and their on/off status'''
     lights_open = {'west': 0, 'east': 0}
     points = ["System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_2FWL_LM1;",
     "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.Local_IO.B47_2FWL_LM2;"]
@@ -63,6 +66,9 @@ def climate_energy():
     return 0
 
 def fh_consumption(root_url, token, fh_opens):
+    '''input: dict of fumehoods open/closed status
+    output: dict of fumehoods and their approximate energy status
+    see: https://fumehoodcalculator.lbl.gov/'''
     fh_cons = {'fh5c': [0], 'fh5d': [0], 'fh6c': [0], 'fh6d':[0]}
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
