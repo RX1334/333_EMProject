@@ -171,7 +171,7 @@ body, a {
   margin: 0px 16px;
 }
 
-#dark-mode-icon {
+#dark-mode-icon, #hamburger-icon {
   cursor: pointer;
 }
 
@@ -384,7 +384,7 @@ input[type="radio"]:checked + label {
     75.8deg,
     #00c08b -4.3%,
     rgba(0, 192, 139, 0.5) 104.49%
-  );
+  ) !important;
   backdrop-filter: blur(24px);
   /* Note: backdrop-filter has minimal browser support */
 
