@@ -23,6 +23,17 @@
         </div>
     </body>
     <script>
+                                // reset dark mode status
+                                let dark_mode_on = localStorage.getItem('dark_mode_on') ?? '1';
+            if (dark_mode_on === '0') {
+                console.log('hi');
+                $('#dark-mode-icon').attr('src', '../static/images/DarkMode.svg');
+                $("body, a").css({"color": "#2A2A2A"});
+                $("#dashboard").css({"background": "linear-gradient(29.82deg, #EEEEEE -3.61%, rgba(238, 238, 238, 0.5) 103.96%)"});
+                $(".widget").css({"background": "white"});
+            }
+    </script>
+    <script>
         "use strict";
 
         let request = null;
@@ -45,6 +56,7 @@
         }
 
         function handle_rerender(response) {
+            console.log('rerender');
             $('#dashboard').html(response);
             $('.activate_rabinowitz_icahn_201').on('click', lab_summary);
         }

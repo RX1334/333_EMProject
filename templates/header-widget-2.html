@@ -12,10 +12,11 @@
   <!-- The JS Code -->
   <script>
     "use strict";
-    let dark_mode_on = 1;
 
     function setLightMode() {
-        dark_mode_on = 0;
+        localStorage.setItem('dark_mode_on', '0');
+        $('#dark-mode-icon').attr('src', '../static/images/DarkMode.svg');
+
         $("body, a").css({"color": "#2A2A2A"});
         $("#dashboard").css({"background": "linear-gradient(29.82deg, #EEEEEE -3.61%, rgba(238, 238, 238, 0.5) 103.96%)"});
         $(".widget").css({"background": "white"});
@@ -25,7 +26,9 @@
     }
 
     function setDarkMode() {
-        dark_mode_on = 1;
+        localStorage.setItem('dark_mode_on', '1');
+        $('#dark-mode-icon').attr('src', '../static/images/LightMode.svg');
+
         $("body, a").css({"color": "white"});
         $("#dashboard").css({"background": "linear-gradient(32.82deg, #2a2a2a -7.28%, rgba(42, 42, 42, 0.75) 107.76%)"});
         $(".widget").css({"background": "#2a2a2a"});
@@ -35,13 +38,12 @@
 
     function toggleDarkMode() {
         // LightMode icon shows in dark mode, and vice versa
-        const dark_icon_array = ['DarkMode.svg', 'LightMode.svg'];
-        if (dark_mode_on === 0) setDarkMode();
-        else setLightMode();
-        $('#dark-mode-icon').attr('src', '../static/images/' + dark_icon_array[dark_mode_on]);
-        console.log(dark_mode_on);
+        let dark_mode_on = localStorage.getItem('dark_mode_on') ?? '1';
+        // console.log('dark mode on for toggle: ' + dark_mode_on);
 
-        console.log('dark mode set to ' + dark_mode_on);
+        if (dark_mode_on === '0') setDarkMode();
+        else setLightMode();
+        // $('#dark-mode-icon').attr('src', '../static/images/' + dark_icon_array[dark_mode_on]);
     }
 
     function setup() {
