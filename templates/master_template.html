@@ -114,7 +114,9 @@
         // reset dark mode status, default to dark mode
         if (localStorage.getItem('dark_mode_on') === '0') setLightMode();
         // reset menu open status, default to closed
-        if (localStorage.getItem('menu_open') === '1') setMenuOpen();
+        // if (localStorage.getItem('menu_open') === '1') setMenuOpen();
+        // reset menu to closed
+        setMenuClosed();
     </script>
 
     <!-- handle real time data -->
