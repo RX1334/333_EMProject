@@ -1,7 +1,7 @@
 /* Thoughts on using scss? Mainly for nesting neatness */
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0px;
+  padding: 0px;
 }
 
 html {
@@ -30,6 +30,7 @@ body, a {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
 }
 
 /* Text Styles */
