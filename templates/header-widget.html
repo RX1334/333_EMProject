@@ -1,58 +1,89 @@
 <!-- The HTML itself -->
 <div class="widget-container">
-  <div id="header-widget" class="widget dark">
-    <img id="header-icon" src="../static/images/House.svg" />
-    <span id="greeting-span" class="body-bold">Page Title</span>
-    <span id="time-weather-span" class="body-regular">
-      <span id="time-date-span"></span>
-      <img id="weather-icon" src="../static/images/CloudRain.svg" />
-      <span id="temperature-span"></span>
-    </span>
+    <div id="header-widget" class="widget dark">
+      <img id="hamburger-icon" src="../static/images/List.svg" />
+      <span id="greeting-span" class="body-bold">{{page_name}}</span>
+      <span id="greeting-span" class="body-bold menu-hidden"><a href="/lab_summary?lab_name=rabinowitz_icahn_201">Primary Lab</a></span>
+      <span id="greeting-span" class="body-bold menu-hidden">Profile</span>
+      <span id="greeting-span" class="body-bold menu-hidden">Report Archive</span>
+      <span id="dark-mode-span">
+        <img id="dark-mode-icon" src="../static/images/LightMode.svg" />
+      </span>
+    </div>
   </div>
-</div>
 
-<!-- The JS Code -->
-<script>
-  // Get the weather data for a certain city (for now, we assume always Princeton,
-  // though maybe we pull city based on IP addr later)
+  <!-- The JS Code -->
+  <script>
+    "use strict";
 
-  function getWeather() {
-    const zipCode = "08540";
-    const countryCode = "us";
-    // Don't just have this here lol, move to secure location later
-    const apiKey = "36ec9764d698648eb0947ec40b047a8b";
-    const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},${countryCode}&appid=${apiKey}&units=imperial`;
-    let weatherData;
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        $("#temperature-span").text(Math.round(data.main.temp) + "\u00B0F");
-      })
-      .catch(() => {
-        console.error("Error occurred when fetching weather data");
-      });
-  }
+    function setLightMode() {
+      localStorage.setItem('dark_mode_on', '0');
 
-  function getTimeDate() {
-    let dt = new Date();
-    let datePart = dt.toLocaleDateString().replaceAll("/", ".");
-    datePart =
-      datePart.slice(0, datePart.lastIndexOf(".") + 1) +
-      datePart.slice(datePart.lastIndexOf(".") + 3);
+      // set icons to the correct color
+      $('#dark-mode-icon').attr('src', '../static/images/DarkMode.svg');
+      $('.lab-summary-options').attr('src', '../static/images/GearSix_dark.svg');
+      $('#hamburger-icon').attr('src', '../static/images/List_dark.svg');
 
-    $("#time-date-span").text(
-      dt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) +
-        " | " +
-        datePart
-    );
-  }
+      // change remaining css
+      $("body, a").css({"color": "#2A2A2A"});
+      $("#dashboard").css({"background": "linear-gradient(29.82deg, #EEEEEE -3.61%, rgba(238, 238, 238, 0.5) 103.96%)"});
+      $(".widget").css({"background": "white"});
 
-  function setup() {
-    getWeather();
-    window.setInterval(getWeather, 30 * 60 * 1000); // Every half hour seems reasonable
-    getTimeDate();
-    window.setInterval(getTimeDate, 1000);
-  }
+      // ensure power consump widget stays white
+      $(".power-consumption-widget").css({"color": "white"});
+    }
 
-  document.addEventListener("DOMContentLoaded", setup);
-</script>
+    function setDarkMode() {
+      localStorage.setItem('dark_mode_on', '1');
+
+      // set icons to the correct color
+      $('#dark-mode-icon').attr('src', '../static/images/LightMode.svg');
+      $('.lab-summary-options').attr('src', '../static/images/GearSix.svg');
+      $('#hamburger-icon').attr('src', '../static/images/List.svg');
+
+      // change remaining css
+      $("body, a").css({"color": "white"});
+      $("#dashboard").css({"background": "linear-gradient(32.82deg, #2a2a2a -7.28%, rgba(42, 42, 42, 0.75) 107.76%)"});
+      $(".widget").css({"background": "#2a2a2a"});
+    }
+
+    function toggleDarkMode() {
+      // LightMode icon shows in dark mode, and vice versa
+      let dark_mode_on = localStorage.getItem('dark_mode_on') ?? '1';
+      if (dark_mode_on === '0') setDarkMode();
+      else setLightMode();
+    }
+
+    function setMenuClosed() {
+      localStorage.setItem('menu_open', '0');
+      $('.menu-hidden').hide();
+      // if dark mode is on, display white svg. else display gray one
+      if (localStorage.getItem('dark_mode_on') === '0') {
+        $('#hamburger-icon').attr('src', '../static/images/List_dark.svg');
+      } else {
+        $('#hamburger-icon').attr('src', '../static/images/List.svg');
+      }
+    }
+
+    function setMenuOpen() {
+      localStorage.setItem('menu_open', '1');
+      $('.menu-hidden').show();
+      // if dark mode is on, display white svg. else display gray one
+      if (localStorage.getItem('dark_mode_on') === '0') $('#hamburger-icon').attr('src', '../static/images/X_dark.svg');
+      else $('#hamburger-icon').attr('src', '../static/images/X.svg');
+    }
+
+    function toggleMenu() {
+      let menu_open = localStorage.getItem('menu_open') ?? '0';
+      if (menu_open === '0') setMenuOpen();
+      else setMenuClosed();
+    }
+
+    function setup() {
+        $('#dark-mode-icon').on('click', toggleDarkMode);
+        $('#hamburger-icon').on('click', toggleMenu);
+        console.log("setup");
+    }
+
+    $('document').ready(setup);
+  </script>

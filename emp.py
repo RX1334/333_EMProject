@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder='./templates', static_folder='./static')
 @app.route('/', methods=['GET'])
 def lab_summaries():
     # compiles widgets
-    dashboard_content = render_template('header-widget-2.html', page_name='Lab Dashboard')
+    dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
     dashboard_content += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
     # dashboard_content += render_template('lab-summary-widget.html')
 
@@ -35,7 +35,7 @@ def fumehood_summary():
         response = make_response(html)
         return response
 
-    dashboard_content = render_template('header-widget-2.html', page_name=fumehood_id)
+    dashboard_content = render_template('header-widget.html', page_name=fumehood_id)
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('barchart-widget.html')
 
@@ -59,7 +59,7 @@ def lab_summary():
         return response
 
     # render energy and power widgets
-    dashboard_content = render_template('header-widget-2.html', page_name=lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=lab_name)
     dashboard_content += '<div class="consumption-widget-container widget-container">'
     dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
     dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
