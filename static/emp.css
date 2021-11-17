@@ -4,11 +4,18 @@
   padding: 0%;
 }
 
+html {
+  background: #E5E5E5;
+}
+
 body, a {
   font-family: "Public Sans", sans-serif;
   color: white;
 }
 
+.heading-label {
+  margin-bottom: 16px;
+}
 
 
 .red {
@@ -103,7 +110,7 @@ body, a {
 #dashboard {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 56px 56px 32px;
 
   width: 656px; /* 768 - 112 */
