@@ -72,7 +72,7 @@
             try {
                 buildAllCharts();
             } catch {
-                console.log("in catch");
+                
             }
         }
 
@@ -208,6 +208,14 @@
                     else {
                         $("#" + key).addClass("green")
                         $("#" + key).removeClass("red")
+                    }
+                }
+                if (key.endsWith("-chart-data")) {
+                    let end = key.indexOf('-chart-data')
+                    try {
+                        buildAllCharts(value, '#' + key.substring(0, end) + '-chart')
+                    } catch{
+                        continue
                     }
                 }
 
