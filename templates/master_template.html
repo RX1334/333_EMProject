@@ -52,8 +52,7 @@
             $('#dark-mode-icon').attr('src', '../static/images/LightMode.svg');
             $('.lab-summary-options').attr('src', '../static/images/GearSix.svg');
             if (localStorage.getItem('menu_open') === '1') $('#hamburger-icon').attr('src', '../static/images/X.svg');
-            console.log(localStorage.getItem('menu_open') === '1');
-            $('#hamburger-icon').attr('src', '../static/images/List.svg');
+            else $('#hamburger-icon').attr('src', '../static/images/List.svg');
 
             // change remaining css
             $("body, a").css({"color": "white"});
