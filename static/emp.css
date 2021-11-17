@@ -131,8 +131,7 @@ body, a {
   flex-grow: 1;
 }
 
-#greeting-span {
-  letter-spacing: 0.1px;
+.greeting-span {
   margin: 0px 0px 0px 16px;
 }
 

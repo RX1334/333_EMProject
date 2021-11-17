@@ -2,10 +2,11 @@
 <div class="widget-container">
     <div id="header-widget" class="widget dark">
       <img id="hamburger-icon" src="../static/images/List.svg" />
-      <span id="greeting-span" class="body-bold">{{page_name}}</span>
-      <span id="greeting-span" class="body-bold menu-hidden"><a href="/lab_summary?lab_name=rabinowitz_icahn_201">Primary Lab</a></span>
-      <span id="greeting-span" class="body-bold menu-hidden">Profile</span>
-      <span id="greeting-span" class="body-bold menu-hidden">Report Archive</span>
+      <span class="greeting-span body-bold">{{page_name}}</span>
+      <span id="{{lab_name}}-temperature" class="greeting-span body-bold menu-visible"></span>
+      <span class="greeting-span body-bold menu-hidden"><a href="/lab_summary?lab_name=rabinowitz_icahn_201">Primary Lab</a></span>
+      <span class="greeting-span body-bold menu-hidden">Profile</span>
+      <span class="greeting-span body-bold menu-hidden">Report Archive</span>
       <span id="dark-mode-span">
         <img id="dark-mode-icon" src="../static/images/LightMode.svg" />
       </span>
@@ -57,6 +58,7 @@
     function setMenuClosed() {
       localStorage.setItem('menu_open', '0');
       $('.menu-hidden').hide();
+      $('.menu-visible').show();
       // if dark mode is on, display white svg. else display gray one
       if (localStorage.getItem('dark_mode_on') === '0') {
         $('#hamburger-icon').attr('src', '../static/images/List_dark.svg');
@@ -68,6 +70,7 @@
     function setMenuOpen() {
       localStorage.setItem('menu_open', '1');
       $('.menu-hidden').show();
+      $('.menu-visible').hide();
       // if dark mode is on, display white svg. else display gray one
       if (localStorage.getItem('dark_mode_on') === '0') $('#hamburger-icon').attr('src', '../static/images/X_dark.svg');
       else $('#hamburger-icon').attr('src', '../static/images/X.svg');

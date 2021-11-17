@@ -59,7 +59,7 @@ def lab_summary():
         return response
 
     # render energy and power widgets
-    dashboard_content = render_template('header-widget.html', page_name=lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_name=lab_name)
     dashboard_content += '<div class="consumption-widget-container widget-container">'
     dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
     dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
@@ -107,6 +107,7 @@ def real_time_data():
         data_dict[lab_name + '-number'] = str(random.randint(0, 4)) +  ' of 4'
         data_dict[lab_name + '-current-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
         data_dict[lab_name + '-today-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+        data_dict[lab_name + '-temperature'] = str(random.randint(70, 80)) + ' °F'
     # if fumehood_id:
     #     # We get the relevant data given an id
     #     data_dict[fumehood_id + '-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
