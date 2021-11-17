@@ -218,12 +218,31 @@
                         continue
                     }
                 }
+                if (key.endsWith("-number")) {
+                    let numOpen = 0
+                    for (const key of Object.keys(value)) {
+                        if (value[key] == "OPEN") {
+                            numOpen++
+                        }
+                    }
+                    $("#" + key).text(numOpen + ' of ' + Object.keys(value).length);
+                    continue
+                }
                 if (key == "fumehoods") {
                     for (let i = 0; i < value.length; i++) {
                         let id = value[i]['id']
                         id = 'fumehood' + i
                         for (const [fkey, fvalue] of Object.entries(value[i])) {
                             $("#" + id + '-' + fkey).text(fvalue);
+                            if (fkey.endsWith("-chart-data")) {
+                                let end = fkey.indexOf('-chart-data')
+                                // console.log('#' + id + '-chart')
+                                try {
+                                    buildAllCharts(fvalue, '#' + id + '-chart')
+                                } catch(err){
+                                    continue
+                                }
+                            }
                         }
                     }
                 }
