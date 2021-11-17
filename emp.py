@@ -37,8 +37,7 @@ def fumehood_summary():
 
     dashboard_content = render_template('header-widget.html', page_name=fumehood_id)
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
-    # dashboard_content += render_template('barchart-widget.html')
-    dashboard_content += render_template('barchart-widget-json.html', lab_name='rabinowitz_icahn_201', type_of_graph='Utilization Rate')
+    dashboard_content += render_template('barchart-widget-json.html', name=fumehood_id, lab_name='rabinowitz_icahn_201', type_of_graph='Utilization Rate')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -66,9 +65,8 @@ def lab_summary():
     dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
     dashboard_content += '</div>'
 
-    # moving day average widget
-    # dashboard_content += render_template('barchart-widget.html')
-    dashboard_content += render_template('barchart-widget-json.html', lab_name=lab_name, type_of_graph='Utilization Rate')
+    # bar chart widget
+    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, lab_name=lab_name, type_of_graph='Utilization Rate')
 
     # include the fumehood widgets
     num_fumehoods = 4 # This should be data fetched from the database
@@ -97,12 +95,10 @@ def lab_summary():
 #       val=the data value attached to this pointd
 @app.route('/real_time_data', methods=['GET'])
 def real_time_data():
-    # We assume just one lab_name is being requested; if there are multiple labs that
-    # need their data updated at once, call this func mult times
+    # We assume just one lab_name is being requested
     lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
     data_dict = {}
-    print(fumehood_id)
     if lab_name:
         # Here, get the relevant data given a lab_name.
         # For now, we just use dummy data.
@@ -112,14 +108,6 @@ def real_time_data():
         data_dict[lab_name + '-temperature'] = str(random.randint(70, 80)) + ' °F'
         randint = random.randint(70,90)
         data_dict[lab_name + '-fumehood-energy-ratio'] = str(randint) + '% Fume Hoods ' + str(100-randint) + '% Other'
-    # if fumehood_id:
-    #     # We get the relevant data given an id
-    #     data_dict[fumehood_id + '-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
-    #     data_dict[fumehood_id + '-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
-    #     data_dict[fumehood_id + '-today'] = str(random.randint(0, 4)) + ' Hrs'
-    #     data_dict[fumehood_id + '-avg-day'] = str(round(random.uniform(2,4), 2)) + ' Hrs'
-    #     data_dict[fumehood_id + '-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
-    #     data_dict[fumehood_id + '-mini-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
 
     # HARDCODED DATA, CHANGE LATER
     for i in range(4):
@@ -131,5 +119,42 @@ def real_time_data():
         data_dict[fumehood_id + '-avg-day'] = str(round(random.uniform(2,4), 2)) + ' Hrs'
         data_dict[fumehood_id + '-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
         data_dict[fumehood_id + '-mini-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+        data_dict[fumehood_id + '-chart-data'] = {
+            'dates': {
+            'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+            'time': [round(random.uniform(0.6,1.4), 2) for _ in range(7)],
+            },
+            'weeks': {
+            'labels': ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
+            'time': [round(random.uniform(1.5,10)) for _ in range(4)],
+            },
+            'sixMonths': {
+            'labels': [4, 5, 6, 7, 8, 9],
+            'time': [round(random.uniform(6,40)) for _ in range(6)],
+            },
+            'years': {
+            'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            'time': [round(random.uniform(6,40)) for _ in range(12)],
+            },
+        };
+
+    data_dict[lab_name + '-chart-data'] = {
+        'dates': {
+        'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+        'time': [round(random.uniform(6,14), 2) for _ in range(7)],
+        },
+        'weeks': {
+        'labels': ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
+        'time': [round(random.uniform(15,100)) for _ in range(4)],
+        },
+        'sixMonths': {
+        'labels': [4, 5, 6, 7, 8, 9],
+        'time': [round(random.uniform(60,400)) for _ in range(6)],
+        },
+        'years': {
+        'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        'time': [round(random.uniform(60,400)) for _ in range(12)],
+        },
+    };
 
     return data_dict

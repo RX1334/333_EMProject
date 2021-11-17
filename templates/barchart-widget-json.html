@@ -1,7 +1,7 @@
 <div class="widget">
   <div class="graph-widget">
     <div class="body-small">Placeholder Identifier | {{lab_name}} {{type_of_graph}}</div>
-    <div>
+    <div id="{{name}}-chart">
       <svg width="608" height="156" class="barchart" id="barchart-dates"></svg>
       <svg width="608" height="156" class="barchart" id="barchart-weeks" style="display: none;"></svg>
       <svg width="608" height="156" class="barchart" id="barchart-sixMonths" style="display: none;"></svg>
@@ -44,14 +44,14 @@
 </div>
 
 <script>
-  function buildChart(data, id) {
+  function buildChart(data, id, name) {
     let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
 
     if (dark_mode_on === '0') color = "#2A2A2A";
     else color = "white";
 
-    // Selecting and defining work area in the SVG
-    var svg = d3.select(id),
+    // Selecting and defining work area in the SVG\
+    var svg = d3.select(name + ' ' + id),
       margin = 24,
       width = svg.attr("width"),
       height = svg.attr("height") - margin;
@@ -66,7 +66,7 @@
     var g = svg.append("g");
 
     xScale.domain(data["labels"]);
-    yScale.domain([-2, d3.max(data.time)]);
+    yScale.domain([0, d3.max(data.time)]);
 
     arrData = [];
     for (let i = 0; i < data["labels"].length; i++) {
@@ -133,35 +133,15 @@
 
   function hideAllBut(id) {
     $(".barchart").hide();
-    console.log(id);
     $(id).show();
   }
 
-  function buildAllCharts() {
-    buildChart(data_dict["dates"], '#barchart-dates');
-    buildChart(data_dict["weeks"], '#barchart-weeks');
-    buildChart(data_dict["sixMonths"], '#barchart-sixMonths');
-    buildChart(data_dict["years"], '#barchart-years');
+  function buildAllCharts(data_dict, name) {
+    buildChart(data_dict["dates"], '#barchart-dates', name);
+    buildChart(data_dict["weeks"], '#barchart-weeks', name);
+    buildChart(data_dict["sixMonths"], '#barchart-sixMonths', name);
+    buildChart(data_dict["years"], '#barchart-years', name);
   }
-
-  let data_dict = {
-    dates: {
-      labels: [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
-      time: [3, 6, 8, 1, 2, 3, 8],
-    },
-    weeks: {
-      labels: ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
-      time: [13, 16, 13, 18],
-    },
-    sixMonths: {
-      labels: [4, 5, 6, 7, 8, 9],
-      time: [50, 49, 60, 58, 12, 20],
-    },
-    years: {
-      labels: [2019, 2020, 2021],
-      time: [600, 789, 406],
-    },
-  };
 
   buildAllCharts();
 </script>
