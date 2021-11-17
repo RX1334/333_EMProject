@@ -131,8 +131,8 @@ def lab_info():
     lab_energy = lab_energy_calc(fh_cons, climate)
     temp = climate*10
 
-    dict = {'24 hr energy consumption': str(lab_energy*12.379) + ' kWh', 
-        'current power consumption': str(lab_energy) + ' kWh',
+    dict = {'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh', 
+        'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
         'current lab temperature': temp,
         'fumehoods in use' : fh_opens,
         'occupants' : occ,

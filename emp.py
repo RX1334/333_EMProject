@@ -1,6 +1,7 @@
 from flask import Flask, make_response, request
 from flask import render_template
 from database import get_fumehood_output
+from lab_query import lab_info
 import random
 # ----------------------------------------------------------------------
 
@@ -136,7 +137,7 @@ def real_time_data():
             'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             'time': [round(random.uniform(6,40)) for _ in range(12)],
             },
-        };
+        }
 
     data_dict[lab_name + '-chart-data'] = {
         'dates': {
@@ -155,6 +156,7 @@ def real_time_data():
         'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         'time': [round(random.uniform(60,400)) for _ in range(12)],
         },
-    };
+    }
 
-    return data_dict
+    # return data_dict
+    return lab_info()

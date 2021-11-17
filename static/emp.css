@@ -19,6 +19,7 @@ a {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  width: 100
 }
 
 /* Text Styles */
@@ -170,7 +171,6 @@ a {
 label {
   display: inline-block;
   margin: 0 32px 0 0;
-  cursor: pointer;
 }
 
 input[type="radio"] {
