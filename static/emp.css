@@ -4,6 +4,10 @@
   padding: 0%;
 }
 
+html {
+  background: #E5E5E5;
+}
+
 body, a {
   font-family: "Public Sans", sans-serif;
   color: white;

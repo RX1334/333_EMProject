@@ -77,7 +77,7 @@ def lab_summary():
         fumehood_name = "Fume Hood #" + str(i + 1)
         fumehood_id = "fumehood" + str(i)
         dashboard_content += '<span>'
-        dashboard_content += render_template('mini-fume-hood-widget.html', fumehood_usage=fumehoods_usage[i], fumehood_id=fumehood_id)
+        dashboard_content += render_template('mini-fume-hood-widget.html', fumehood_id=fumehood_id)
         dashboard_content += '</span>'
     dashboard_content += '</div>'
 

@@ -1,19 +1,11 @@
 <div class="mini-fume-hood-widget widget">
   <div class="mini-fume-info">
     <div class="mini-fume-status" id="{{fumehood_id}}-mini-status">
-      {% if fumehood_usage == 'OFF' %}
-      <span class="mini-fume-status-text button-small green">CLOSED</span>
-      <img src="../static/images/GreenDot.svg" />
-      {% else %}
-      <span class="mini-fume-status-text button-small red">OPEN</span>
-      <img src="../static/images/RedDot.svg" />
-      {% endif %}
+      <span class="mini-fume-status-text button-small"></span>
+      <img />
     </div>
     <div class="mini-fume-name body-small">{{fumehood_id}}</div>
-    <div id="{{fumehood_id}}-kw" class="mini-fume-energy header-medium">
-      {% if fumehood_usage == 'OFF' %} 0 kW {% else %}
-      {{fumehood_usage}} kW {% endif %}
-    </div>
+    <div id="{{fumehood_id}}-kw" class="mini-fume-energy header-medium"></div>
   </div>
   <a href="/fumehood_summary?fumehood_id={{fumehood_id}}" class="mini-fume-details nav-small">See Details</a>
 </div>
