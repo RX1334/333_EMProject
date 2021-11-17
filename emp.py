@@ -75,7 +75,6 @@ def lab_summary():
     fumehoods_usage = ['OFF', 123, 123, 123]
     dashboard_content += '<div class="fume-hood-widget-container widget-container">'
     for i in range(num_fumehoods):
-        fumehood_name = "Fume Hood #" + str(i + 1)
         fumehood_id = "fumehood" + str(i)
         dashboard_content += '<span>'
         dashboard_content += render_template('mini-fume-hood-widget.html', fumehood_id=fumehood_id)

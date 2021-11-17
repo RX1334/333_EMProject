@@ -133,26 +133,29 @@ def lab_info():
 
     dict = {'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh', 
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
-        'current lab temperature': temp,
+        'rabinowitz_icahn_201-temperature': temp,
         'fumehoods in use' : fh_opens,
         'occupants' : occ,
         'lights' : light_opens,
         'energy moving average': str(lab_energy*1.10002) + ' kWh',
         'fumehood energy ratio': '68% Fume Hood, 32% Other',
-        'lab chart data': [
-            {'1week':  {'labels': ['11/11','11/12','11/13','11/14','11/15','11/16','11/17'], 
-            'values': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]}}, 
-            {'1month':  {'labels': ['10/20-10/27', '10/27-11/3', '11/3-11/10', '11/10-11/17'], 'values': [400.272, 402.002, 381.078, 392.219]}}, 
-            {'6months': {'labels': ['5/2021', '6/2021', '7/2021', '8/2021', '9/2021', '10/2021'], 'values': [383.382, 392.229, 402.225, 410.202]}}, 
-            {'1year':  {'labels': ['11/2020', '12/2020', '1/2021', '2/2021', '3/2021', '4/2021',
-             '5/2021', '6/2021', '7/2021', '8/2021', '9/2021', '10/2021'], 'values': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}}
-        ], 
+        'rabinowitz_icahn_201-chart-data': {
+            'dates':  {'labels': ['11/11','11/12','11/13','11/14','11/15','11/16','11/17'], 
+            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]}, 
+            'weeks':  {'labels': ['10/20-10/27', '10/27-11/3', '11/3-11/10', '11/10-11/17'], 'time': [400.272, 402.002, 381.078, 392.219]}, 
+            'sixMonths': {'labels': ['5/2021', '6/2021', '7/2021', '8/2021', '9/2021', '10/2021'], 'time': [383.382, 392.229, 402.225, 410.202]}, 
+            'years':  {'labels': ['11/2020', '12/2020', '1/2021', '2/2021', '3/2021', '4/2021',
+             '5/2021', '6/2021', '7/2021', '8/2021', '9/2021', '10/2021'], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
+             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+        }, 
         'fumehoods':[
-        {'id':'FH5C', 'current consumption': str(fh_cons['fh5c']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
-        {'id':'FH6C', 'current consumption': str(fh_cons['fh6c']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
-        {'id': 'FH5D', 'current consumption': str(fh_cons['fh5d']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
-        {'id': 'FH6D', 'current consumption': str(fh_cons['fh6d']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5}]
+        {
+                'id':'FH5C', 'kw': str(round(fh_cons['fh5c'], 2)) + ' kWh', 'kwh': 3, 
+                'today': 4, 'avg-day': 5}
+        ,
+        {'id': 'FH6C', 'kw': str(round(fh_cons['fh6c'], 2)) + ' kWh', 'kwh': 3, 'today': 4, 'avg-day': 5},
+        {'id': 'FH5D', 'kw': str(round(fh_cons['fh5d'], 2)) + ' kWh', 'kwh': 3, 'today': 4, 'avg-day': 5},
+        {'id': 'FH6D', 'kw': str(round(fh_cons['fh6d'], 2)) + ' kWh', 'kwh': 3, 'today': 4, 'avg-day': 5}]
     }
     return dict
 

@@ -137,6 +137,7 @@
   }
 
   function buildAllCharts(data_dict, name) {
+    console.log(data_dict['dates'])
     buildChart(data_dict["dates"], '#barchart-dates', name);
     buildChart(data_dict["weeks"], '#barchart-weeks', name);
     buildChart(data_dict["sixMonths"], '#barchart-sixMonths', name);
