@@ -14,6 +14,7 @@ app = Flask(__name__, template_folder='./templates', static_folder='./static')
 def lab_summaries():
     # compiles widgets
     dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
+    dashboard_content += render_template('heading-label.html', text='Your Monitored Rooms')
     dashboard_content += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
     # dashboard_content += render_template('lab-summary-widget.html')
 
@@ -36,7 +37,9 @@ def fumehood_summary():
         return response
 
     dashboard_content = render_template('header-widget.html', page_name=fumehood_id)
+    dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
+    dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html', name=fumehood_id, lab_name='rabinowitz_icahn_201', type_of_graph='Utilization Rate')
 
     # renders dashboard with those widgets
@@ -60,13 +63,11 @@ def lab_summary():
 
     # render energy and power widgets
     dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_name=lab_name)
+    dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += '<div class="consumption-widget-container widget-container">'
     dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
     dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
     dashboard_content += '</div>'
-
-    # bar chart widget
-    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, lab_name=lab_name, type_of_graph='Utilization Rate')
 
     # include the fumehood widgets
     num_fumehoods = 4 # This should be data fetched from the database
@@ -79,6 +80,10 @@ def lab_summary():
         dashboard_content += render_template('mini-fume-hood-widget.html', fumehood_usage=fumehoods_usage[i], fumehood_id=fumehood_id)
         dashboard_content += '</span>'
     dashboard_content += '</div>'
+
+    # bar chart widget
+    dashboard_content += render_template('heading-label.html', text='Visualizations')
+    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, lab_name=lab_name, type_of_graph='Utilization Rate')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
