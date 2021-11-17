@@ -38,7 +38,7 @@ def fumehood_summary():
     dashboard_content = render_template('header-widget.html', page_name=fumehood_id)
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     # dashboard_content += render_template('barchart-widget.html')
-    dashboard_content += render_template('barchart-widget-json.html')
+    dashboard_content += render_template('barchart-widget-json.html', lab_name='rabinowitz_icahn_201', type_of_graph='Utilization Rate')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -68,7 +68,7 @@ def lab_summary():
 
     # moving day average widget
     # dashboard_content += render_template('barchart-widget.html')
-    dashboard_content += render_template('barchart-widget-json.html')
+    dashboard_content += render_template('barchart-widget-json.html', lab_name=lab_name, type_of_graph='Utilization Rate')
 
     # include the fumehood widgets
     num_fumehoods = 4 # This should be data fetched from the database
