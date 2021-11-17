@@ -3,6 +3,9 @@
     <div id="header-widget-2" class="widget dark">
       <img id="hamburger-icon" src="../static/images/List.svg" />
       <span id="greeting-span-2" class="body-bold">{{page_name}}</span>
+      <span id="greeting-span-2" class="body-bold menu-hidden">Primary Lab</span>
+      <span id="greeting-span-2" class="body-bold menu-hidden">Profile</span>
+      <span id="greeting-span-2" class="body-bold menu-hidden">Report Archive</span>
       <span id="dark-mode-span">
         <img id="dark-mode-icon" src="../static/images/LightMode.svg" />
       </span>
@@ -53,7 +56,7 @@
 
     function setMenuClosed() {
       localStorage.setItem('menu_open', '0');
-
+      $('.menu-hidden').hide();
       // if dark mode is on, display white svg. else display gray one
       if (localStorage.getItem('dark_mode_on') === '0') {
         $('#hamburger-icon').attr('src', '../static/images/List_dark.svg');
@@ -64,7 +67,7 @@
 
     function setMenuOpen() {
       localStorage.setItem('menu_open', '1');
-
+      $('.menu-hidden').show();
       // if dark mode is on, display white svg. else display gray one
       if (localStorage.getItem('dark_mode_on') === '0') $('#hamburger-icon').attr('src', '../static/images/X_dark.svg');
       else $('#hamburger-icon').attr('src', '../static/images/X.svg');

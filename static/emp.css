@@ -168,11 +168,15 @@ body, a {
 
 #greeting-span-2 {
   letter-spacing: 0.1px;
-  margin: 0px 16px;
+  margin: 0px 0px 0px 16px;
 }
 
 #dark-mode-icon, #hamburger-icon {
   cursor: pointer;
+}
+
+.menu-hidden {
+  display: none;
 }
 
 /* ----------------------------------------------------------------------------- */
