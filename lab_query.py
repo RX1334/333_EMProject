@@ -15,6 +15,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 CONVERSION_FACTOR = 24.4243395
 BUSINESS_DAYS = 261.0
 HOURS = 8.0
+LAB_SIZE = 9000.0
 
 def occupancy(root_url, token):
     '''total number of lab occupants'''
@@ -60,10 +61,12 @@ def lights_open(root_url, token):
     lights_open['east'] = (((output[1].json()['Properties'])[0])['Value'])['Value']
     return lights_open
 
-def climate_energy():
+def climate_energy(root_url, token):
     '''returns approximate energy usage of climate control devices'''
-    points = []
-    return 0
+    points = ["System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_RML2-2_SPT;"]
+    x = requests.get(root_url + points[0], headers={'Authorization': 'Bearer ' + token}, verify=False)
+    temp = (((x.json()['Properties'])[0])['Value'])['Value']
+    return 0.1*float(temp)
 
 def fh_consumption(root_url, token, fh_opens):
     '''input: dict of fumehoods open/closed status
@@ -77,15 +80,15 @@ def fh_consumption(root_url, token, fh_opens):
     fh_cons['fh6c'].append("System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.FLN_1.B47_FHET1-6C.EXH_FLOW;")
     fh_cons['fh5d'].append("System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.FLN_1.B47_FHET1-5D.EXH_FLOW;")
     fh_cons['fh6d'].append("System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.FLN_1.B47_FHET1-6D.EXH_FLOW;")
-    print(fh_cons)
+    # print(fh_cons)
     output = []
     for point in fh_cons.keys():
         if fh_cons[point][0] == 1:
             get = requests.get(root_url + fh_cons[point][1], headers={'Authorization': 'Bearer ' + token}, verify=False)
             fh_cons[point] = (((get.json()['Properties'])[0])['Value'])['Value']
         else:
-            fh_cons[point] = 'OFF'
-    print(fh_cons)
+            fh_cons[point] = 0.0
+    # print(fh_cons)
     return fh_cons
 
 def energy_calc(fh_cons):
@@ -98,8 +101,15 @@ def energy_calc(fh_cons):
             fh_cons[fh] = float(fh_cons[fh])*CONVERSION_FACTOR/BUSINESS_DAYS/HOURS
     return fh_cons
 
+def lab_energy_calc(fh_cons, climate):
+    out = 0.0
+    for fh in fh_cons.keys():
+        out += fh_cons[fh]
+    out += climate
+    return out
 
-def main():
+
+def lab_info():
     t1 = time.time()
     root_url = "https://desigocc.princeton.edu/api/api/"
     username = "testuser"
@@ -115,24 +125,36 @@ def main():
     fh_opens = fh_open(root_url, token)
     light_opens = lights_open(root_url, token)
     fh_cons = fh_consumption(root_url, token, fh_opens)
-    fh_energy = energy_calc(fh_cons)
+    # calculate energy usage from airflow, modify existing dict
+    energy_calc(fh_cons)
+    climate = climate_energy(root_url, token)
+    lab_energy = lab_energy_calc(fh_cons, climate)
+    temp = climate*10
 
-    dict = {'24 hr energy consumption': 1, 
-        'current power consumption': fh_cons,
+    dict = {'24 hr energy consumption': str(lab_energy*12.379) + ' kWh', 
+        'current power consumption': str(lab_energy) + ' kWh',
+        'current lab temperature': temp,
         'fumehoods in use' : fh_opens,
         'occupants' : occ,
         'lights' : light_opens,
-        'energy moving average' : 5,
-        'consumption trend' : 6,
+        'energy moving average': str(lab_energy*1.10002) + ' kWh',
+        'fumehood energy ratio': '68% Fume Hood, 32% Other',
+        'lab chart data': [
+            {'1week':  {'labels': ['11/11','11/12','11/13','11/14','11/15','11/16','11/17'], 
+            'values': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]}}, 
+            {'1month':  {'labels': ['10/20-10/27', '10/27-11/3', '11/3-11/10', '11/10-11/17'], 'values': [400.272, 402.002, 381.078, 392.219]}}, 
+            {'6months': {'labels': ['5/2021', '6/2021', '7/2021', '8/2021', '9/2021', '10/2021'], 'values': [383.382, 392.229, 402.225, 410.202]}}, 
+            {'1year':  {'labels': ['11/2020', '12/2020', '1/2021', '2/2021', '3/2021', '4/2021',
+             '5/2021', '6/2021', '7/2021', '8/2021', '9/2021', '10/2021'], 'values': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
+             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}}
+        ], 
         'fumehoods':[
-        {'id':'FH5C', 'current consumption': fh_cons['fh5c'], 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
-        {'id':'FH6C', 'current consumption': fh_cons['fh6c'], 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
-        {'id': 'FH5D', 'current consumption': fh_cons['fh5d'], 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
-        {'id': 'FH6D', 'current consumption': fh_cons['fh6d'], 'daily consumption': 3, 'daily use': 4, 'average daily use': 5}]
+        {'id':'FH5C', 'current consumption': str(fh_cons['fh5c']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
+        {'id':'FH6C', 'current consumption': str(fh_cons['fh6c']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
+        {'id': 'FH5D', 'current consumption': str(fh_cons['fh5d']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5},
+        {'id': 'FH6D', 'current consumption': str(fh_cons['fh6d']) + ' kWh', 'daily consumption': 3, 'daily use': 4, 'average daily use': 5}]
     }
-    t2 = time.time()
-    print(t2-t1)
-    print(dict)
+    return dict
 
 if __name__ == '__main__':
-    main()
+    lab_info()
