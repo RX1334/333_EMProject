@@ -178,6 +178,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked + label {
   color: #00c08b;
+  font-weight: bold;
 }
 
 /* ----------------------------------------------------------------------------- */
