@@ -1,6 +1,7 @@
 /* Thoughts on using scss? Mainly for nesting neatness */
 
-body, a {
+body,
+a {
   font-family: "Public Sans", sans-serif;
   color: white;
 }
@@ -135,7 +136,8 @@ body, a {
   margin: 0px 0px 0px 16px;
 }
 
-#dark-mode-icon, #hamburger-icon {
+#dark-mode-icon,
+#hamburger-icon {
   cursor: pointer;
 }
 
@@ -161,18 +163,12 @@ body, a {
   border-radius: 4px;
 }
 
-.bar {
-  fill: white;
-}
-
 .yAxis-label {
-  color: white;
   opacity: 100%;
 }
 
 label {
   display: inline-block;
-  color: white;
   margin: 0 32px 0 0;
 }
 
@@ -181,7 +177,7 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked + label {
-  color: #00C08B;
+  color: #00c08b;
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -448,7 +444,7 @@ input[type="radio"]:checked + label {
   align-items: flex-start;
   padding: 24px;
 
-  background: #2A2A2A;
+  background: #2a2a2a;
   backdrop-filter: blur(24px);
   /* Note: backdrop-filter has minimal browser support */
 
@@ -464,9 +460,7 @@ input[type="radio"]:checked + label {
   padding: 0px;
   justify-content: space-between;
 
-
-/* Inside Auto Layout */
-
+  /* Inside Auto Layout */
 
   align-self: stretch;
 }
@@ -504,7 +498,6 @@ input[type="radio"]:checked + label {
 }
 
 .toggle-switch {
-
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -535,8 +528,8 @@ input[type="radio"]:checked + label {
   right: 0;
   bottom: 0;
   background-color: #d14112;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -547,8 +540,8 @@ input[type="radio"]:checked + label {
   left: 0px;
   bottom: 0px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
