@@ -119,6 +119,19 @@
         setMenuClosed();
     </script>
 
+    <!-- get time and date data -->
+    <script>
+        function get_date() {
+            let dt = new Date();
+            let datePart = dt.toLocaleDateString().replaceAll("/", ".");
+            datePart =
+                datePart.slice(0, datePart.lastIndexOf(".") + 1) +
+                datePart.slice(datePart.lastIndexOf(".") + 3);
+
+            $(".consumption-date").text(datePart);
+        }
+    </script>
+
     <!-- handle real time data -->
     <script>
         "use strict";
@@ -237,6 +250,8 @@
         function setup() {
             get_rt_data();
             window.setInterval(get_rt_data, 1000);
+            get_date();
+            window.setInterval(getDate(), 3600000);
 
             // reloads page if navigated to from the "back" button
             // important for persisting menu_open and dark_mode_on
