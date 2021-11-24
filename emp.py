@@ -41,7 +41,7 @@ def fumehood_summary():
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', name=fumehood_id, lab_name='rabinowitz_icahn_201', type_of_graph='Utilization Rate')
+    dashboard_content += render_template('barchart-widget-json.html', name=fumehood_id, lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -82,7 +82,24 @@ def lab_summary():
 
     # bar chart widget
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, lab_name=lab_name, type_of_graph='Utilization Rate')
+    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, lab_name=lab_name, type_of_graph='Energy Consumption Trend')
+
+    # renders dashboard with those widgets
+    html = render_template('master_template.html', dashboard_content=dashboard_content)
+    response = make_response(html)
+    return(response)
+
+# report archive
+@app.route('/report_archive', methods=['GET'])
+def report_archive():
+    # render energy and power widgets
+    dashboard_content = render_template('header-widget.html', page_name='Report Archive')
+    dashboard_content += render_template('report-heading-label.html', text='Icahn 201 Reports')
+    dashboard_content += '<div class="report-widget-container widget-container">'
+    dashboard_content += render_template('report-widget.html', report_date='10.13.21')
+    dashboard_content += render_template('report-widget.html', report_date='10.13.21')
+    dashboard_content += render_template('report-widget.html', report_date='10.13.21')
+    dashboard_content += '</div>'
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)

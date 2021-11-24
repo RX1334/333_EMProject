@@ -13,11 +13,6 @@ body, a {
   color: white;
 }
 
-.heading-label {
-  margin-bottom: 16px;
-}
-
-
 .red {
   color: #d14112;
 }
@@ -94,15 +89,34 @@ body, a {
 .widget {
   margin-bottom: 16px;
   border-radius: 4px;
+  /* Note: backdrop-filter has minimal browser support */
+}
 
-  /* For dark mode only */
+.dark {
   background: #2a2a2a;
   backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
 }
 
 .widget-container {
   width: 100%;
+}
+
+/* ----------------------------------------------------------------------------- */
+/* Heading Label                                                          */
+/* ----------------------------------------------------------------------------- */
+
+.heading-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4px 8px;
+}
+
+.heading-label-right-align {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -150,7 +164,8 @@ body, a {
 }
 
 #dark-mode-icon,
-#hamburger-icon {
+#hamburger-icon,
+.caret-down-icon {
   cursor: pointer;
 }
 
@@ -376,7 +391,7 @@ input[type="radio"]:checked + label {
   align-items: flex-start;
   padding: 24px;
 
-  background: #2a2a2a;
+  /* background: #2a2a2a; */
   backdrop-filter: blur(24px);
   /* Note: backdrop-filter has minimal browser support */
 
@@ -674,4 +689,45 @@ input:checked + .slider:before {
 .fumehood-summary-number-text {
   /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
+}
+
+
+/* ----------------------------------------------------------------------------- */
+/* Report Widget                                                                 */
+/* ----------------------------------------------------------------------------- */
+
+.report-widget {
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  backdrop-filter: blur(24px);
+}
+
+.report-widget-right-align {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.report-widget-container {
+  margin-bottom: 16px;
+  /* border-radius: 4px; */
+}
+
+.report-widget-nest:nth-child(odd) {
+  background: #2a2a2a;
+}
+
+.report-widget-nest:nth-child(even) {
+  background: #414141;
+}
+
+.report-widget-nest:first-child {
+  border-radius: 4px 4px 0px 0px;
+}
+
+.report-widget-nest:last-child {
+  border-radius: 0px 0px 4px 4px;
 }
