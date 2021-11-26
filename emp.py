@@ -96,9 +96,9 @@ def report_archive():
     dashboard_content = render_template('header-widget.html', page_name='Report Archive')
     dashboard_content += render_template('report-heading-label.html', text='Icahn 201 Reports')
     dashboard_content += '<div class="report-widget-container widget-container">'
-    dashboard_content += render_template('report-widget.html', report_date='10.13.21')
-    dashboard_content += render_template('report-widget.html', report_date='10.13.21')
-    dashboard_content += render_template('report-widget.html', report_date='10.13.21')
+    dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date='10.31.21')
+    dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date='10.24.21')
+    dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date='10.17.21')
     dashboard_content += '</div>'
 
     # renders dashboard with those widgets
@@ -106,6 +106,31 @@ def report_archive():
     response = make_response(html)
     return(response)
 
+# report
+@app.route('/report', methods=['GET'])
+def weekly_report():
+    # get lab_name
+    lab_name = request.args.get('lab_name')
+    week_name = request.args.get('week_name')
+
+    # temp error handling
+    if not lab_name or not week_name:
+        html = ''
+        response = make_response(html)
+        return response
+
+    # compiles widgets
+    dashboard_content = render_template('header-widget.html', page_name='Week of ' + week_name + ' Report')
+    dashboard_content += render_template('heading-label.html', text='Statistics')
+    dashboard_content += render_template('weekly-lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
+    dashboard_content += render_template('heading-label.html', text='Visualizations')
+    dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
+
+
+    # renders dashboard with those widgets
+    html = render_template('master_template.html', dashboard_content=dashboard_content)
+    response = make_response(html)
+    return(response)
 
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id
