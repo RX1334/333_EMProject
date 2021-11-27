@@ -6,7 +6,6 @@ import argparse
 from sys import exit, stderr
 from emp import app
 
-
 def main():
     DESC_STR = 'The EMP application'
     parser = argparse.ArgumentParser(description=DESC_STR,

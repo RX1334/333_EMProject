@@ -1,32 +1,29 @@
 <div class="device-toggle-widget widget">
-    <div class="toggle-heading">
-        <span class="toggle-title body-bold">Room Lights</span>
-        <label class="switch">
-            <input type="checkbox" class="device-toggle-switch">
-            <span class="slider round"></span>
-        </label>
-    </div>
-    <div class="toggle-info">
-        <span class="toggle-power body-small">Power: 0.2 kW</span>
-        <span class="toggle-date body-small">10.19.21</span>
-    </div>
+  <div class="toggle-heading">
+    <span class="toggle-title body-bold">Room Lights</span>
+    <label class="switch">
+      <input type="checkbox" class="device-toggle-switch" />
+      <span class="slider round"></span>
+    </label>
   </div>
+  <div class="toggle-info body-small">
+    <span class="toggle-power">Power: 0.2 kW</span>
+    <span class="toggle-date">10.19.21</span>
+  </div>
+</div>
 
-  <script>
-    "use strict";
+<script>
+  "use strict";
 
-    function toggleDeviceSwitch() {
+  function toggleDeviceSwitch() {
+    if ($(this).is(":checked")) console.log("toggle: On");
+    else console.log("toggle: Off");
+  }
+  function setup() {
+    $(".device-toggle-switch").unbind("change");
+    $(".device-toggle-switch").on("change", toggleDeviceSwitch);
+    console.log("setup");
+  }
 
-        if ($(this).is(":checked"))
-            console.log("toggle: On");
-        else
-            console.log("toggle: Off");
-    }
-    function setup() {
-        $('.device-toggle-switch').unbind('change');
-        $('.device-toggle-switch').on('change', toggleDeviceSwitch);
-        console.log("setup");
-    }
-
-    $('document').ready(setup);
-  </script>
+  $("document").ready(setup);
+</script>

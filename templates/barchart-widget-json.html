@@ -1,11 +1,29 @@
 <div class="widget dark">
-  <div class="graph-widget">
-    <div class="body-small">Placeholder Identifier | {{lab_name}} {{type_of_graph}}</div>
+  <div class="graph-widget body-small">
+    <div>Placeholder Identifier | {{lab_name}} {{type_of_graph}}</div>
     <div id="{{name}}-chart">
       <svg width="608" height="156" class="barchart" id="barchart-dates"></svg>
-      <svg width="608" height="156" class="barchart" id="barchart-weeks" style="display: none;"></svg>
-      <svg width="608" height="156" class="barchart" id="barchart-sixMonths" style="display: none;"></svg>
-      <svg width="608" height="156" class="barchart" id="barchart-years" style="display: none;"></svg>
+      <svg
+        width="608"
+        height="156"
+        class="barchart"
+        id="barchart-weeks"
+        style="display: none"
+      ></svg>
+      <svg
+        width="608"
+        height="156"
+        class="barchart"
+        id="barchart-sixMonths"
+        style="display: none"
+      ></svg>
+      <svg
+        width="608"
+        height="156"
+        class="barchart"
+        id="barchart-years"
+        style="display: none"
+      ></svg>
     </div>
     <div
       style="
@@ -18,27 +36,21 @@
       <!-- Duration Selection List -->
       <div style="display: flex; flex-direction: row">
         <input type="radio" id="1w" name="duration" checked />
-        <label class="body-small" for="1w" onclick="hideAllBut('#barchart-dates')"
-          >1-Week</label
-        >
+        <label for="1w" onclick="hideAllBut('#barchart-dates')">1-Week</label>
 
         <input type="radio" id="1m" name="duration" />
-        <label class="body-small" for="1m" onclick="hideAllBut('#barchart-weeks')"
-          >1-Month</label
-        >
+        <label for="1m" onclick="hideAllBut('#barchart-weeks')">1-Month</label>
 
         <input type="radio" id="6m" name="duration" />
-        <label class="body-small" for="6m" onclick="hideAllBut('#barchart-sixMonths')"
+        <label for="6m" onclick="hideAllBut('#barchart-sixMonths')"
           >6-Months</label
         >
 
         <input type="radio" id="1y" name="duration" />
-        <label class="body-small" for="1y" onclick="hideAllBut('#barchart-years')"
-          >1-Year</label
-        >
+        <label for="1y" onclick="hideAllBut('#barchart-years')">1-Year</label>
       </div>
       <!-- Unit Label -->
-      <div class="body-small">kWh</div>
+      <div>kWh</div>
     </div>
   </div>
 </div>
@@ -47,11 +59,11 @@
   function buildChart(data, id, name) {
     let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
 
-    if (dark_mode_on === '0') color = "#2A2A2A";
+    if (dark_mode_on === "0") color = "#2A2A2A";
     else color = "white";
 
-    // Selecting and defining work area in the SVG\
-    var svg = d3.select(name + ' ' + id),
+    // Selecting and defining work area in the SVG
+    var svg = d3.select(name + " " + id),
       margin = 24,
       width = svg.attr("width"),
       height = svg.attr("height") - margin;
@@ -82,7 +94,6 @@
       .call(d3.axisBottom(xScale));
 
     xAxis.selectAll("line").style("display", "none");
-
     xAxis.selectAll("path").style("display", "none");
 
     xAxis
@@ -137,11 +148,10 @@
   }
 
   function buildAllCharts(data_dict, name) {
-    console.log(data_dict['dates'])
-    buildChart(data_dict["dates"], '#barchart-dates', name);
-    buildChart(data_dict["weeks"], '#barchart-weeks', name);
-    buildChart(data_dict["sixMonths"], '#barchart-sixMonths', name);
-    buildChart(data_dict["years"], '#barchart-years', name);
+    buildChart(data_dict["dates"], "#barchart-dates", name);
+    buildChart(data_dict["weeks"], "#barchart-weeks", name);
+    buildChart(data_dict["sixMonths"], "#barchart-sixMonths", name);
+    buildChart(data_dict["years"], "#barchart-years", name);
   }
 
   buildAllCharts();

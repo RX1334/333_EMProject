@@ -1,5 +1,4 @@
-from flask import Flask, make_response, request
-from flask import render_template
+from flask import Flask, make_response, request, render_template
 from database import get_fumehood_output
 from lab_query import lab_info
 import random
@@ -17,7 +16,6 @@ def lab_summaries():
     dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
     dashboard_content += render_template('heading-label.html', text='Your Monitored Rooms')
     dashboard_content += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
-    # dashboard_content += render_template('lab-summary-widget.html')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -41,7 +39,10 @@ def fumehood_summary():
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', name=fumehood_id, lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
+    dashboard_content += render_template('barchart-widget-json.html', 
+                                         name=fumehood_id,
+                                         lab_name='rabinowitz_icahn_201',
+                                         type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -82,7 +83,8 @@ def lab_summary():
 
     # bar chart widget
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, lab_name=lab_name, type_of_graph='Energy Consumption Trend')
+    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, 
+                                         lab_name=lab_name, type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -203,5 +205,5 @@ def real_time_data():
         },
     }
 
-    # return data_dict
-    return lab_info()
+    return data_dict
+    # return lab_info()

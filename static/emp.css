@@ -1,14 +1,14 @@
-/* Thoughts on using scss? Mainly for nesting neatness */
 * {
   margin: 0px;
   padding: 0px;
 }
 
 html {
-  background: #E5E5E5;
+  background: #e5e5e5;
 }
 
-body, a {
+body,
+a {
   font-family: "Public Sans", sans-serif;
   color: white;
 }
@@ -89,7 +89,6 @@ body, a {
 .widget {
   margin-bottom: 16px;
   border-radius: 4px;
-  /* Note: backdrop-filter has minimal browser support */
 }
 
 .dark {
@@ -102,7 +101,7 @@ body, a {
 }
 
 /* ----------------------------------------------------------------------------- */
-/* Heading Label                                                          */
+/* Heading Label                                                                 */
 /* ----------------------------------------------------------------------------- */
 
 .heading-label {
@@ -132,14 +131,12 @@ body, a {
   /* min-width: 656px; */
   height: 936px; /* 1024 - 56 - 32, since figma doesn't count padding for height */
 
-
   background: linear-gradient(
     32.82deg,
     #2a2a2a -7.28%,
     rgba(42, 42, 42, 0.75) 107.76%
   );
   backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -165,7 +162,8 @@ body, a {
 
 #dark-mode-icon,
 #hamburger-icon,
-.caret-down-icon {
+.caret-down-icon,
+.lab-summary-options {
   cursor: pointer;
 }
 
@@ -175,7 +173,7 @@ body, a {
 }
 
 /* ----------------------------------------------------------------------------- */
-/* Graph Widget                                                        */
+/* Graph Widget                                                                  */
 /* ----------------------------------------------------------------------------- */
 
 .graph-widget {
@@ -187,7 +185,7 @@ body, a {
 
   width: 608px;
   height: 232px;
-  /* Gray 90 */
+
   border-radius: 4px;
 }
 
@@ -229,18 +227,12 @@ input[type="radio"]:checked + label {
   align-self: stretch;
 }
 
-/* .lab-summary-title-name {
-  color: #ffffff;
-} */
-
 .lab-summary-details-options {
   display: flex;
   align-items: center;
 }
 
 .lab-summary-details {
-  /* color: #ffffff; */
-
   margin: 0px 16px;
 }
 
@@ -261,14 +253,8 @@ input[type="radio"]:checked + label {
 }
 
 .lab-summary-today-kwh {
-  /* color: #ffffff; */
-
   margin: 4px 0px;
 }
-
-/* .lab-summary-today-text {
-  color: #ffffff;
-} */
 
 .lab-summary-current-consumption {
   display: flex;
@@ -323,10 +309,6 @@ input[type="radio"]:checked + label {
   padding: 24px;
 }
 
-/* .mini-fume-details {
-  color: #ffffff;
-} */
-
 .mini-fume-info {
   display: flex;
   flex-direction: column;
@@ -335,12 +317,7 @@ input[type="radio"]:checked + label {
   margin: 0px 0px 36px;
 }
 
-/* .mini-fume-name {
-  color: #ffffff;
-} */
-
 .mini-fume-energy {
-  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
@@ -355,8 +332,6 @@ input[type="radio"]:checked + label {
 }
 
 .mini-fume-status-text {
-  /* color: #d14112; */
-
   flex-grow: 1;
 }
 
@@ -380,7 +355,6 @@ input[type="radio"]:checked + label {
     rgba(0, 192, 139, 0.5) 104.49%
   ) !important;
   backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 4px;
 }
@@ -391,9 +365,7 @@ input[type="radio"]:checked + label {
   align-items: flex-start;
   padding: 24px;
 
-  /* background: #2a2a2a; */
   backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 4px;
 }
@@ -411,18 +383,12 @@ input[type="radio"]:checked + label {
   left: 24px;
   top: 60px;
 
-  /* Inside Auto Layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
   flex-grow: 0;
   margin: 4px 0px;
 }
-
-/* .consumption-energy {
-  color: #ffffff;
-} */
 
 .power-consumption-misc {
   display: flex;
@@ -437,22 +403,12 @@ input[type="radio"]:checked + label {
   left: 24px;
   top: 118px;
 
-  /* Inside Auto Layout */
-
   flex: none;
   order: 2;
   align-self: stretch;
   flex-grow: 0;
   margin: 4px 0px;
 }
-
-/* .power-consumption-percent {
-  color: #ffffff;
-}
-
-.consumption-date {
-  color: #ffffff;
-} */
 
 .energy-consumption-usage {
   color: #d14112;
@@ -475,13 +431,11 @@ input[type="radio"]:checked + label {
 
   background: #2a2a2a;
   backdrop-filter: blur(24px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 4px;
 }
 
 .toggle-heading {
-  /* Auto Layout */
   width: 272px;
   display: flex;
   flex-direction: row;
@@ -489,22 +443,15 @@ input[type="radio"]:checked + label {
   padding: 0px;
   justify-content: space-between;
 
-  /* Inside Auto Layout */
-
   align-self: stretch;
 }
+
 .toggle-title {
-  /* color: #ffffff; */
   flex-grow: 0;
   display: flex;
 }
 
-.toggle-power {
-  /* color: #ffffff; */
-}
-
 .toggle-info {
-  /* Auto Layout */
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -513,7 +460,6 @@ input[type="radio"]:checked + label {
 
   width: 272px;
   height: 18px;
-  /* Inside Auto Layout */
 
   flex: none;
   order: 1;
@@ -522,15 +468,11 @@ input[type="radio"]:checked + label {
   margin: 12px 0px 0px 0px;
 }
 .toggle-date {
-  /* color: #ffffff; */
   display: flex;
 }
 
-.toggle-switch {
-}
-
 /* ----------------------------------------------------------------------------- */
-/* Toggle Switch                                                       */
+/* Toggle Switch                                                                 */
 /* ----------------------------------------------------------------------------- */
 
 /* The switch - the box around the slider */
@@ -616,18 +558,12 @@ input:checked + .slider:before {
   align-self: stretch;
 }
 
-/* .fumehood-summary-title-name {
-  color: #ffffff;
-} */
-
 .fumehood-summary-details-options {
   display: flex;
   align-items: center;
 }
 
 .fumehood-summary-details {
-  /* color: #ffffff; */
-
   margin: 0px 16px;
 }
 
@@ -648,14 +584,8 @@ input:checked + .slider:before {
 }
 
 .fumehood-summary-today-kwh {
-  /* color: #ffffff; */
-
   margin: 4px 0px;
 }
-/*
-.fumehood-summary-today-text {
-  color: #ffffff;
-} */
 
 .fumehood-summary-current-consumption {
   display: flex;
@@ -665,12 +595,7 @@ input:checked + .slider:before {
   flex-grow: 1;
 }
 
-/* .fumehood-summary-current-text {
-  color: #ffffff;
-} */
-
 .fumehood-summary-current-kw {
-  /* color: #ffffff; */
   margin: 4px 0px;
 }
 
@@ -691,7 +616,6 @@ input:checked + .slider:before {
   width: 181.33px;
 }
 
-
 /* ----------------------------------------------------------------------------- */
 /* Report Widget                                                                 */
 /* ----------------------------------------------------------------------------- */
@@ -702,7 +626,6 @@ input:checked + .slider:before {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  /* backdrop-filter: blur(24px); */
 }
 
 .report-widget-right-align {
