@@ -218,6 +218,27 @@ input[type="radio"]:checked + label {
   padding: 18px 24px 24px;
 }
 
+.lab-summary-options-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  width: 608px;
+  height: 18px;
+  left: 24px;
+  top: 114px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 3;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 12px 0px;
+}
+
 .lab-summary-title {
   display: flex;
   justify-content: space-between;

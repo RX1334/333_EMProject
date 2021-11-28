@@ -5,27 +5,192 @@
         Lab Summary | {{lab_name}}
       </span>
       <span class="lab-summary-details-options">
-        <a href="/lab_summary?lab_name={{lab_name}}" class="activate_{{lab_name}} lab-summary-details nav-small">See Lab Details</a>
-        <img src="../static/images/GearSix.svg" class="lab-summary-options" />
+        <a
+          href="/lab_summary?lab_name={{lab_name}}"
+          class="activate_{{lab_name}} lab-summary-details nav-small"
+          >See Lab Details</a
+        >
+        <img
+          src="../static/images/GearSix.svg"
+          class="lab-summary-options"
+          onclick="options()"
+        />
       </span>
     </div>
     <div class="lab-summary-content">
-      <span class="lab-summary-today-consumption">
-        <div class="lab-summary-today-kwh widget-medium" id="{{lab_name}}-today-kwh"></div>
+      <!-- The gear box display -->
+      <div class="body-small lab-summary-gear-disp" style="display: none">
+        <div>Select 3 options.</div>
+        <form action="/action_page.php">
+          <div class="lab-summary-options-row">
+            <input type="checkbox" id="nrg-cons-check" checked />
+            <label for="nrg-cons-check">Energy Consumption</label>
+            <input type="checkbox" id="pwr-cons-check" checked />
+            <label for="pwr-cons-check">Power Consumption</label>
+            <input type="checkbox" id="hood-usage-check" checked />
+            <label for="hood-usage-check">Fume Hood Use Status</label>
+          </div>
+          <div class="lab-summary-options-row">
+            <input type="checkbox" id="occ-ratio-check" />
+            <label for="occ-ratio-check">Occupancy Ratio</label>
+            <input type="checkbox" id="ave-nrg-check" />
+            <label for="ave-nrg-check">Average Energy Used</label>
+            <input type="checkbox" id="nrg-trend-check" />
+            <label for="nrg-trend-check">Energy Trend</label>
+          </div>
+        </form>
+      </div>
+
+      <span class="lab-summary-today-consumption lab-summary-option">
+        <div
+          class="lab-summary-today-kwh widget-medium"
+          id="{{lab_name}}-today-kwh"
+        ></div>
         <div class="lab-summary-today-text body-small">
           Today's Energy Consumption
         </div>
       </span>
-      <span class="lab-summary-current-consumption">
-        <div class="lab-summary-current-kw widget-medium" id="{{lab_name}}-current-kw"></div>
+      <span class="lab-summary-current-consumption lab-summary-option">
+        <div
+          class="lab-summary-current-kw widget-medium"
+          id="{{lab_name}}-current-kw"
+        ></div>
         <div class="lab-summary-current-text body-small">
           Current Power Consumption
         </div>
       </span>
-      <span class="lab-summary-number-active">
-        <div class="lab-summary-number widget-medium" id="{{lab_name}}-number"></div>
+      <span class="lab-summary-number-active lab-summary-option">
+        <div
+          class="lab-summary-number widget-medium"
+          id="{{lab_name}}-number"
+        ></div>
         <div class="lab-summary-number-text body-small">Fume Hoods in Use</div>
+      </span>
+      <!-- Occ Ratio -->
+      <span
+        class="lab-summary-occ-ratio lab-summary-option"
+        style="display: none"
+      >
+        <div class="lab-summary-occ widget-medium" id="{{lab_name}}-occ">
+          Placeholder %
+        </div>
+        <div class="lab-summary-occ-text body-small">Occupancy Ratio</div>
+      </span>
+      <!-- ave nrg -->
+      <span
+        class="lab-summary-ave-nrg lab-summary-option"
+        style="display: none"
+      >
+        <div
+          class="lab-summary-inner-ave-nrg widget-medium"
+          id="{{lab_name}}-ave-nrg"
+        >
+          Placeholder
+        </div>
+        <div class="lab-summary-ave-nrg-text body-small">kWh</div>
+      </span>
+
+      <!-- nrg trend -->
+      <span
+        class="lab-summary-nrg-trend lab-summary-option"
+        style="display: none"
+      >
+        <div
+          class="lab-summary-inner-nrg-trend widget-medium"
+          id="{{lab_name}}-nrg-trend"
+        >
+          Placeholder %
+        </div>
+        <div class="lab-summary-nrg-trend-text body-small">
+          the Energy Used Yesterday
+        </div>
       </span>
     </div>
   </div>
 </div>
+
+<script>
+  // On startup
+  function setup() {
+    let allCheckboxes = $(".lab-summary-gear-disp input");
+    let checkboxNames = [];
+    allCheckboxes.each(function (index) {
+      if ($(this).is(":checked")) {
+        checkboxNames.push($(this).attr("id"));
+      }
+    });
+    localStorage.setItem("checked", checkboxNames.join(";"));
+    console.log(checkboxNames.join(";"));
+  }
+
+  function options() {
+    let allCheckboxes = $(".lab-summary-gear-disp input");
+    let checkboxNames = [];
+
+    // If the gear was clicked when the options weren't displayed, display
+    // them and do nothing more
+    let allOptions = $(".lab-summary-option");
+    if ($(".lab-summary-gear-disp").css("display") == "none") {
+      $(".lab-summary-gear-disp").css("display", "");
+      allOptions.css("display", "none");
+      return;
+    }
+
+    allCheckboxes.each(function (index) {
+      if ($(this).is(":checked")) {
+        checkboxNames.push($(this).attr("id"));
+      }
+    });
+    if (checkboxNames.length > 3) {
+      return;
+    }
+
+    $(".lab-summary-gear-disp").css("display", "none");
+
+    // This keeps the old ones checked if there are fewer than 3
+    if (checkboxNames.length < 3) {
+      checkboxNames.forEach((id) => {
+        $("#" + id).prop("checked", false);
+      });
+      let oldChecks = localStorage.getItem("checked");
+      let oldChecksArr = oldChecks.split(";");
+      oldChecksArr.forEach((id) => {
+        $("#" + id).prop("checked", true);
+      });
+      return;
+    }
+
+    // If it gets to this point, it means we have a valid combo of checks;
+    // We can now set these ones to be displayed
+
+    // First, hide all the boxes for simplicity
+
+    allOptions.css("display", "none");
+    checkboxNames.forEach((id) => {
+      switch (id) {
+        case "nrg-cons-check":
+          $(".lab-summary-today-consumption").css("display", "flex");
+          break;
+        case "pwr-cons-check":
+          $(".lab-summary-current-consumption").css("display", "flex");
+          break;
+        case "hood-usage-check":
+          $(".lab-summary-number-active").css("display", "flex");
+          break;
+        case "occ-ratio-check":
+          $(".lab-summary-occ-ratio").css("display", "flex");
+          break;
+        case "ave-nrg-check":
+          $(".lab-summary-").css("display", "flex");
+          break;
+        case "nrg-trend-check":
+          $(".lab-summary-").css("display", "flex");
+          break;
+      }
+    });
+
+    localStorage.setItem("checked", checkboxNames.join(";"));
+  }
+
+  $("document").ready(setup);
+</script>
