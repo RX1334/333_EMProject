@@ -647,3 +647,11 @@ input:checked + .slider:before {
 .report-widget-nest:nth-child(even) {
   background-color: #414141;
 }
+
+.light-report-widget-nest:nth-child(odd) {
+  background-color: white;
+}
+
+.light-report-widget-nest:nth-child(even) {
+  background-color: #f7f7f7;
+}

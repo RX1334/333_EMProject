@@ -39,7 +39,7 @@ def fumehood_summary():
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', 
+    dashboard_content += render_template('barchart-widget-json.html',
                                          name=fumehood_id,
                                          lab_name='rabinowitz_icahn_201',
                                          type_of_graph='Energy Consumption Trend')
@@ -83,7 +83,7 @@ def lab_summary():
 
     # bar chart widget
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', name=lab_name, 
+    dashboard_content += render_template('barchart-widget-json.html', name=lab_name,
                                          lab_name=lab_name, type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
