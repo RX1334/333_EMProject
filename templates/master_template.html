@@ -152,35 +152,30 @@
       $("#hamburger-icon").on("click", toggleMenu);
       $("#money-mode-icon").on("click", toggleMoneyMode);
       console.log("setup");
+
+      // reset dark mode status, default to dark mode
+      if (localStorage.getItem("dark_mode_on") === "0") setLightMode();
+      // reset money mode status, default to off
+      if (localStorage.getItem("money_mode_on") === "1") setMoneyMode();
+      // reset menu open status, default to closed
+      // if (localStorage.getItem('menu_open') === '1') setMenuOpen();
+      // reset menu to closed
+      setMenuClosed();
+
+      // reloads page if navigated to from the "back" button
+      // important for persisting menu_open and dark_mode_on
+      window.addEventListener("pageshow", function (event) {
+        let historyTraversal =
+          event.persisted ||
+          (typeof window.performance != "undefined" &&
+            window.performance.navigation.type === 2);
+        if (historyTraversal) window.location.reload();
+      });
     }
 
     $("document").ready(setup);
   </script>
 
-  <!-- keep dark mode and menu open status consistent -->
-  <script>
-    // reset dark mode status, default to dark mode
-    if (localStorage.getItem("dark_mode_on") === "0") setLightMode();
-    // reset money mode status, default to off
-    if (localStorage.getItem("money_mode_on") === "1") setMoneyMode();
-    // reset menu open status, default to closed
-    // if (localStorage.getItem('menu_open') === '1') setMenuOpen();
-    // reset menu to closed
-    setMenuClosed();
-  </script>
-
-  <!-- get time and date data -->
-  <script>
-    function get_date() {
-      let dt = new Date();
-      let datePart = dt.toLocaleDateString().replaceAll("/", ".");
-      datePart =
-        datePart.slice(0, datePart.lastIndexOf(".") + 1) +
-        datePart.slice(datePart.lastIndexOf(".") + 3);
-
-      $(".consumption-date").text(datePart);
-    }
-  </script>
 
   <!-- handle real time data -->
   <script>
@@ -301,22 +296,22 @@
       });
     }
 
+    function get_date() {
+      let dt = new Date();
+      let datePart = dt.toLocaleDateString().replaceAll("/", ".");
+      datePart =
+        datePart.slice(0, datePart.lastIndexOf(".") + 1) +
+        datePart.slice(datePart.lastIndexOf(".") + 3);
+
+      $(".consumption-date").text(datePart);
+    }
+
     // set up document
     function setup() {
       get_rt_data();
       window.setInterval(get_rt_data, 1000);
       get_date();
       window.setInterval(getDate(), 3600000);
-
-      // reloads page if navigated to from the "back" button
-      // important for persisting menu_open and dark_mode_on
-      window.addEventListener("pageshow", function (event) {
-        let historyTraversal =
-          event.persisted ||
-          (typeof window.performance != "undefined" &&
-            window.performance.navigation.type === 2);
-        if (historyTraversal) window.location.reload();
-      });
     }
 
     $("document").ready(setup);
