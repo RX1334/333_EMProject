@@ -149,10 +149,9 @@ a {
   padding: 24px;
 }
 
-#dark-mode-span {
+.header-widget-right-align {
   display: flex;
   justify-content: flex-end;
-
   flex-grow: 1;
 }
 
@@ -163,7 +162,8 @@ a {
 #dark-mode-icon,
 #hamburger-icon,
 .caret-down-icon,
-.lab-summary-options {
+.lab-summary-options,
+#money-mode-icon {
   cursor: pointer;
 }
 

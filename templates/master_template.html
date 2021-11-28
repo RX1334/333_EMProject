@@ -40,6 +40,11 @@
         $("#hamburger-icon").attr("src", "../static/images/X_dark.svg");
       else $("#hamburger-icon").attr("src", "../static/images/List_dark.svg");
 
+      if (localStorage.getItem("money_mode_on") === "1")
+        $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg")
+      else { $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg")
+    }
+
       // change remaining css
       $("body, a").css({ color: "#2A2A2A" });
       $("#dashboard").css({
@@ -61,6 +66,12 @@
       if (localStorage.getItem("menu_open") === "1")
         $("#hamburger-icon").attr("src", "../static/images/X.svg");
       else $("#hamburger-icon").attr("src", "../static/images/List.svg");
+
+      if (localStorage.getItem("money_mode_on") === "1")
+        $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg")
+      else  { $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg")
+    }
+
 
       // change remaining css
       $("body, a").css({ color: "white" });
@@ -108,9 +119,38 @@
       menu_open === "0" ? setMenuOpen() : setMenuClosed();
     }
 
+    function setMoneyMode() {
+      localStorage.setItem("money_mode_on", "1");
+
+      // set icons to the correct color
+      $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
+    }
+
+    function setNonMoneyMode() {
+      localStorage.setItem("money_mode_on", "0");
+      // set icons to the correct color
+      if (localStorage.getItem("dark_mode_on") === "0")
+        $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
+      else
+        $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
+    }
+
+    function toggleMoneyMode() {
+      // LightMode icon shows in dark mode, and vice versa
+      let money_mode_on = localStorage.getItem("money_mode_on") ?? "0";
+      if (money_mode_on === "0") setMoneyMode();
+      else setNonMoneyMode();
+
+      // If a barchart is located on the page, it will update the colors
+      try {
+        buildAllCharts();
+      } catch {}
+    }
+
     function setup() {
       $("#dark-mode-icon").on("click", toggleDarkMode);
       $("#hamburger-icon").on("click", toggleMenu);
+      $("#money-mode-icon").on("click", toggleMoneyMode);
       console.log("setup");
     }
 
@@ -121,6 +161,8 @@
   <script>
     // reset dark mode status, default to dark mode
     if (localStorage.getItem("dark_mode_on") === "0") setLightMode();
+    // reset money mode status, default to off
+    if (localStorage.getItem("money_mode_on") === "1") setMoneyMode();
     // reset menu open status, default to closed
     // if (localStorage.getItem('menu_open') === '1') setMenuOpen();
     // reset menu to closed
@@ -178,7 +220,6 @@
 
     // try to cram data into the corresponding tag with id
     function handle_rt_resp(response) {
-      // console.log(response);
       for (const [key, value] of Object.entries(response)) {
         // color fumehood open status the correct color
         if (key.endsWith("-mini-status")) {
