@@ -127,7 +127,7 @@ def weekly_report():
     dashboard_content += render_template('weekly-lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
-
+    dashboard_content += render_template('email-print-report.html')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)

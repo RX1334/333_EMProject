@@ -58,6 +58,14 @@ a {
   text-decoration-line: underline;
 }
 
+.nav-regular {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration-line: underline;
+}
+
 .header-medium {
   font-style: normal;
   font-weight: bold;
@@ -113,6 +121,24 @@ a {
 }
 
 .heading-label-right-align {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+/* ----------------------------------------------------------------------------- */
+/* Email Print Report                                                            */
+/* ----------------------------------------------------------------------------- */
+
+.email-print-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4px 8px;
+}
+
+.email-print-label-right-align {
   display: flex;
   justify-content: flex-end;
   flex-grow: 1;
