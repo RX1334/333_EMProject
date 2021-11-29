@@ -23,20 +23,32 @@
         <div>Select 3 options.</div>
         <form action="/action_page.php">
           <div class="lab-summary-options-row">
-            <input type="checkbox" id="nrg-cons-check" checked />
-            <label for="nrg-cons-check">Energy Consumption</label>
-            <input type="checkbox" id="pwr-cons-check" checked />
-            <label for="pwr-cons-check">Power Consumption</label>
-            <input type="checkbox" id="hood-usage-check" checked />
-            <label for="hood-usage-check">Fume Hood Use Status</label>
+            <span class="lab-summary-checkbox-span">
+              <input type="checkbox" id="nrg-cons-check" checked />
+              <label for="nrg-cons-check">Energy Consumption</label>
+            </span>
+            <span class="lab-summary-checkbox-span">
+              <input type="checkbox" id="pwr-cons-check" checked />
+              <label for="pwr-cons-check">Power Consumption</label>
+            </span>
+            <span class="lab-summary-checkbox-span">
+              <input type="checkbox" id="hood-usage-check" checked />
+              <label for="hood-usage-check">Fume Hood Use Status</label>
+            </span>
           </div>
           <div class="lab-summary-options-row">
-            <input type="checkbox" id="occ-ratio-check" />
-            <label for="occ-ratio-check">Occupancy Ratio</label>
-            <input type="checkbox" id="ave-nrg-check" />
-            <label for="ave-nrg-check">Average Energy Used</label>
-            <input type="checkbox" id="nrg-trend-check" />
-            <label for="nrg-trend-check">Energy Trend</label>
+            <span class="lab-summary-checkbox-span">
+              <input type="checkbox" id="occ-ratio-check" />
+              <label for="occ-ratio-check">Occupancy Ratio</label>
+            </span>
+            <span class="lab-summary-checkbox-span">
+              <input type="checkbox" id="ave-nrg-check" />
+              <label for="ave-nrg-check">Average Energy Used</label>
+            </span>
+            <span class="lab-summary-checkbox-span">
+              <input type="checkbox" id="nrg-trend-check" />
+              <label for="nrg-trend-check">Energy Trend</label>
+            </span>
           </div>
         </form>
       </div>
@@ -66,6 +78,7 @@
         ></div>
         <div class="lab-summary-number-text body-small">Fume Hoods in Use</div>
       </span>
+
       <!-- Occ Ratio -->
       <span
         class="lab-summary-occ-ratio lab-summary-option"
@@ -74,8 +87,9 @@
         <div class="lab-summary-occ widget-medium" id="{{lab_name}}-occ">
           Placeholder %
         </div>
-        <div class="lab-summary-occ-text body-small">Occupancy Ratio</div>
+        <div class="lab-summary-occ-text body-small">Occupancy Percentage</div>
       </span>
+
       <!-- ave nrg -->
       <span
         class="lab-summary-ave-nrg lab-summary-option"
@@ -87,7 +101,9 @@
         >
           Placeholder
         </div>
-        <div class="lab-summary-ave-nrg-text body-small">kWh</div>
+        <div class="lab-summary-ave-nrg-text body-small">
+          Average Energy Used
+        </div>
       </span>
 
       <!-- nrg trend -->
@@ -121,6 +137,33 @@
     });
     localStorage.setItem("checked", checkboxNames.join(";"));
     console.log(checkboxNames.join(";"));
+  }
+
+  // arr is an array containing the ids of the inputs
+  // that were checked in the function
+  function displayInnerWidgets(arr) {
+    arr.forEach((id) => {
+      switch (id) {
+        case "nrg-cons-check":
+          $(".lab-summary-today-consumption").css("display", "flex");
+          break;
+        case "pwr-cons-check":
+          $(".lab-summary-current-consumption").css("display", "flex");
+          break;
+        case "hood-usage-check":
+          $(".lab-summary-number-active").css("display", "flex");
+          break;
+        case "occ-ratio-check":
+          $(".lab-summary-occ-ratio").css("display", "flex");
+          break;
+        case "ave-nrg-check":
+          $(".lab-summary-ave-nrg").css("display", "flex");
+          break;
+        case "nrg-trend-check":
+          $(".lab-summary-nrg-trend").css("display", "flex");
+          break;
+      }
+    });
   }
 
   function options() {
@@ -166,28 +209,7 @@
     // First, hide all the boxes for simplicity
 
     allOptions.css("display", "none");
-    checkboxNames.forEach((id) => {
-      switch (id) {
-        case "nrg-cons-check":
-          $(".lab-summary-today-consumption").css("display", "flex");
-          break;
-        case "pwr-cons-check":
-          $(".lab-summary-current-consumption").css("display", "flex");
-          break;
-        case "hood-usage-check":
-          $(".lab-summary-number-active").css("display", "flex");
-          break;
-        case "occ-ratio-check":
-          $(".lab-summary-occ-ratio").css("display", "flex");
-          break;
-        case "ave-nrg-check":
-          $(".lab-summary-ave-nrg").css("display", "flex");
-          break;
-        case "nrg-trend-check":
-          $(".lab-summary-nrg-trend").css("display", "flex");
-          break;
-      }
-    });
+    displayInnerWidgets(checkboxNames);
 
     localStorage.setItem("checked", checkboxNames.join(";"));
   }

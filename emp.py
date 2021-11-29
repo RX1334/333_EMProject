@@ -156,6 +156,9 @@ def real_time_data():
         data_dict[lab_name + '-temperature'] = str(random.randint(70, 80)) + ' °F'
         randint = random.randint(70,90)
         data_dict[lab_name + '-fumehood-energy-ratio'] = str(randint) + '% Fume Hoods ' + str(100-randint) + '% Other'
+        data_dict[lab_name + '-occ'] = str(random.randint(0, 150)) + '%'
+        data_dict[lab_name + '-ave-nrg'] = str(round(random.uniform(0.5,1.5), 2)) + ' kWh'
+        data_dict[lab_name + '-nrg-trend'] = str(random.randint(50, 150)) + '%'
 
     # HARDCODED DATA, CHANGE LATER
     for i in range(4):
@@ -186,6 +189,7 @@ def real_time_data():
             },
         }
 
+    # Fake chart data
     data_dict[lab_name + '-chart-data'] = {
         'dates': {
         'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],

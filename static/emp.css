@@ -265,6 +265,30 @@ input[type="radio"]:checked + label {
   margin: 12px 0px;
 }
 
+.lab-summary-checkbox-span {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  width: 181.33px;
+  height: 18px;
+  left: 426.67px;
+  top: 0px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 2;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.lab-summary-checkbox-span > label {
+  margin: 0px;
+}
+
 .lab-summary-title {
   display: flex;
   justify-content: space-between;
@@ -299,6 +323,38 @@ input[type="radio"]:checked + label {
   flex-grow: 1;
 }
 
+.lab-summary-occ-ratio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex-grow: 1;
+}
+
+.lab-summary-ave-nrg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex-grow: 1;
+}
+
+.lab-summary-nrg-trend {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex-grow: 1;
+}
+
+.lab-summary-inner-ave-nrg {
+  margin: 4px 0px;
+}
+
+.lab-summary-inner-nrg-trend {
+  margin: 4px 0px;
+}
+
 .lab-summary-today-kwh {
   margin: 4px 0px;
 }
@@ -330,6 +386,10 @@ input[type="radio"]:checked + label {
 
 .lab-summary-number {
   color: #00c08b;
+  margin: 4px 0px;
+}
+
+.lab-summary-occ {
   margin: 4px 0px;
 }
 
