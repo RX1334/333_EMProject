@@ -130,10 +130,10 @@ def lab_money_calc(fh_cons, climate):
     out += climate
     return out*2.25
 
-def time_dates(date=None):
+def time_dates(date_input=None):
     '''return list of list of dates (1week,4weeks,6months,12months) for calculation labels'''
-    if date is not None:
-        current_date = date
+    if date_input is not None:
+        current_date = date_input
     else:
         current_date = date.today()
     dates = []
@@ -303,8 +303,8 @@ def lab_info():
             'years':  {'labels': year, 'time': info_6d['years']}
         }, }]
     }
-    put_fumehood_output()
-    put_lab_info()
+    # put_fumehood_output()
+    # put_lab_info()
     print(dict)
     return dict
 
