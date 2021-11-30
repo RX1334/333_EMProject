@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Energy Monitoring</title>
-    <link rel="stylesheet" href="../static/emp.css" />
+    <link rel="stylesheet" href="{{ url_for ('static', filename='emp.css')}}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,42 +29,17 @@
   <!-- handle real time data -->
   <script src="../static/real_time_data_script.js"></script>
 
-  <!-- print.js library -->
-  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-
+  <!-- report archive -->
+  <script src="../static/report_archive_data_script.js"></script>
   <script>
-
-
-
-    function printPage(date) {
-      console.log(date);
-      let id = $(this).attr('id');
-      console.log(id);
-      myData= [
-    {
-       name: 'John Doe',
-       email: 'john@doe.com',
-       phone: '111-111-1111'
-    },
-    {
-       name: 'Barry Allen',
-       email: 'barry@flash.com',
-       phone: '222-222-2222'
-    },
-    {
-       name: 'Cool Dude',
-       email: 'cool@dude.com',
-       phone: '333-333-3333'
-    }
- ]
-
-      printJS({printable: myData, type: 'json', properties: ['name', 'email', 'phone']});
+    function printPage() {
+      window.print();
     }
 
     function emailPage() {
       window.open('mailto:test@example.com?subject=subject&body=body');
     }
-    // $(".printer-icon").on("click", () => { printPage('d') });
+    $(".printer-icon").on("click", printPage);
 
 
 

@@ -175,34 +175,6 @@ def report_archive_dates():
     return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
     # return from report_archive_dates() in lab_query.py
 
-<<<<<<< HEAD
-=======
-# the printed weekly report
-@app.route('/weekly_report', methods=['GET'])
-def printed_weekly_report():
-    lab_name = request.args.get('lab_name')
-    date = request.args.get('date')
-    data_dict = weekly_report(date)
-
-    html = render_template('printed-weekly-report.html', data_dict=data_dict)
-    response = make_response(html)
-    return response
-
-# should be replaced by call to lab_query
-def weekly_report(date):
-    return {
-    'date' : date,
-    'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
-    'this_week_energy_consumption' : '323.3 kWh',
-    'this_week_avg_power_consumption' : '421.23 kW',
-    'this_week_avg_fumehood_usage' : '6 hrs',
-    'energy_consumption_kwh_day' : [3.1, 3.3, 3.2, 3.7, 3.9, 4.2, 3.2],
-    'energy_consumption_dollars_day' : [7.68, 5.64, 9.00, 10.23, 11.21, 13.21, 9.81],
-    'energy_consumption_lb_co2_day' : [8.1, 7.6, 5.4, 2.1, 9.8, 6.7, 9.4]
-    }
-
-
->>>>>>> 1bffd4608d0a600547afd7c8a0c9a33c220f6420
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id
 # args: optional for either lab_name or fumehood_id (if neither provided,
