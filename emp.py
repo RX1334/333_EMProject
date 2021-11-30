@@ -49,7 +49,6 @@ def fumehood_summary():
     response = make_response(html)
     return(response)
 
-
 # arguments: lab_name
 # output: HTML of lab sum page w/ energy, power, graph, fumehoods
 @app.route('/lab_summary', methods=['GET'])
@@ -140,7 +139,6 @@ def weekly_report():
 def report_archive_dates():
     return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
     # return from report_archive_dates() in lab_query.py
-
 
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id

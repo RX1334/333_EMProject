@@ -4,8 +4,10 @@
         <span class="email-print-label-right-align">
             <span style="margin-right: 16px"><a href="">Print Report</a></span>
             <a href="">
-                <img class="printer-icon light-icon" src="../static/images/Printer.svg">
-                <img class="printer-icon invisible-icon dark-icon" src="../static/images/Printer_dark.svg">
+                <img class="printer-icon light-icon"
+                src="{{ url_for ('static', filename='images/Printer.svg')}}">
+                <img class="printer-icon invisible-icon dark-icon"
+                src="{{ url_for ('static', filename='images/Printer_dark.svg')}}">
             </a>
         </span>
     </div>
