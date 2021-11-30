@@ -1,6 +1,6 @@
 <div style="margin-bottom: 16px; width: 100%;">
     <div class="nav-regular email-print-label">
-        <span><a href="mailto:?subject=subject&body=body">Email Report</a></span>
+        <span><a href="mailto:?subject={{email_subject}}&body={{email_body}}">Email Report</a></span>
         <span class="email-print-label-right-align" id="{{lab_name}}_{{report_date_stripped}}_in_report" style="cursor: pointer;">
             <span style="margin-right: 16px">Print Report</span>
             <img class="printer-icon light-icon" src="../static/images/Printer.svg">
@@ -9,7 +9,9 @@
     </div>
     <script>
         $("#{{lab_name}}_{{report_date_stripped}}_in_report").on("click", () => {
-          let url = "/weekly_report?date={{report_date}}";
+          let lab_name = encodeURIComponent("{{lab_name}}");
+          let report_date = encodeURIComponent("{{report_date}}");
+          let url = "/weekly_report?lab_name=" + lab_name + "&date=" + report_date;
           request = $.ajax({
             type: "GET",
             url: url,

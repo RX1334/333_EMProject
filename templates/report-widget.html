@@ -14,7 +14,7 @@
   </div>
   <script>
     $("#{{lab_name}}_{{report_date_stripped}}").on("click", () => {
-      let url = "/weekly_report?date={{report_date}}";
+      let url = "/weekly_report?lab_name={{lab_name}}&date={{report_date}}";
       request = $.ajax({
         type: "GET",
         url: url,

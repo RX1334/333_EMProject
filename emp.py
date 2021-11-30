@@ -124,6 +124,21 @@ def report():
         response = make_response(html)
         return response
 
+    # forms email subject
+    email_subject = lab_name + ' ' + week_name + ' Weekly Report'
+    # forms email body
+    weeks_data = weekly_report(week_name)
+    email_body = 'Weekly Report for Icahn 201, ' + weeks_data['date'] + '%0D%0A%0D%0A'
+    email_body += 'Total Energy Consumption: ' + weeks_data['this_week_energy_consumption'] + '%0D%0A'
+    email_body += 'Average Power Consumption: ' + weeks_data['this_week_avg_power_consumption'] + '%0D%0A'
+    email_body += 'Average Fumehood Usage: ' + weeks_data['this_week_avg_fumehood_usage'] + '%0D%0A%0D%0A'
+    email_body += 'Energy Consumption by Day:%0D%0A'
+    for i in range(7):
+        email_body += weeks_data['week'][i] + ': '
+        email_body += str(weeks_data['energy_consumption_kwh_day'][i]) + ' kWh / '
+        email_body += '$' + str(weeks_data['energy_consumption_dollars_day'][i]) + ' / '
+        email_body += str(weeks_data['energy_consumption_lb_co2_day'][i]) + ' lb CO2%0D%0A'
+
     # compiles widgets
     dashboard_content = render_template('header-widget.html', page_name='Week of ' + week_name + ' Report')
     dashboard_content += render_template('heading-label.html', text='Statistics')
@@ -131,7 +146,7 @@ def report():
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
     dashboard_content += render_template('barchart-report.html', name=week_name.replace('.', ''), lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
-    dashboard_content += render_template('email-print-report.html', lab_name=lab_name, week_name=week_name)
+    dashboard_content += render_template('email-print-report.html', lab_name=lab_name, week_name=week_name, email_subject=email_subject, email_body=email_body)
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -162,7 +177,8 @@ def report_archive_dates():
 
 # the printed weekly report
 @app.route('/weekly_report', methods=['GET'])
-def weekly_report():
+def printed_weekly_report():
+    lab_name = request.args.get('lab_name')
     date = request.args.get('date')
     data_dict = weekly_report(date)
 
