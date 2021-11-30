@@ -1,5 +1,6 @@
 <div style="margin-bottom: 16px; width: 100%;">
     <div class="nav-regular email-print-label">
+<<<<<<< HEAD
         <span><a href="mailto:?subject=subject&body=body">Email Report</a></span>
         <span class="email-print-label-right-align">
             <span style="margin-right: 16px"><a href="">Print Report</a></span>
@@ -12,3 +13,28 @@
         </span>
     </div>
 </div>
+=======
+        <span><a href="mailto:?subject={{email_subject}}&body={{email_body}}">Email Report</a></span>
+        <span class="email-print-label-right-align" id="{{lab_name}}_{{report_date_stripped}}_in_report" style="cursor: pointer;">
+            <span style="margin-right: 16px">Print Report</span>
+            <img class="printer-icon light-icon icon" src="../static/images/Printer.svg">
+            <img class="printer-icon invisible-icon dark-icon icon" src="../static/images/Printer_dark.svg">
+        </span>
+    </div>
+    <script>
+        $("#{{lab_name}}_{{report_date_stripped}}_in_report").on("click", () => {
+          let lab_name = encodeURIComponent("{{lab_name}}");
+          let report_date = encodeURIComponent("{{report_date}}");
+          let url = "/weekly_report?lab_name=" + lab_name + "&date=" + report_date;
+          request = $.ajax({
+            type: "GET",
+            url: url,
+            success: (response) => {
+              printJS({printable: response, type: 'raw-html'});
+              console.log(response);
+            },
+          });
+        });
+      </script>
+</div>
+>>>>>>> 1bffd4608d0a600547afd7c8a0c9a33c220f6420

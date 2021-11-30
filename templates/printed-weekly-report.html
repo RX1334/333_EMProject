@@ -1,0 +1,45 @@
+<style>
+    table, th, td {
+  border: 1px solid black;
+}
+table {
+    border-collapse: collapse;
+}
+</style>
+<h1>Weekly Report for Icahn 201, {{data_dict['date']}}</h1>
+<p>Total Energy Consumption: {{data_dict['this_week_energy_consumption']}}</p>
+<p>Average Power Consumption: {{data_dict['this_week_avg_power_consumption']}}</p>
+<p>Average Fumehood Usage: {{data_dict['this_week_avg_fumehood_usage']}}</p>
+<hr>
+<h2>Energy Consumption by Day</h2>
+<table>
+    <tr>
+        <th>Units</th>
+        <th>{{data_dict['week'][0]}}</th>
+        <th>{{data_dict['week'][1]}}</th>
+        <th>{{data_dict['week'][2]}}</th>
+        <th>{{data_dict['week'][3]}}</th>
+        <th>{{data_dict['week'][4]}}</th>
+        <th>{{data_dict['week'][5]}}</th>
+        <th>{{data_dict['week'][6]}}</th>
+    </tr>
+    <tr>
+        <td>kWh</td>
+        {% for item in data_dict['energy_consumption_kwh_day'] %}
+            <td>{{item}}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>USD</td>
+        {% for item in data_dict['energy_consumption_dollars_day'] %}
+            <td>{{item}}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>lb CO2</td>
+        {% for item in data_dict['energy_consumption_lb_co2_day'] %}
+            <td>{{item}}</td>
+        {% endfor %}
+    </tr>
+</table>
+<hr>

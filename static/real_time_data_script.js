@@ -3,15 +3,15 @@
 let request = null;
 
 function lab_summary() {
-    let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
-    if (request != null) request.abort();
+  let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
+  if (request != null) request.abort();
 
-    request = $.ajax({
-      type: "GET",
-      url: url,
-      success: handle_rerender,
-    });
-  }
+  request = $.ajax({
+    type: "GET",
+    url: url,
+    success: handle_rerender,
+  });
+}
 
 function handle_rerender(response) {
   console.log("rerender");
@@ -65,14 +65,32 @@ function handle_rt_resp(response) {
       let end = key.indexOf("-chart-data");
       try {
         buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
-      } catch {
-        continue;
-      }
+      } catch {}
+      continue;
     }
     if (key.endsWith("-number")) {
       let numOpen = 0;
-      for (const key of Object.keys(value)) {
-        if (value[key] == "OPEN") {
+      let i = 0;
+      for (const vkey of Object.keys(value)) {
+        $("#fumehood" + i + "-mini-status").removeClass("red");
+        $("#fumehood" + i + "-mini-status").removeClass("green");
+        let html;
+        if (value[vkey] == "OPEN") {
+          html =
+            "<p style='font-weight: bold'>" +
+            value[vkey] +
+            "</p><img src='../static/images/RedDot.svg'></img>";
+          $("#fumehood" + i + "-mini-status").addClass("red");
+        } else {
+          html =
+            "<p style='font-weight: bold'>" +
+            value[vkey] +
+            "</p><img src='../static/images/GreenDot.svg'></img>";
+          $("#fumehood" + i + "-mini-status").addClass("green");
+        }
+        $("#fumehood" + i + "-mini-status").html(html);
+        i += 1;
+        if (value[vkey] == "OPEN") {
           numOpen++;
         }
       }
@@ -86,12 +104,10 @@ function handle_rt_resp(response) {
         for (const [fkey, fvalue] of Object.entries(value[i])) {
           $("#" + id + "-" + fkey).text(fvalue);
           if (fkey.endsWith("-chart-data")) {
-            let end = fkey.indexOf("-chart-data");
+            // let end = fkey.indexOf("-chart-data");
             try {
               buildAllCharts(fvalue, "#" + id + "-chart");
-            } catch {
-              continue;
-            }
+            } catch {}
           }
         }
       }
@@ -128,9 +144,9 @@ function get_date() {
 // set up document
 function setup() {
   get_rt_data();
-  window.setInterval(get_rt_data, 1000);
+  window.setInterval(get_rt_data, 5000);
   get_date();
-  window.setInterval(getDate(), 3600000);
+  window.setInterval(get_date, 3600000);
 }
 
 $("document").ready(setup);
