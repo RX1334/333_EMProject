@@ -29,9 +29,6 @@
   <!-- handle real time data -->
   <script src="../static/real_time_data_script.js"></script>
 
-  <!-- report archive -->
-  <script src="../static/report_archive_data_script.js"></script>
-
   <!-- print.js library -->
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
@@ -39,7 +36,10 @@
 
 
 
-    function printPage() {
+    function printPage(date) {
+      console.log(date);
+      let id = $(this).attr('id');
+      console.log(id);
       myData= [
     {
        name: 'John Doe',
@@ -64,7 +64,7 @@
     function emailPage() {
       window.open('mailto:test@example.com?subject=subject&body=body');
     }
-    $(".printer-icon").on("click", printPage);
+    // $(".printer-icon").on("click", () => { printPage('d') });
 
 
 

@@ -1,6 +1,7 @@
 from flask import Flask, make_response, request, render_template
 from database import get_fumehood_output
 from lab_query import lab_info
+import json
 import random
 # ----------------------------------------------------------------------
 
@@ -102,7 +103,7 @@ def report_archive():
     dashboard_content += render_template('report-heading-label.html', text='Icahn 201 Reports')
     dashboard_content += '<div class="report-widget-container widget-container">'
     for date in dates_array:
-        dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date=date)
+        dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date=date, report_date_stripped=date.replace('.', ''))
     dashboard_content += '</div>'
 
     # renders dashboard with those widgets
@@ -112,7 +113,7 @@ def report_archive():
 
 # report
 @app.route('/report', methods=['GET'])
-def weekly_report():
+def report():
     # get lab_name
     lab_name = request.args.get('lab_name')
     week_name = request.args.get('week_name')
@@ -153,10 +154,33 @@ def report_chart():
         'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
     }
     return report_dict
+
 # @app.route('/report_archive_data', methods=['GET'])
 def report_archive_dates():
     return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
     # return from report_archive_dates() in lab_query.py
+
+@app.route('/weekly_report', methods=['GET'])
+def weekly_report():
+    date = request.args.get('date')
+    data_dict = weekly_report(date)
+
+    html = render_template('printed-weekly-report.html', data_dict=data_dict)
+    response = make_response(html)
+    return response
+
+
+def weekly_report(date):
+    return {
+    'date' : date,
+    'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
+    'this_week_energy_consumption' : '323.3 kWh',
+    'this_week_avg_power_consumption' : '421.23 kW',
+    'this_week_avg_fumehood_usage' : '6 hrs',
+    'energy_consumption_kwh_day' : [3.1, 3.3, 3.2, 3.7, 3.9, 4.2, 3.2],
+    'energy_consumption_dollars_day' : [7.68, 5.64, 9.00, 10.23, 11.21, 13.21, 9.81],
+    'energy_consumption_lb_co2_day' : [8.1, 7.6, 5.4, 2.1, 9.8, 6.7, 9.4]
+    }
 
 
 # Temporary function for fetching all the relevant

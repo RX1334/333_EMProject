@@ -77,13 +77,13 @@ function handle_rt_resp(response) {
         let html;
         if (value[vkey] == "OPEN") {
           html =
-            "<p>" +
+            "<p style='font-weight: bold'>" +
             value[vkey] +
             "</p><img src='../static/images/RedDot.svg'></img>";
           $("#fumehood" + i + "-mini-status").addClass("red");
         } else {
           html =
-            "<p>" +
+            "<p style='font-weight: bold'>" +
             value[vkey] +
             "</p><img src='../static/images/GreenDot.svg'></img>";
           $("#fumehood" + i + "-mini-status").addClass("green");
