@@ -38,6 +38,8 @@ def occupancy(root_url, token):
     occ_e = "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.Local_IO.B47_RML210_OS2;"
     occ_req1 = requests.get(root_url + occ_w, headers={'Authorization': 'Bearer ' + token}, verify=False)
     occ_req2 = requests.get(root_url + occ_e, headers={'Authorization': 'Bearer ' + token}, verify=False)
+    print(occ_req1)
+
     # calculate total occupancy
     return(int((((occ_req1.json()['Properties'])[0])['Value'])['Value']) + int((((occ_req2.json()['Properties'])[0])['Value'])['Value']))
 
@@ -100,7 +102,10 @@ def fh_consumption(root_url, token, fh_opens):
     for point in fh_cons.keys():
         if fh_cons[point][0] == 1:
             get = requests.get(root_url + fh_cons[point][1], headers={'Authorization': 'Bearer ' + token}, verify=False)
-            fh_cons[point] = (((get.json()['Properties'])[0])['Value'])['Value']
+            try:
+                fh_cons[point] = (((get.json()['Properties'])[0])['Value'])['Value']
+            except:
+                fh_cons[point] = 0.0
         else:
             fh_cons[point] = 0.0
     # print(fh_cons)
@@ -216,6 +221,7 @@ def lab_info():
     r = requests.post(root_url + "token", data=user_info, verify=False)
     # retrieve access token from POST
     token = r.json()['access_token']
+    print(token)
     # lab occupancy (1 west, 2 east)
     root_url += "propertyvalues/"
     # calculate total occupancy
