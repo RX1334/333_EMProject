@@ -34,6 +34,8 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
+  console.log(JSON.stringify(response))
+  localStorage.setItem('real_time_data', JSON.stringify(response))
   for (const [key, value] of Object.entries(response)) {
     // color fumehood open status the correct color
     if (key.endsWith("-mini-status")) {
@@ -143,6 +145,10 @@ function get_date() {
 
 // set up document
 function setup() {
+  let cached_rt_data = localStorage.getItem('real_time_data');
+  console.log(cached_rt_data);
+  if (cached_rt_data != null) handle_rt_resp(cached_rt_data);
+
   get_rt_data();
   window.setInterval(get_rt_data, 5000);
   get_date();
