@@ -37,7 +37,7 @@ def fumehood_summary():
         response = make_response(html)
         return response
 
-    dashboard_content = render_template('header-widget.html', page_name=fumehood_id)
+    dashboard_content = render_template('header-widget.html', page_name=fumehood_id, arrow='arrow')
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
