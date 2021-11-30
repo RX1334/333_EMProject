@@ -24,13 +24,13 @@
   </body>
 
   <!-- dark mode, money mode, menu open -->
-  <script src="../static/header_script.js"></script>
+  <script src="{{ url_for('static', filename='header_script.js')}}"></script>
 
   <!-- handle real time data -->
-  <script src="../static/real_time_data_script.js"></script>
+  <script src="{{ url_for('static', filename='real_time_data_script.js')}}"></script>
 
   <!-- report archive -->
-  <script src="../static/report_archive_data_script.js"></script>
+  <script src="{{ url_for('static', filename='report_archive_data_script.js')}}"></script>
   <script>
     function printPage() {
       window.print();
