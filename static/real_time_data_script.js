@@ -34,7 +34,7 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
-  console.log(JSON.stringify(response))
+  console.log(response)
   localStorage.setItem('real_time_data', JSON.stringify(response))
   for (const [key, value] of Object.entries(response)) {
     // color fumehood open status the correct color
@@ -102,6 +102,7 @@ function handle_rt_resp(response) {
     if (key == "fumehoods") {
       for (let i = 0; i < value.length; i++) {
         let id = value[i]["id"];
+        $("#fumehood" + i + "-name").text("Fumehood " + id.slice(-2));
         id = "fumehood" + i;
         for (const [fkey, fvalue] of Object.entries(value[i])) {
           $("#" + id + "-" + fkey).text(fvalue);
@@ -146,7 +147,7 @@ function get_date() {
 // set up document
 function setup() {
   let cached_rt_data = localStorage.getItem('real_time_data');
-  console.log(cached_rt_data);
+  // console.log(cached_rt_data);
   if (cached_rt_data != null) handle_rt_resp(cached_rt_data);
 
   get_rt_data();
