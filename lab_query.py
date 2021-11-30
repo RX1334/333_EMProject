@@ -171,7 +171,6 @@ def time_dates(date_input=None):
                 sixmonths.append(month_tostring(curr_month) + " " + str(int(current_year)-1))
             else:
                 sixmonths.append(month_tostring(curr_month) + " " + current_year)
-        sixmonths.reverse()
         return sixmonths
     # 1 year by month
     def year_dates():
@@ -185,7 +184,6 @@ def time_dates(date_input=None):
                 year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
-        year.reverse()
         return year
     week = week_dates()
     month = month_dates()
@@ -252,9 +250,8 @@ def lab_info():
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
         'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         'rabinowitz_icahn_201-temperature': str(round(temp)) + ' °F',
-        # %'s don't need to be escaped
-        'rabinowitz_icahn_201-fumehood-energy-ratio': '68% Fumehood 32% Other',
-        'rabinowitz_icahn_201-occ' : str(occ) + '%',
+        'rabinowitz_icahn_201-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
+        'rabinowitz_icahn_201-occ' : occ,
         'rabinowitz_icahn_201-ave-nrg': str(lab_energy*1.10002) + ' kWh',
         'rabinowitz_icahn_201-nrg-trend': energy_comp,
         'rabinowitz_icahn_201-chart-data': {
@@ -303,15 +300,15 @@ def lab_info():
          'today': 4,
          'avg-day': 5,
         '-chart-data': {
-            'daily':  {'labels': week, 'time': info_6d['dates']},
-            'weekly':  {'labels': month, 'time': info_6d['weeks']},
-            'monthly': {'labels': sixmonths, 'time': info_6d['sixMonths']},
-            'yearly':  {'labels': year, 'time': info_6d['years']}
+            'dates':  {'labels': week, 'time': info_6d['dates']},
+            'weeks':  {'labels': month, 'time': info_6d['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_6d['sixMonths']},
+            'years':  {'labels': year, 'time': info_6d['years']}
         }, }]
     }
     # put_fumehood_output()
     # put_lab_info()
-    # print(dict)
+    print(dict)
     return dict
 
 if __name__ == '__main__':
