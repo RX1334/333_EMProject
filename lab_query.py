@@ -38,6 +38,8 @@ def occupancy(root_url, token):
     occ_e = "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.Local_IO.B47_RML210_OS2;"
     occ_req1 = requests.get(root_url + occ_w, headers={'Authorization': 'Bearer ' + token}, verify=False)
     occ_req2 = requests.get(root_url + occ_e, headers={'Authorization': 'Bearer ' + token}, verify=False)
+    print(occ_req1)
+
     # calculate total occupancy
     return(int((((occ_req1.json()['Properties'])[0])['Value'])['Value']) + int((((occ_req2.json()['Properties'])[0])['Value'])['Value']))
 
@@ -174,7 +176,6 @@ def time_dates(date_input=None):
                 sixmonths.append(month_tostring(curr_month) + " " + str(int(current_year)-1))
             else:
                 sixmonths.append(month_tostring(curr_month) + " " + current_year)
-        sixmonths.reverse()
         return sixmonths
     # 1 year by month
     def year_dates():
@@ -188,7 +189,6 @@ def time_dates(date_input=None):
                 year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
-        year.reverse()
         return year
     week = week_dates()
     month = month_dates()
@@ -203,13 +203,13 @@ def weekly_report(week_date):
     # need to add logic for consistent start date (e.g. every sunday)
     data = week_report()
     cal = time_dates(week_date)
-    dict = {'date': week_date, 
-    'week': cal[2], 
+    dict = {'date': week_date,
+    'week': cal[2],
     'this_week_energy_consumption': data['this_week_energy_consumption'],
-    'this_week_avg_power_consumption': data['this_week_avg_power_consumption'], 
-    'this_week_avg_fumehood_usage': data['this_week_avg_power_consumption'], 
-    'energy_consumption_kwh_day': data['this_week_avg_power_consumption'], 
-    'energy_consumption_dollar_day': data['this_week_avg_power_consumption'], 
+    'this_week_avg_power_consumption': data['this_week_avg_power_consumption'],
+    'this_week_avg_fumehood_usage': data['this_week_avg_power_consumption'],
+    'energy_consumption_kwh_day': data['this_week_avg_power_consumption'],
+    'energy_consumption_dollar_day': data['this_week_avg_power_consumption'],
     'energy_consumption_lb_co2_day': data['this_week_avg_power_consumption']}
     return dict
 
@@ -221,6 +221,7 @@ def lab_info():
     r = requests.post(root_url + "token", data=user_info, verify=False)
     # retrieve access token from POST
     token = r.json()['access_token']
+    print(token)
     # lab occupancy (1 west, 2 east)
     root_url += "propertyvalues/"
     # calculate total occupancy
@@ -270,7 +271,7 @@ def lab_info():
         {'id':'FH5C',
          'kw': str(round(fh_cons['fh5c'], 2)) + ' kWh',
          'kwh': 3,
-         'today': 4, 
+         'today': 4,
          'avg-day': 5,
         '-chart-data': {
             'dates':  {'labels': week, 'time': info_5c['dates']},
@@ -281,7 +282,7 @@ def lab_info():
         ,
         {'id': 'FH6C',
          'kw': str(round(fh_cons['fh6c'], 2)) + ' kWh', 'kwh': 3,
-         'today': 4, 
+         'today': 4,
          'avg-day': 5,
          '-chart-data': {
             'dates':  {'labels': week, 'time': info_6c['dates']},
@@ -291,7 +292,7 @@ def lab_info():
         }, },
         {'id': 'FH5D',
          'kw': str(round(fh_cons['fh5d'], 2)) + ' kWh',
-         'kwh': 3, 
+         'kwh': 3,
          'today': 4,
          'avg-day': 5,
         '-chart-data': {
@@ -306,15 +307,15 @@ def lab_info():
          'today': 4,
          'avg-day': 5,
         '-chart-data': {
-            'daily':  {'labels': week, 'time': info_6d['dates']},
-            'weekly':  {'labels': month, 'time': info_6d['weeks']},
-            'monthly': {'labels': sixmonths, 'time': info_6d['sixMonths']},
-            'yearly':  {'labels': year, 'time': info_6d['years']}
+            'dates':  {'labels': week, 'time': info_6d['dates']},
+            'weeks':  {'labels': month, 'time': info_6d['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_6d['sixMonths']},
+            'years':  {'labels': year, 'time': info_6d['years']}
         }, }]
     }
     # put_fumehood_output()
     # put_lab_info()
-    # print(dict)
+    print(dict)
     return dict
 
 if __name__ == '__main__':
