@@ -3,7 +3,7 @@
 let request = null;
 
 function lab_summary() {
-  let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
+  let url = "/emapp/lab_summary?lab_name=rabinowitz_icahn_201";
   if (request != null) request.abort();
 
   request = $.ajax({

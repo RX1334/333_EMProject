@@ -53,7 +53,7 @@ def fumehood_summary():
 
 # arguments: lab_name
 # output: HTML of lab sum page w/ energy, power, graph, fumehoods
-@app.route('/lab_summary', methods=['GET'])
+@app.route('/emapp/lab_summary', methods=['GET'])
 def lab_summary():
     # get lab_name
     lab_name = request.args.get('lab_name')
