@@ -35,19 +35,25 @@
     >
       <!-- Duration Selection List -->
       <div style="display: flex; flex-direction: row">
-        <input type="radio" id="1w" name="duration" checked style="cursor: pointer" />
+        <input
+          type="radio"
+          id="1w"
+          name="duration"
+          checked
+          style="cursor: pointer"
+        />
         <label for="1w" onclick="hideAllBut('#barchart-dates')">Daily</label>
 
-        <input type="radio" id="1m" name="duration" style="cursor: pointer"/>
+        <input type="radio" id="1m" name="duration" style="cursor: pointer" />
         <label for="1m" onclick="hideAllBut('#barchart-weeks')">Weekly</label>
 
-        <input type="radio" id="6m" name="duration" style="cursor: pointer"/>
+        <input type="radio" id="6m" name="duration" style="cursor: pointer" />
         <label for="6m" onclick="hideAllBut('#barchart-sixMonths')"
-          >6-Months</label
+          >Monthly</label
         >
 
-        <input type="radio" id="1y" name="duration" style="cursor: pointer"/>
-        <label for="1y" onclick="hideAllBut('#barchart-years')">12-Months</label>
+        <input type="radio" id="1y" name="duration" style="cursor: pointer" />
+        <label for="1y" onclick="hideAllBut('#barchart-years')">Yearly</label>
       </div>
       <!-- Unit Label -->
       <div>Units: kWh</div>

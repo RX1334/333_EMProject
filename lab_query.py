@@ -171,6 +171,7 @@ def time_dates(date_input=None):
                 sixmonths.append(month_tostring(curr_month) + " " + str(int(current_year)-1))
             else:
                 sixmonths.append(month_tostring(curr_month) + " " + current_year)
+        sixmonths.reverse()
         return sixmonths
     # 1 year by month
     def year_dates():
@@ -184,6 +185,7 @@ def time_dates(date_input=None):
                 year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
+        year.reverse()
         return year
     week = week_dates()
     month = month_dates()

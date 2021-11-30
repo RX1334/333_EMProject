@@ -200,14 +200,6 @@
     if (checkboxNames.length < 3) {
       let oldChecksArr = localStorage.getItem("checked");
       setChecks(oldChecksArr);
-      // checkboxNames.forEach((id) => {
-      //   $("#" + id).prop("checked", false);
-      // });
-      // let oldChecks = localStorage.getItem("checked");
-      // let oldChecksArr = oldChecks.split(";");
-      // oldChecksArr.forEach((id) => {
-      //   $("#" + id).prop("checked", true);
-      // });
       displayInnerWidgets(oldChecksArr.split(";"));
       return;
     }
