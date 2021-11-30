@@ -137,6 +137,9 @@ def time_dates(date_input=None):
     else:
         current_date = date.today()
     dates = []
+    def month_tostring(month):
+        monthnames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC']
+        return monthnames[month-1]
     # 1 week by day
     def week_dates():
         week = []
@@ -165,9 +168,9 @@ def time_dates(date_input=None):
             curr_month = int(current_month)-i
             if curr_month < 1:
                 curr_month = 12-curr_month
-                sixmonths.append(str(curr_month) + '/' +str(int(current_year)-1))
+                sixmonths.append(month_tostring(curr_month) + " " + str(int(current_year)-1))
             else:
-                sixmonths.append(str(curr_month) + '/' +current_year)
+                sixmonths.append(month_tostring(curr_month) + " " + current_year)
         return sixmonths
     # 1 year by month
     def year_dates():
@@ -178,9 +181,9 @@ def time_dates(date_input=None):
             curr_month = int(current_month)-i
             if curr_month < 1:
                 curr_month = 12-curr_month
-                year.append(str(curr_month) + '/' +str(int(current_year)-1))
+                year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
-                year.append(str(curr_month) + '/' +current_year)
+                year.append(month_tostring(curr_month) + ' ' +current_year)
         return year
     week = week_dates()
     month = month_dates()
@@ -297,10 +300,10 @@ def lab_info():
          'today': 4,
          'avg-day': 5,
         '-chart-data': {
-            'dates':  {'labels': week, 'time': info_6d['dates']},
-            'weeks':  {'labels': month, 'time': info_6d['weeks']},
-            'sixMonths': {'labels': sixmonths, 'time': info_6d['sixMonths']},
-            'years':  {'labels': year, 'time': info_6d['years']}
+            'daily':  {'labels': week, 'time': info_6d['dates']},
+            'weekly':  {'labels': month, 'time': info_6d['weeks']},
+            'monthly': {'labels': sixmonths, 'time': info_6d['sixMonths']},
+            'yearly':  {'labels': year, 'time': info_6d['years']}
         }, }]
     }
     # put_fumehood_output()
