@@ -35,7 +35,7 @@
 
         <input type="radio" id="radio-dollars" name="duration" />
         <label for="radio-dollars" onclick="hideAllBut('#barchart-dollars')"
-          >Dollars/Day</label
+          >$/Day</label
         >
 
         <input type="radio" id="radio-co2" name="duration" />
@@ -44,48 +44,41 @@
         >
       </div>
       <!-- Unit Label -->
-      <div>kWh</div>
+      <div class="report-chart-units">Units: kWh</div>
     </div>
   </div>
 </div>
 
 <script>
-  function dataStringToInt(arr) {
-    let intArr = [];
-    arr.forEach((elem) => {
-      let toPush;
-      if (arr[0].includes("$")) {
-        toPush = elem.substring(1);
-      } else if (arr[0].includes(" kW")) {
-        toPush = elem.substring(0, elem.length - 3);
-      } else if (arr[0].includes(" lb CO2")) {
-        toPush = elem.substring(0, elem.length - 7);
-      } else {
-        console.log("Malformed data array");
-      }
-      intArr.push(parseInt(toPush));
-    });
-    return intArr;
-  }
+  // function dataStringToInt(arr) {
+  //   let intArr = [];
+  //   arr.forEach((elem) => {
+  //     let toPush;
+  //     if (arr[0].includes("$")) {
+  //       toPush = elem.substring(1);
+  //     } else if (arr[0].includes(" kW")) {
+  //       toPush = elem.substring(0, elem.length - 3);
+  //     } else if (arr[0].includes(" lb CO2")) {
+  //       toPush = elem.substring(0, elem.length - 7);
+  //     } else {
+  //       console.log("Malformed data array");
+  //     }
+  //     intArr.push(parseInt(toPush));
+  //   });
+  //   return intArr;
+  // }
 
-  function buildReportChart(report_data, id, date) {
-    console.log("report_data:", report_data);
-    console.log("id:", id);
-    console.log("date:", date);
-    console.log(dataStringToInt(report_data));
-
+  function buildReportChart(report_data, id, week) {
     let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
     let data = {};
-    data["labels"] = report_data;
-    data["labels"].forEach((elem) => {
-      console.log(elem);
-    });
+    // data["time"] = dataStringToInt(report_data);
+    data["time"] = report_data;
+    data["labels"] = week;
 
     if (dark_mode_on === "0") color = "#2A2A2A";
     else color = "white";
 
     // Selecting and defining work area in the SVG
-    // var svg = d3.select("#" + date.split(".").join("") + "-report-chart " + id),
     var svg = d3.select(id),
       margin = 24,
       width = svg.attr("width"),
@@ -168,6 +161,13 @@
   function hideAllBut(id) {
     $(".barchart").hide();
     $(id).show();
+    if (id.includes("-nrg")) {
+      $(".report-chart-units").text("Units: kWh");
+    } else if (id.includes("-dollars")) {
+      $(".report-chart-units").text("Units: $");
+    } else if (id.includes("-co2")) {
+      $(".report-chart-units").text("Units: lbs");
+    }
   }
 
   function buildAllReportCharts(report_dict) {
@@ -175,17 +175,17 @@
     buildReportChart(
       report_dict["energy_consumption_kwh_day"],
       "#barchart-nrg",
-      report_dict["date"]
+      report_dict["week"]
     );
     buildReportChart(
       report_dict["energy_consumption_dollars_day"],
       "#barchart-dollars",
-      report_dict["date"]
+      report_dict["week"]
     );
     buildReportChart(
       report_dict["energy_consumption_lb_co2_day"],
       "#barchart-co2",
-      report_dict["date"]
+      report_dict["week"]
     );
   }
 

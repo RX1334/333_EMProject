@@ -4,13 +4,6 @@ function setLightMode() {
   localStorage.setItem("dark_mode_on", "0");
 
   // set icons to the correct color
-<<<<<<< HEAD
-  $("#dark-mode-icon").attr("src", "../static/images/DarkMode.svg");
-  $(".printer-icon").attr("src", "../static/images/Printer_dark.svg");
-  $(".caret-down-icon").attr("src", "../static/images/CaretDown_dark.svg");
-  $(".plus-icon").attr("src", "../static/images/Plus_dark.svg");
-  $(".lab-summary-options").attr("src", "../static/images/GearSix_dark.svg");
-=======
   // $("#dark-mode-icon").attr("src", "../static/images/DarkMode.svg");
   // $(".printer-icon").attr("src", "../static/images/Printer_dark.svg");
   // $(".caret-down-icon").attr("src", "../static/images/CaretDown_dark.svg");
@@ -22,7 +15,6 @@ function setLightMode() {
   $(".light-icon").addClass("invisible-icon");
   $(".dark-icon").removeClass("invisible-icon");
 
->>>>>>> 196aac7c25bce447a595a995d80026ad487e71c9
   if (localStorage.getItem("menu_open") === "1")
     $("#hamburger-icon").attr("src", "../static/images/X_dark.svg");
   else $("#hamburger-icon").attr("src", "../static/images/List_dark.svg");
@@ -137,8 +129,7 @@ function setNonMoneyMode() {
   // set icons to the correct color
   if (localStorage.getItem("dark_mode_on") === "0")
     $(".money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
-  else
-    $(".money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
+  else $(".money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
 }
 
 function toggleMoneyMode() {

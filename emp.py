@@ -144,12 +144,13 @@ def report_chart():
     # For now, use fake data, but should call a lab_query func instead
     report_dict = {
         'date' : '10.31.21',
+        'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
         'this_week_energy_consumption' : '323.3 kWh',
         'this_week_avg_power_consumption' : '421.23 kW',
         'this_week_avg_fumehood_usage' : '6 hrs',
-        'energy_consumption_kwh_day' : ['3 kW', '3 kW', '3 kW', '3 kW', '3 kW', '3 kW', '3 kW'],
-        'energy_consumption_dollars_day' : ['$5','$5','$5','$5','$5','$5','$5'],
-        'energy_consumption_lb_co2_day' : ['8 lb CO2', '8 lb CO2','8 lb CO2','8 lb CO2','8 lb CO2','8 lb CO2','8 lb CO2']
+        'energy_consumption_kwh_day' : [7, 9, 3,5 ,7, 2, 1],
+        'energy_consumption_dollars_day' : [3, 3, 2, 3, 7, 4, 5],
+        'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
     }
     return report_dict
 # @app.route('/report_archive_data', methods=['GET'])
