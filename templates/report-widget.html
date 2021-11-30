@@ -10,22 +10,18 @@
       <img class="printer-icon dark-icon invisible-icon" id="{{lab_name}}_{{report_date_stripped}}_dark" src="../static/images/Printer_dark.svg">
     </span>
   </div>
-</div>
-<script>
-  $("#{{lab_name}}_{{report_date_stripped}}").on("click", () => {
-    let url = "/weekly_report?date={{report_date}}";
-    request = $.ajax({
-      type: "GET",
-      url: url,
-      success: (response) => {
-        printJS({printable: response, type: 'raw-html'});
-        console.log(response);
-      },
+  <script>
+    $("#{{lab_name}}_{{report_date_stripped}}, #{{lab_name}}_{{report_date_stripped}}_dark").on("click", () => {
+      let url = "/weekly_report?date={{report_date}}";
+      request = $.ajax({
+        type: "GET",
+        url: url,
+        success: (response) => {
+          printJS({printable: response, type: 'raw-html'});
+          console.log(response);
+        },
+      });
     });
-  });
+  </script>
+</div>
 
-
-  $("#{{lab_name}}_{{report_date_stripped}}_dark").on("click", () => {
-    console.log("aas")
-  });
-</script>
