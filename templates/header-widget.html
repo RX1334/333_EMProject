@@ -1,17 +1,13 @@
 <div class="widget-container">
     <div id="header-widget" class="widget dark">
-<<<<<<< HEAD
-      {% if arrow %}
-        <img class="arrow-left-icon light-icon invisible-icon icon" src="../static/images/ArrowLeft.svg" />
-        <img class="arrow-left-icon dark-icon invisible-icon icon" src="../static/images/ArrowLeft_dark.svg" />
-      {% else %}
-        <img class="hamburger-icon light-icon icon" src="../static/images/List.svg" />
-        <img class="hamburger-icon dark-icon invisible-icon icon" src="../static/images/List_dark.svg" />
-        <img class="x-icon light-icon invisible-icon icon" src="../static/images/X.svg" />
-        <img class="x-icon dark-icon invisible-icon icon" src="../static/images/X_dark.svg" />
-      {% endif %}
-=======
-
+    {% if back_arrow_link %}
+      <a href="{{back_arrow_link}}">
+      <img class="arrow-left-icon light-icon icon"
+      src="{{ url_for ('static', filename='images/ArrowLeft.svg')}}" />
+      <img class="arrow-left-icon dark-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/ArrowLeft_dark.svg')}}" />
+      </a>
+    {% else %}
       <img class="hamburger-icon light-icon icon"
       src="{{ url_for ('static', filename='images/List.svg')}}" />
       <img class="hamburger-icon dark-icon invisible-icon icon"
@@ -20,12 +16,8 @@
       src="{{ url_for ('static', filename='images/X.svg')}}" />
       <img class="x-icon dark-icon invisible-icon icon"
       src="{{ url_for ('static', filename='images/X_dark.svg')}}" />
-      <img class="arrow-left-icon light-icon invisible-icon icon"
-      src="{{ url_for ('static', filename='images/ArrowLeft.svg')}}"" />
-      <img class="arrow-left-icon dark-icon invisible-icon icon"
-      src="{{ url_for ('static', filename='images/ArrowLeft_dark.svg')}}" />
+    {% endif %}
 
->>>>>>> 4ecf961496483bb6ada6e43555ecffffe110435e
       <span class="greeting-span body-bold menu-visible">{{page_name}}</span>
 
       <span id="{{lab_name}}-temperature" class="greeting-span body-bold menu-visible"></span>
@@ -44,7 +36,7 @@
       src="{{ url_for ('static', filename='images/LightMode.svg')}}" />
       <img class="dark-mode-icon dark-icon invisible-icon icon"
       src="{{ url_for ('static', filename='images/DarkMode.svg')}}" />
-      
+
       </span>
     </div>
   </div>

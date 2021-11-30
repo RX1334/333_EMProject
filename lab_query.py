@@ -198,13 +198,13 @@ def weekly_report(week_date):
     # need to add logic for consistent start date (e.g. every sunday)
     data = week_report()
     cal = time_dates(week_date)
-    dict = {'date': week_date, 
-    'week': cal[2], 
+    dict = {'date': week_date,
+    'week': cal[2],
     'this_week_energy_consumption': data['this_week_energy_consumption'],
-    'this_week_avg_power_consumption': data['this_week_avg_power_consumption'], 
-    'this_week_avg_fumehood_usage': data['this_week_avg_power_consumption'], 
-    'energy_consumption_kwh_day': data['this_week_avg_power_consumption'], 
-    'energy_consumption_dollar_day': data['this_week_avg_power_consumption'], 
+    'this_week_avg_power_consumption': data['this_week_avg_power_consumption'],
+    'this_week_avg_fumehood_usage': data['this_week_avg_power_consumption'],
+    'energy_consumption_kwh_day': data['this_week_avg_power_consumption'],
+    'energy_consumption_dollar_day': data['this_week_avg_power_consumption'],
     'energy_consumption_lb_co2_day': data['this_week_avg_power_consumption']}
     return dict
 
@@ -264,7 +264,7 @@ def lab_info():
         {'id':'FH5C',
          'kw': str(round(fh_cons['fh5c'], 2)) + ' kWh',
          'kwh': 3,
-         'today': 4, 
+         'today': 4,
          'avg-day': 5,
         '-chart-data': {
             'dates':  {'labels': week, 'time': info_5c['dates']},
@@ -275,7 +275,7 @@ def lab_info():
         ,
         {'id': 'FH6C',
          'kw': str(round(fh_cons['fh6c'], 2)) + ' kWh', 'kwh': 3,
-         'today': 4, 
+         'today': 4,
          'avg-day': 5,
          '-chart-data': {
             'dates':  {'labels': week, 'time': info_6c['dates']},
@@ -285,7 +285,7 @@ def lab_info():
         }, },
         {'id': 'FH5D',
          'kw': str(round(fh_cons['fh5d'], 2)) + ' kWh',
-         'kwh': 3, 
+         'kwh': 3,
          'today': 4,
          'avg-day': 5,
         '-chart-data': {

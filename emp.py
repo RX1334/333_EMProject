@@ -37,7 +37,7 @@ def fumehood_summary():
         response = make_response(html)
         return response
 
-    dashboard_content = render_template('header-widget.html', page_name=fumehood_id, arrow='arrow')
+    dashboard_content = render_template('header-widget.html', page_name=fumehood_id, back_arrow_link='/lab_summary?lab_name=' + lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
@@ -111,6 +111,35 @@ def report_archive():
     response = make_response(html)
     return(response)
 
+# @app.route('/report_archive_data', methods=['GET'])
+def report_archive_dates():
+    return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
+    # return from report_archive_dates() in lab_query.py
+
+# should be replaced by call to lab_query, don't delete, just comment out pls
+def weekly_report(date):
+    return {
+    'date' : date,
+    'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
+    'this_week_energy_consumption' : '323.3 kWh',
+    'this_week_avg_power_consumption' : '421.23 kW',
+    'this_week_avg_fumehood_usage' : '6 hrs',
+    'energy_consumption_kwh_day' : [3.1, 3.3, 3.2, 3.7, 3.9, 4.2, 3.2],
+    'energy_consumption_dollars_day' : [7.68, 5.64, 9.00, 10.23, 11.21, 13.21, 9.81],
+    'energy_consumption_lb_co2_day' : [8.1, 7.6, 5.4, 2.1, 9.8, 6.7, 9.4]
+    }
+
+# the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
+@app.route('/weekly_report', methods=['GET'])
+def printed_weekly_report():
+    lab_name = request.args.get('lab_name')
+    date = request.args.get('date')
+    data_dict = weekly_report(date)
+
+    html = render_template('printed-weekly-report.html', data_dict=data_dict)
+    response = make_response(html)
+    return response
+
 # report
 @app.route('/report', methods=['GET'])
 def report():
@@ -140,13 +169,13 @@ def report():
         email_body += str(weeks_data['energy_consumption_lb_co2_day'][i]) + ' lb CO2%0D%0A'
 
     # compiles widgets
-    dashboard_content = render_template('header-widget.html', page_name='Week of ' + week_name + ' Report')
+    dashboard_content = render_template('header-widget.html', page_name='Week of ' + week_name + ' Report', back_arrow_link='/report_archive')
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('weekly-lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
     dashboard_content += render_template('barchart-report.html', name=week_name.replace('.', ''), lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
-    dashboard_content += render_template('email-print-report.html', lab_name=lab_name, week_name=week_name, email_subject=email_subject, email_body=email_body)
+    dashboard_content += render_template('email-print-report.html', lab_name=lab_name, report_date_stripped=week_name.replace('.', ''), report_date=week_name, email_subject=email_subject, email_body=email_body)
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -170,10 +199,6 @@ def report_chart():
     }
     return report_dict
 
-# @app.route('/report_archive_data', methods=['GET'])
-def report_archive_dates():
-    return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
-    # return from report_archive_dates() in lab_query.py
 
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id
