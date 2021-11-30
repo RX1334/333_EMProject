@@ -185,11 +185,6 @@ def time_dates(days=None, weeks=None, months=None, years=None):
 
 
 def lab_info():
-    if money_mode:
-        print('money')
-    else:
-        print('energy')
-
     root_url = "https://desigocc.princeton.edu/api/api/"
     username = "testuser"
     password = "testuser"
@@ -207,22 +202,27 @@ def lab_info():
     # calculate energy usage from airflow, modify existing dict
     energy_calc(fh_cons)
     climate = climate_energy(root_url, token)
-    lab_energy = lab_energy_calc(fh_cons, climate)
+    if money_mode:
+        lab_energy = lab_energy_calc(fh_cons, climate)
+    else:
+        lab_energy = lab_money_calc(fh_cons, climate)
     temp = climate*10
     times = time_dates()
     week = times[0]
     month = times[1]
     sixmonths = times[2]
     year = times[3]
+    labid = 'rabinowitz-icahn-201'
 
-    dict = {'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
+    dict = {'labid': str(labid),
+        'rabinowitz_icahn_201-number': fh_opens,
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
+        'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         'rabinowitz_icahn_201-temperature': str(round(temp)) + ' °F',
-        'rabinowitz_icahn_201-number' : fh_opens,
+        'rabinowitz_icahn_201-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
         'rabinowitz_icahn_201-occ' : occ,
         'rabinowitz_icahn_201-ave-nrg': str(lab_energy*1.10002) + ' kWh',
-        'rabinowitz_icahn_201-fumehood-energy-ratio': '68%% Fume Hood, 32% Other',
-        'rabinowitz_icahn_201-nrg-trend': str(round(((lab_energy - old_lab_energy)/old_lab_energy)*100)) + '%% change from yesterday',
+        'rabinowitz_icahn_201-nrg-trend': 'NEEDTODO',
         'rabinowitz_icahn_201-chart-data': {
             'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
             'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
@@ -232,9 +232,11 @@ def lab_info():
              402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
         },
         'fumehoods':[
-        {
-                'id':'FH5C', 'kw': str(round(fh_cons['fh5c'], 2)) + ' kWh', 'kwh': 3,
-                'today': 4, 'avg-day': 5,
+        {'id':'FH5C',
+         'kw': str(round(fh_cons['fh5c'], 2)) + ' kWh',
+         'kwh': 3,
+         'today': 4, 
+         'avg-day': 5,
         '-chart-data': {
             'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
             'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
@@ -244,7 +246,23 @@ def lab_info():
              402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
         }, }
         ,
-        {'id': 'FH6C', 'kw': str(round(fh_cons['fh6c'], 2)) + ' kWh', 'kwh': 3, 'today': 4, 'avg-day': 5,
+        {'id': 'FH6C',
+         'kw': str(round(fh_cons['fh6c'], 2)) + ' kWh', 'kwh': 3,
+         'today': 4, 
+         'avg-day': 5,
+         '-chart-data': {
+            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
+            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
+            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
+            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
+            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
+             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+        }, },
+        {'id': 'FH5D',
+         'kw': str(round(fh_cons['fh5d'], 2)) + ' kWh',
+         'kwh': 3, 
+         'today': 4,
+         'avg-day': 5,
         '-chart-data': {
             'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
             'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
@@ -253,16 +271,11 @@ def lab_info():
             'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
              402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
         }, },
-        {'id': 'FH5D', 'kw': str(round(fh_cons['fh5d'], 2)) + ' kWh', 'kwh': 3, 'today': 4, 'avg-day': 5,
-        '-chart-data': {
-            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
-            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
-            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
-            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
-            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
-        }, },
-        {'id': 'FH6D', 'kw': str(round(fh_cons['fh6d'], 2)) + ' kWh', 'kwh': 3, 'today': 4, 'avg-day': 5,
+        {'id': 'FH6D',
+         'kw': str(round(fh_cons['fh6d'], 2)) + ' kWh',
+         'kwh': 3,
+         'today': 4,
+         'avg-day': 5,
         '-chart-data': {
             'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
             'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
