@@ -28,4 +28,20 @@
 
   <!-- handle real time data -->
   <script src="../static/real_time_data_script.js"></script>
+
+  <!-- report archive -->
+  <script src="../static/report_archive_data_script.js"></script>
+  <script>
+    function printPage() {
+      window.print();
+    }
+
+    function emailPage() {
+      window.open('mailto:test@example.com?subject=subject&body=body');
+    }
+    $(".printer-icon").on("click", printPage);
+
+
+
+  </script>
 </html>

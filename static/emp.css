@@ -185,12 +185,12 @@ a {
   margin: 0px 0px 0px 16px;
 }
 
-#dark-mode-icon,
-#hamburger-icon,
-.caret-down-icon,
-.lab-summary-options,
-#money-mode-icon {
+.dark-icon, .light-icon {
   cursor: pointer;
+}
+
+.invisible-icon {
+  display: none;
 }
 
 .menu-hidden {
