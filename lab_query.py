@@ -9,6 +9,8 @@ import requests
 import urllib3
 import time
 from datetime import date, timedelta
+from database import put_fumehood_output, get_fumehood_output, put_lab_info, get_lab_info
+from database import nrg_trend, week_report
 
 # disable https warning
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -128,9 +130,12 @@ def lab_money_calc(fh_cons, climate):
     out += climate
     return out*2.25
 
-def time_dates(days=None, weeks=None, months=None, years=None):
+def time_dates(date=None):
     '''return list of list of dates (1week,4weeks,6months,12months) for calculation labels'''
-    current_date = date.today()
+    if date is not None:
+        current_date = date
+    else:
+        current_date = date.today()
     dates = []
     # 1 week by day
     def week_dates():
@@ -183,6 +188,22 @@ def time_dates(days=None, weeks=None, months=None, years=None):
     year = year_dates()
     return week, month, sixmonths, year
 
+def graph_info():
+    return(0)
+
+def weekly_report(week_date):
+    # need to add logic for consistent start date (e.g. every sunday)
+    data = week_report()
+    cal = time_dates(week_date)
+    dict = {'date': week_date, 
+    'week': cal[2], 
+    'this_week_energy_consumption': data['this_week_energy_consumption'],
+    'this_week_avg_power_consumption': data['this_week_avg_power_consumption'], 
+    'this_week_avg_fumehood_usage': data['this_week_avg_power_consumption'], 
+    'energy_consumption_kwh_day': data['this_week_avg_power_consumption'], 
+    'energy_consumption_dollar_day': data['this_week_avg_power_consumption'], 
+    'energy_consumption_lb_co2_day': data['this_week_avg_power_consumption']}
+    return dict
 
 def lab_info():
     root_url = "https://desigocc.princeton.edu/api/api/"
@@ -212,24 +233,29 @@ def lab_info():
     month = times[1]
     sixmonths = times[2]
     year = times[3]
-    labid = 'rabinowitz-icahn-201'
+    info_5c = get_fumehood_output('5c')
+    info_5d = get_fumehood_output('5d')
+    info_6c = get_fumehood_output('6c')
+    info_6d = get_fumehood_output('6d')
+    info_lab = get_lab_info()
+    energy_comp = nrg_trend()
+
+    labid = 'rabinowitz_icahn_201'
 
     dict = {'labid': str(labid),
         'rabinowitz_icahn_201-number': fh_opens,
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
         'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         'rabinowitz_icahn_201-temperature': str(round(temp)) + ' °F',
-        'rabinowitz_icahn_201-fumehood-energy-ratio': '68% Fumehood 32% Other',
+        'rabinowitz_icahn_201-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
         'rabinowitz_icahn_201-occ' : occ,
         'rabinowitz_icahn_201-ave-nrg': str(lab_energy*1.10002) + ' kWh',
-        'rabinowitz_icahn_201-nrg-trend': 'NEEDTODO',
+        'rabinowitz_icahn_201-nrg-trend': energy_comp,
         'rabinowitz_icahn_201-chart-data': {
-            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
-            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
-            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
-            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
-            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+            'dates':  {'labels': week, 'time': info_lab['dates']},
+            'weeks':  {'labels': month, 'time':info_lab['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_lab['sixMonths']},
+            'years':  {'labels': year, 'time': info_lab['years']}
         },
         'fumehoods':[
         {'id':'FH5C',
@@ -238,12 +264,10 @@ def lab_info():
          'today': 4, 
          'avg-day': 5,
         '-chart-data': {
-            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
-            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
-            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
-            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
-            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+            'dates':  {'labels': week, 'time': info_5c['dates']},
+            'weeks':  {'labels': month, 'time': info_5c['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_5c['sixMonths']},
+            'years':  {'labels': year, 'time': info_5c['years']}
         }, }
         ,
         {'id': 'FH6C',
@@ -251,12 +275,10 @@ def lab_info():
          'today': 4, 
          'avg-day': 5,
          '-chart-data': {
-            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
-            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
-            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
-            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
-            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+            'dates':  {'labels': week, 'time': info_6c['dates']},
+            'weeks':  {'labels': month, 'time': info_6c['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_6c['sixMonths']},
+            'years':  {'labels': year, 'time': info_6c['years']}
         }, },
         {'id': 'FH5D',
          'kw': str(round(fh_cons['fh5d'], 2)) + ' kWh',
@@ -264,12 +286,10 @@ def lab_info():
          'today': 4,
          'avg-day': 5,
         '-chart-data': {
-            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
-            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
-            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
-            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
-            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+            'dates':  {'labels': week, 'time': info_5d['dates']},
+            'weeks':  {'labels': month, 'time': info_5d['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_5d['sixMonths']},
+            'years':  {'labels': year, 'time': info_5d['years']}
         }, },
         {'id': 'FH6D',
          'kw': str(round(fh_cons['fh6d'], 2)) + ' kWh',
@@ -277,14 +297,15 @@ def lab_info():
          'today': 4,
          'avg-day': 5,
         '-chart-data': {
-            'dates':  {'labels': [week[0],week[1],week[2],week[3],week[4],week[5], week[6]],
-            'time': [450.139, 423.239, 390.291, 320.120, 490.390, 419.329, 213.221]},
-            'weeks':  {'labels': [month[0], month[1], month[2], month[3]], 'time': [400.272, 402.002, 381.078, 392.219]},
-            'sixMonths': {'labels': [sixmonths[0], sixmonths[1], sixmonths[2], sixmonths[3], sixmonths[4], sixmonths[5]], 'time': [383.382, 392.229, 402.225, 410.202, 402.225, 410.202]},
-            'years':  {'labels': [year[0],year[1],year[2], year[3],year[4], year[5], year[6], year[7], year[8], year[9], year[10], year[11]], 'time': [402.208, 303.443, 412.239, 380.393, 390.202, 399.250,
-             402.240, 379.992, 389.225, 394.293, 428.393, 402.922]}
+            'dates':  {'labels': week, 'time': info_6d['dates']},
+            'weeks':  {'labels': month, 'time': info_6d['weeks']},
+            'sixMonths': {'labels': sixmonths, 'time': info_6d['sixMonths']},
+            'years':  {'labels': year, 'time': info_6d['years']}
         }, }]
     }
+    put_fumehood_output()
+    put_lab_info()
+    print(dict)
     return dict
 
 if __name__ == '__main__':
