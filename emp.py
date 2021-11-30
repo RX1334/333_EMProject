@@ -134,7 +134,7 @@ def report():
     email_body += 'Average Fumehood Usage: ' + weeks_data['this_week_avg_fumehood_usage'] + '%0D%0A%0D%0A'
     email_body += 'Energy Consumption by Day:%0D%0A'
     for i in range(7):
-        email_body += weeks_data['week'][i] + ' '
+        email_body += weeks_data['week'][i] + ': '
         email_body += str(weeks_data['energy_consumption_kwh_day'][i]) + ' kWh / '
         email_body += '$' + str(weeks_data['energy_consumption_dollars_day'][i]) + ' / '
         email_body += str(weeks_data['energy_consumption_lb_co2_day'][i]) + ' lb CO2%0D%0A'
