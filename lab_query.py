@@ -143,7 +143,7 @@ def time_dates(date_input=None):
         current_date = date.today()
     dates = []
     def month_tostring(month):
-        monthnames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC']
+        monthnames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
         return monthnames[month-1]
     # 1 week by day
     def week_dates():
