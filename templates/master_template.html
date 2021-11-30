@@ -31,9 +31,34 @@
 
   <!-- report archive -->
   <script src="../static/report_archive_data_script.js"></script>
+
+  <!-- print.js library -->
+  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
   <script>
+
+
+
     function printPage() {
-      window.print();
+      myData= [
+    {
+       name: 'John Doe',
+       email: 'john@doe.com',
+       phone: '111-111-1111'
+    },
+    {
+       name: 'Barry Allen',
+       email: 'barry@flash.com',
+       phone: '222-222-2222'
+    },
+    {
+       name: 'Cool Dude',
+       email: 'cool@dude.com',
+       phone: '333-333-3333'
+    }
+ ]
+
+      printJS({printable: myData, type: 'json', properties: ['name', 'email', 'phone']});
     }
 
     function emailPage() {

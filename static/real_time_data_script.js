@@ -144,9 +144,9 @@ function get_date() {
 // set up document
 function setup() {
   get_rt_data();
-  window.setInterval(get_rt_data, 1000);
+  window.setInterval(get_rt_data, 5000);
   get_date();
-  window.setInterval(getDate(), 3600000);
+  window.setInterval(get_date, 3600000);
 }
 
 $("document").ready(setup);
