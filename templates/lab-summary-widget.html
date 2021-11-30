@@ -29,15 +29,15 @@
         <form action="/action_page.php">
           <div class="lab-summary-options-row">
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="nrg-cons-check" checked />
+              <input type="checkbox" id="nrg-cons-check" />
               <label for="nrg-cons-check">Energy Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="pwr-cons-check" checked />
+              <input type="checkbox" id="pwr-cons-check" />
               <label for="pwr-cons-check">Power Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="hood-usage-check" checked />
+              <input type="checkbox" id="hood-usage-check" />
               <label for="hood-usage-check">Fume Hood Use Status</label>
             </span>
           </div>
@@ -133,15 +133,22 @@
 <script>
   // On startup
   function setup() {
+    let checkboxNames =
+      localStorage.getItem("checked") ??
+      "nrg-cons-check;pwr-cons-check;hood-usage-check";
+    setChecks(checkboxNames);
+    localStorage.setItem(checkboxNames);
+  }
+
+  function setChecks(checkStr) {
+    let checkArr = checkStr.split(";");
     let allCheckboxes = $(".lab-summary-gear-disp input");
-    let checkboxNames = [];
     allCheckboxes.each(function (index) {
-      if ($(this).is(":checked")) {
-        checkboxNames.push($(this).attr("id"));
-      }
+      $(this).prop("checked", false);
     });
-    localStorage.setItem("checked", checkboxNames.join(";"));
-    console.log(checkboxNames.join(";"));
+    checkArr.forEach((id) => {
+      $("#" + id).prop("checked", true);
+    });
   }
 
   // arr is an array containing the ids of the inputs
@@ -197,14 +204,15 @@
 
     // This keeps the old ones checked if there are fewer than 3
     if (checkboxNames.length < 3) {
-      checkboxNames.forEach((id) => {
-        $("#" + id).prop("checked", false);
-      });
-      let oldChecks = localStorage.getItem("checked");
-      let oldChecksArr = oldChecks.split(";");
-      oldChecksArr.forEach((id) => {
-        $("#" + id).prop("checked", true);
-      });
+      setChecks(localStorage.getItem("checked"));
+      // checkboxNames.forEach((id) => {
+      //   $("#" + id).prop("checked", false);
+      // });
+      // let oldChecks = localStorage.getItem("checked");
+      // let oldChecksArr = oldChecks.split(";");
+      // oldChecksArr.forEach((id) => {
+      //   $("#" + id).prop("checked", true);
+      // });
       displayInnerWidgets(oldChecksArr);
       return;
     }
