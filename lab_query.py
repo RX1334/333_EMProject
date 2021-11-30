@@ -100,7 +100,10 @@ def fh_consumption(root_url, token, fh_opens):
     for point in fh_cons.keys():
         if fh_cons[point][0] == 1:
             get = requests.get(root_url + fh_cons[point][1], headers={'Authorization': 'Bearer ' + token}, verify=False)
-            fh_cons[point] = (((get.json()['Properties'])[0])['Value'])['Value']
+            try:
+                fh_cons[point] = (((get.json()['Properties'])[0])['Value'])['Value']
+            except:
+                fh_cons[point] = 0.0
         else:
             fh_cons[point] = 0.0
     # print(fh_cons)
@@ -255,7 +258,7 @@ def lab_info():
         # %'s don't need to be escaped
         'rabinowitz_icahn_201-fumehood-energy-ratio': '68% Fumehood 32% Other',
         'rabinowitz_icahn_201-occ' : str(occ) + '%',
-        'rabinowitz_icahn_201-ave-nrg': str(lab_energy*1.10002) + ' kWh',
+        'rabinowitz_icahn_201-ave-nrg': str(round(lab_energy*1.10002, 2))+ ' kWh',
         'rabinowitz_icahn_201-nrg-trend': energy_comp,
         'rabinowitz_icahn_201-chart-data': {
             'dates':  {'labels': week, 'time': info_lab['dates']},

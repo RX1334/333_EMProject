@@ -58,7 +58,10 @@
         </form>
       </div>
 
-      <span class="lab-summary-today-consumption lab-summary-option">
+      <span
+        class="lab-summary-today-consumption lab-summary-option"
+        style="display: none"
+      >
         <div
           class="lab-summary-today-kwh widget-medium"
           id="{{lab_name}}-today-kwh"
@@ -67,7 +70,10 @@
           Today's Energy Consumption
         </div>
       </span>
-      <span class="lab-summary-current-consumption lab-summary-option">
+      <span
+        class="lab-summary-current-consumption lab-summary-option"
+        style="display: none"
+      >
         <div
           class="lab-summary-current-kw widget-medium"
           id="{{lab_name}}-current-kw"
@@ -76,7 +82,10 @@
           Current Power Consumption
         </div>
       </span>
-      <span class="lab-summary-number-active lab-summary-option">
+      <span
+        class="lab-summary-number-active lab-summary-option"
+        style="display: none"
+      >
         <div
           class="lab-summary-number widget-medium"
           id="{{lab_name}}-number"
@@ -130,7 +139,9 @@
     let checkboxNames =
       localStorage.getItem("checked") ??
       "nrg-cons-check;pwr-cons-check;hood-usage-check";
+    console.log(checkboxNames);
     setChecks(checkboxNames);
+    displayInnerWidgets(checkboxNames.split(";"));
     localStorage.setItem("checked", checkboxNames);
   }
 
@@ -148,6 +159,11 @@
   // arr is an array containing the ids of the inputs
   // that were checked in the function
   function displayInnerWidgets(arr) {
+    // First, hide all the displays
+    console.log("in display");
+    $(".lab-summary-gear-disp").css("display", "none");
+
+    // Now, just show the relevant displays
     arr.forEach((id) => {
       switch (id) {
         case "nrg-cons-check":
@@ -193,8 +209,6 @@
     if (checkboxNames.length > 3) {
       return;
     }
-
-    $(".lab-summary-gear-disp").css("display", "none");
 
     // This keeps the old ones checked if there are fewer than 3
     if (checkboxNames.length < 3) {

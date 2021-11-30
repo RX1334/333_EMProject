@@ -102,6 +102,12 @@ function handle_rt_resp(response) {
         let id = value[i]["id"];
         id = "fumehood" + i;
         for (const [fkey, fvalue] of Object.entries(value[i])) {
+          if (fkey == "id") {
+            $("#" + id + "-mini-status")
+              .siblings(".mini-fume-name")
+              .text("Fumehood " + fvalue.substring(2));
+            continue;
+          }
           $("#" + id + "-" + fkey).text(fvalue);
           if (fkey.endsWith("-chart-data")) {
             // let end = fkey.indexOf("-chart-data");
