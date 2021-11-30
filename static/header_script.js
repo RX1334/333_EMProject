@@ -3,15 +3,6 @@
 function setLightMode() {
   localStorage.setItem("dark_mode_on", "0");
 
-  // set icons to the correct color
-  // $("#dark-mode-icon").attr("src", "../static/images/DarkMode.svg");
-  // $(".printer-icon").attr("src", "../static/images/Printer_dark.svg");
-  // $(".caret-down-icon").attr("src", "../static/images/CaretDown_dark.svg");
-  // $(".plus-icon").attr("src", "../static/images/Plus_dark.svg");
-  // $(".lab-summary-options").attr(
-  //   "src",
-  //   "../static/images/GearSix_dark.svg"
-  // );
   $(".light-icon").addClass("invisible-icon");
   $(".dark-icon").removeClass("invisible-icon");
 
@@ -28,6 +19,8 @@ function setLightMode() {
   $(".report-widget-internal-container").addClass("light-report-widget-nest");
   $(".report-widget-internal-container").removeClass("report-widget-nest");
 
+  $(".arrow-left-icon").addClass("invisible-icon");
+
   // change remaining css
   $("body, a").css({ color: "#2A2A2A" });
   $("#dashboard").css({
@@ -42,13 +35,6 @@ function setLightMode() {
 
 function setDarkMode() {
   localStorage.setItem("dark_mode_on", "1");
-
-  // set icons to the correct color
-  // $("#dark-mode-icon").attr("src", "../static/images/LightMode.svg");
-  // $(".printer-icon").attr("src", "../static/images/Printer.svg");
-  // $(".caret-down-icon").attr("src", "../static/images/CaretDown.svg");
-  // $(".plus-icon").attr("src", "../static/images/Plus.svg");
-  // $(".lab-summary-options").attr("src", "../static/images/GearSix.svg");
 
   $(".dark-icon").addClass("invisible-icon");
   $(".light-icon").removeClass("invisible-icon");
@@ -65,6 +51,8 @@ function setDarkMode() {
 
   $(".report-widget-internal-container").addClass("report-widget-nest");
   $(".report-widget-internal-container").removeClass("light-report-widget-nest");
+
+  $(".arrow-left-icon").addClass("invisible-icon");
 
   // change remaining css
   $("body, a").css({ color: "white" });
@@ -95,6 +83,7 @@ function setMenuClosed() {
   $(".menu-hidden").hide();
   $(".menu-visible").show();
   // if dark mode is on, display white svg. else display gray one
+
   if (localStorage.getItem("dark_mode_on") === "0") {
     $(".dark-icon").removeClass("invisible-icon");
     $(".x-icon").addClass("invisible-icon");
@@ -104,6 +93,8 @@ function setMenuClosed() {
     $(".x-icon").addClass("invisible-icon");
     $(".dark-icon").addClass("invisible-icon");
   }
+
+  $(".arrow-left-icon").addClass("invisible-icon");
 
   if (localStorage.getItem("money_mode_on") === "1") {
     $(".dark-money-icon").addClass("invisible-icon");
@@ -115,6 +106,7 @@ function setMenuOpen() {
   localStorage.setItem("menu_open", "1");
   $(".menu-hidden").show();
   $(".menu-visible").hide();
+
   // if dark mode is on, display white svg. else display gray one
   if (localStorage.getItem("dark_mode_on") === "0") {
     $(".dark-icon").removeClass("invisible-icon");
@@ -125,6 +117,8 @@ function setMenuOpen() {
     $(".hamburger-icon").addClass("invisible-icon");
     $(".dark-icon").addClass("invisible-icon");
   }
+
+  $(".arrow-left-icon").addClass("invisible-icon");
 
   if (localStorage.getItem("money_mode_on") === "1") {
     $(".dark-money-icon").addClass("invisible-icon");
