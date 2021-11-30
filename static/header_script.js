@@ -8,21 +8,19 @@ function setLightMode() {
   $(".printer-icon").attr("src", "../static/images/Printer_dark.svg");
   $(".caret-down-icon").attr("src", "../static/images/CaretDown_dark.svg");
   $(".plus-icon").attr("src", "../static/images/Plus_dark.svg");
-  $(".lab-summary-options").attr(
-    "src",
-    "../static/images/GearSix_dark.svg"
-  );
+  $(".lab-summary-options").attr("src", "../static/images/GearSix_dark.svg");
   if (localStorage.getItem("menu_open") === "1")
     $("#hamburger-icon").attr("src", "../static/images/X_dark.svg");
   else $("#hamburger-icon").attr("src", "../static/images/List_dark.svg");
 
   if (localStorage.getItem("money_mode_on") === "1")
     $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
-  else { $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
+  else {
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
 
-  $(".report-widget-internal-container").addClass("light-report-widget-nest");
-  $(".report-widget-internal-container").removeClass("report-widget-nest");
-}
+    $(".report-widget-internal-container").addClass("light-report-widget-nest");
+    $(".report-widget-internal-container").removeClass("report-widget-nest");
+  }
 
   // change remaining css
   $("body, a").css({ color: "#2A2A2A" });
@@ -50,13 +48,15 @@ function setDarkMode() {
   else $("#hamburger-icon").attr("src", "../static/images/List.svg");
 
   if (localStorage.getItem("money_mode_on") === "1")
-    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg")
-  else  { $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg")
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
+  else {
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
 
-  $(".report-widget-internal-container").addClass("report-widget-nest");
-  $(".report-widget-internal-container").removeClass("light-report-widget-nest");
-}
-
+    $(".report-widget-internal-container").addClass("report-widget-nest");
+    $(".report-widget-internal-container").removeClass(
+      "light-report-widget-nest"
+    );
+  }
 
   // change remaining css
   $("body, a").css({ color: "white" });
@@ -76,6 +76,9 @@ function toggleDarkMode() {
   // If a barchart is located on the page, it will update the colors
   try {
     buildAllCharts();
+  } catch {}
+  try {
+    buildAllReportCharts();
   } catch {}
 }
 
@@ -116,8 +119,7 @@ function setNonMoneyMode() {
   // set icons to the correct color
   if (localStorage.getItem("dark_mode_on") === "0")
     $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
-  else
-    $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
+  else $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
 }
 
 function toggleMoneyMode() {
@@ -129,6 +131,9 @@ function toggleMoneyMode() {
   // If a barchart is located on the page, it will update the colors
   try {
     buildAllCharts();
+  } catch {}
+  try {
+    buildAllReportCharts();
   } catch {}
 }
 

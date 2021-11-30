@@ -126,13 +126,31 @@ def weekly_report():
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('weekly-lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
+    # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
+    dashboard_content += render_template('barchart-report.html', name=week_name.replace('.', ''), lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
     dashboard_content += render_template('email-print-report.html')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
     response = make_response(html)
     return(response)
+
+# Get Report Chart Data
+@app.route('/report-chart-data', methods=['GET'])
+def report_chart():
+    date = request.args.get('date')
+    # For now, use fake data, but should call a lab_query func instead
+    report_dict = {
+        'date' : '10.31.21',
+        'this_week_energy_consumption' : '323.3 kWh',
+        'this_week_avg_power_consumption' : '421.23 kW',
+        'this_week_avg_fumehood_usage' : '6 hrs',
+        'energy_consumption_kwh_day' : ['3 kW', '3 kW', '3 kW', '3 kW', '3 kW', '3 kW', '3 kW'],
+        'energy_consumption_dollars_day' : ['$5','$5','$5','$5','$5','$5','$5'],
+        'energy_consumption_lb_co2_day' : ['8 lb CO2', '8 lb CO2','8 lb CO2','8 lb CO2','8 lb CO2','8 lb CO2','8 lb CO2']
+    }
+    return report_dict
+
 
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id

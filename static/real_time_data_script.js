@@ -3,15 +3,15 @@
 let request = null;
 
 function lab_summary() {
-    let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
-    if (request != null) request.abort();
+  let url = "/lab_summary?lab_name=rabinowitz_icahn_201";
+  if (request != null) request.abort();
 
-    request = $.ajax({
-      type: "GET",
-      url: url,
-      success: handle_rerender,
-    });
-  }
+  request = $.ajax({
+    type: "GET",
+    url: url,
+    success: handle_rerender,
+  });
+}
 
 function handle_rerender(response) {
   console.log("rerender");
@@ -65,9 +65,8 @@ function handle_rt_resp(response) {
       let end = key.indexOf("-chart-data");
       try {
         buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
-      } catch {
-        continue;
-      }
+      } catch {}
+      continue;
     }
     if (key.endsWith("-number")) {
       let numOpen = 0;
@@ -89,9 +88,7 @@ function handle_rt_resp(response) {
             let end = fkey.indexOf("-chart-data");
             try {
               buildAllCharts(fvalue, "#" + id + "-chart");
-            } catch {
-              continue;
-            }
+            } catch {}
           }
         }
       }
