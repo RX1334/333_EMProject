@@ -131,7 +131,7 @@ def report():
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
     dashboard_content += render_template('barchart-report.html', name=week_name.replace('.', ''), lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
-    dashboard_content += render_template('email-print-report.html')
+    dashboard_content += render_template('email-print-report.html', lab_name=lab_name, week_name=week_name)
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -160,6 +160,7 @@ def report_archive_dates():
     return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
     # return from report_archive_dates() in lab_query.py
 
+# the printed weekly report
 @app.route('/weekly_report', methods=['GET'])
 def weekly_report():
     date = request.args.get('date')
@@ -169,7 +170,7 @@ def weekly_report():
     response = make_response(html)
     return response
 
-
+# should be replaced by call to lab_query
 def weekly_report(date):
     return {
     'date' : date,

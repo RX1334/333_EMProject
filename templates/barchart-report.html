@@ -28,19 +28,19 @@
     >
       <!-- Duration Selection List -->
       <div style="display: flex; flex-direction: row">
-        <input type="radio" id="radio-kWh" name="duration" checked />
+        <input type="radio" id="radio-kWh" name="duration" checked style="cursor: pointer"/>
         <label for="radio-kWh" onclick="hideAllBut('#barchart-nrg')"
           >kWh/Day</label
         >
 
-        <input type="radio" id="radio-dollars" name="duration" />
+        <input type="radio" id="radio-dollars" name="duration" style="cursor: pointer"/>
         <label for="radio-dollars" onclick="hideAllBut('#barchart-dollars')"
           >$/Day</label
         >
 
-        <input type="radio" id="radio-co2" name="duration" />
+        <input type="radio" id="radio-co2" name="duration" style="cursor: pointer"/>
         <label for="radio-co2" onclick="hideAllBut('#barchart-co2')"
-          >Lb CO2/Day</label
+          >lb CO2/Day</label
         >
       </div>
       <!-- Unit Label -->
@@ -166,7 +166,7 @@
     } else if (id.includes("-dollars")) {
       $(".report-chart-units").text("Units: $");
     } else if (id.includes("-co2")) {
-      $(".report-chart-units").text("Units: lbs");
+      $(".report-chart-units").text("Units: lbs CO2");
     }
   }
 
