@@ -70,8 +70,27 @@ function handle_rt_resp(response) {
     }
     if (key.endsWith("-number")) {
       let numOpen = 0;
-      for (const key of Object.keys(value)) {
-        if (value[key] == "OPEN") {
+      let i = 0;
+      for (const vkey of Object.keys(value)) {
+        $("#fumehood" + i + "-mini-status").removeClass("red");
+        $("#fumehood" + i + "-mini-status").removeClass("green");
+        let html;
+        if (value[vkey] == "OPEN") {
+          html =
+            "<p>" +
+            value[vkey] +
+            "</p><img src='../static/images/RedDot.svg'></img>";
+          $("#fumehood" + i + "-mini-status").addClass("red");
+        } else {
+          html =
+            "<p>" +
+            value[vkey] +
+            "</p><img src='../static/images/GreenDot.svg'></img>";
+          $("#fumehood" + i + "-mini-status").addClass("green");
+        }
+        $("#fumehood" + i + "-mini-status").html(html);
+        i += 1;
+        if (value[vkey] == "OPEN") {
           numOpen++;
         }
       }
@@ -85,7 +104,7 @@ function handle_rt_resp(response) {
         for (const [fkey, fvalue] of Object.entries(value[i])) {
           $("#" + id + "-" + fkey).text(fvalue);
           if (fkey.endsWith("-chart-data")) {
-            let end = fkey.indexOf("-chart-data");
+            // let end = fkey.indexOf("-chart-data");
             try {
               buildAllCharts(fvalue, "#" + id + "-chart");
             } catch {}
