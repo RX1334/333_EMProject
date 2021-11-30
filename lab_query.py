@@ -250,8 +250,9 @@ def lab_info():
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
         'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         'rabinowitz_icahn_201-temperature': str(round(temp)) + ' °F',
-        'rabinowitz_icahn_201-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
-        'rabinowitz_icahn_201-occ' : occ,
+        # %'s don't need to be escaped
+        'rabinowitz_icahn_201-fumehood-energy-ratio': '68% Fumehood 32% Other',
+        'rabinowitz_icahn_201-occ' : str(occ) + '%',
         'rabinowitz_icahn_201-ave-nrg': str(lab_energy*1.10002) + ' kWh',
         'rabinowitz_icahn_201-nrg-trend': energy_comp,
         'rabinowitz_icahn_201-chart-data': {
@@ -308,7 +309,7 @@ def lab_info():
     }
     # put_fumehood_output()
     # put_lab_info()
-    print(dict)
+    # print(dict)
     return dict
 
 if __name__ == '__main__':

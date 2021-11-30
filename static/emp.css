@@ -186,7 +186,8 @@ a {
 }
 
 .dark-icon,
-.light-icon {
+.light-icon,
+.money-mode-icon {
   cursor: pointer;
 }
 

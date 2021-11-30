@@ -29,15 +29,15 @@
         <form action="/action_page.php">
           <div class="lab-summary-options-row">
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="nrg-cons-check" checked />
+              <input type="checkbox" id="nrg-cons-check" />
               <label for="nrg-cons-check">Energy Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="pwr-cons-check" checked />
+              <input type="checkbox" id="pwr-cons-check" />
               <label for="pwr-cons-check">Power Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="hood-usage-check" checked />
+              <input type="checkbox" id="hood-usage-check" />
               <label for="hood-usage-check">Fume Hood Use Status</label>
             </span>
           </div>
@@ -89,9 +89,7 @@
         class="lab-summary-occ-ratio lab-summary-option"
         style="display: none"
       >
-        <div class="lab-summary-occ widget-medium" id="{{lab_name}}-occ">
-          Placeholder %
-        </div>
+        <div class="lab-summary-occ widget-medium" id="{{lab_name}}-occ"></div>
         <div class="lab-summary-occ-text body-small">Occupancy Percentage</div>
       </span>
 
@@ -103,9 +101,7 @@
         <div
           class="lab-summary-inner-ave-nrg widget-medium"
           id="{{lab_name}}-ave-nrg"
-        >
-          Placeholder
-        </div>
+        ></div>
         <div class="lab-summary-ave-nrg-text body-small">
           Average Energy Used
         </div>
@@ -119,9 +115,7 @@
         <div
           class="lab-summary-inner-nrg-trend widget-medium"
           id="{{lab_name}}-nrg-trend"
-        >
-          Placeholder %
-        </div>
+        ></div>
         <div class="lab-summary-nrg-trend-text body-small">
           the Energy Used Yesterday
         </div>
@@ -133,15 +127,22 @@
 <script>
   // On startup
   function setup() {
+    let checkboxNames =
+      localStorage.getItem("checked") ??
+      "nrg-cons-check;pwr-cons-check;hood-usage-check";
+    setChecks(checkboxNames);
+    localStorage.setItem("checked", checkboxNames);
+  }
+
+  function setChecks(checkStr) {
+    let checkArr = checkStr.split(";");
     let allCheckboxes = $(".lab-summary-gear-disp input");
-    let checkboxNames = [];
     allCheckboxes.each(function (index) {
-      if ($(this).is(":checked")) {
-        checkboxNames.push($(this).attr("id"));
-      }
+      $(this).prop("checked", false);
     });
-    localStorage.setItem("checked", checkboxNames.join(";"));
-    console.log(checkboxNames.join(";"));
+    checkArr.forEach((id) => {
+      $("#" + id).prop("checked", true);
+    });
   }
 
   // arr is an array containing the ids of the inputs
@@ -197,15 +198,17 @@
 
     // This keeps the old ones checked if there are fewer than 3
     if (checkboxNames.length < 3) {
-      checkboxNames.forEach((id) => {
-        $("#" + id).prop("checked", false);
-      });
-      let oldChecks = localStorage.getItem("checked");
-      let oldChecksArr = oldChecks.split(";");
-      oldChecksArr.forEach((id) => {
-        $("#" + id).prop("checked", true);
-      });
-      displayInnerWidgets(oldChecksArr);
+      let oldChecksArr = localStorage.getItem("checked");
+      setChecks(oldChecksArr);
+      // checkboxNames.forEach((id) => {
+      //   $("#" + id).prop("checked", false);
+      // });
+      // let oldChecks = localStorage.getItem("checked");
+      // let oldChecksArr = oldChecks.split(";");
+      // oldChecksArr.forEach((id) => {
+      //   $("#" + id).prop("checked", true);
+      // });
+      displayInnerWidgets(oldChecksArr.split(";"));
       return;
     }
 

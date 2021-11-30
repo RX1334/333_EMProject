@@ -27,7 +27,10 @@ def put_fumehood_output(date, fh_id):
     #     # Close connection.
     #     conn.close()
 def nrg_trend():
-    return('Energy consumption is down 8.2%% from yesterday')
+    # We want this just be short numerical info (otherwise the display is clunky). 
+    # The helper text in the html file handles this fine. Also, %'s don't need to 
+    # be escaped
+    return('-8.2%')
 
 def put_lab_info():
     print('lol')
