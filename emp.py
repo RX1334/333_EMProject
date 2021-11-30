@@ -94,13 +94,15 @@ def lab_summary():
 # report archive
 @app.route('/report_archive', methods=['GET'])
 def report_archive():
+
+    dates_array = report_archive_dates()
+
     # render energy and power widgets
     dashboard_content = render_template('header-widget.html', page_name='Report Archive')
     dashboard_content += render_template('report-heading-label.html', text='Icahn 201 Reports')
     dashboard_content += '<div class="report-widget-container widget-container">'
-    dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date='10.31.21')
-    dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date='10.24.21')
-    dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date='10.17.21')
+    for date in dates_array:
+        dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date=date)
     dashboard_content += '</div>'
 
     # renders dashboard with those widgets
@@ -133,6 +135,12 @@ def weekly_report():
     html = render_template('master_template.html', dashboard_content=dashboard_content)
     response = make_response(html)
     return(response)
+
+# @app.route('/report_archive_data', methods=['GET'])
+def report_archive_dates():
+    return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
+    # return from report_archive_dates() in lab_query.py
+
 
 # Temporary function for fetching all the relevant
 # real-time data given either a lab name or a fumehood id
@@ -209,5 +217,5 @@ def real_time_data():
         },
     }
 
-    return data_dict
-    # return lab_info()
+    # return data_dict
+    return lab_info()

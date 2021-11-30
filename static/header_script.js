@@ -4,14 +4,17 @@ function setLightMode() {
   localStorage.setItem("dark_mode_on", "0");
 
   // set icons to the correct color
-  $("#dark-mode-icon").attr("src", "../static/images/DarkMode.svg");
-  $(".printer-icon").attr("src", "../static/images/Printer_dark.svg");
-  $(".caret-down-icon").attr("src", "../static/images/CaretDown_dark.svg");
-  $(".plus-icon").attr("src", "../static/images/Plus_dark.svg");
-  $(".lab-summary-options").attr(
-    "src",
-    "../static/images/GearSix_dark.svg"
-  );
+  // $("#dark-mode-icon").attr("src", "../static/images/DarkMode.svg");
+  // $(".printer-icon").attr("src", "../static/images/Printer_dark.svg");
+  // $(".caret-down-icon").attr("src", "../static/images/CaretDown_dark.svg");
+  // $(".plus-icon").attr("src", "../static/images/Plus_dark.svg");
+  // $(".lab-summary-options").attr(
+  //   "src",
+  //   "../static/images/GearSix_dark.svg"
+  // );
+  $(".light-icon").addClass("invisible-icon");
+  $(".dark-icon").removeClass("invisible-icon");
+
   if (localStorage.getItem("menu_open") === "1")
     $("#hamburger-icon").attr("src", "../static/images/X_dark.svg");
   else $("#hamburger-icon").attr("src", "../static/images/List_dark.svg");
@@ -40,11 +43,15 @@ function setDarkMode() {
   localStorage.setItem("dark_mode_on", "1");
 
   // set icons to the correct color
-  $("#dark-mode-icon").attr("src", "../static/images/LightMode.svg");
-  $(".printer-icon").attr("src", "../static/images/Printer.svg");
-  $(".caret-down-icon").attr("src", "../static/images/CaretDown.svg");
-  $(".plus-icon").attr("src", "../static/images/Plus.svg");
-  $(".lab-summary-options").attr("src", "../static/images/GearSix.svg");
+  // $("#dark-mode-icon").attr("src", "../static/images/LightMode.svg");
+  // $(".printer-icon").attr("src", "../static/images/Printer.svg");
+  // $(".caret-down-icon").attr("src", "../static/images/CaretDown.svg");
+  // $(".plus-icon").attr("src", "../static/images/Plus.svg");
+  // $(".lab-summary-options").attr("src", "../static/images/GearSix.svg");
+
+  $(".dark-icon").addClass("invisible-icon");
+  $(".light-icon").removeClass("invisible-icon");
+
   if (localStorage.getItem("menu_open") === "1")
     $("#hamburger-icon").attr("src", "../static/images/X.svg");
   else $("#hamburger-icon").attr("src", "../static/images/List.svg");
@@ -108,16 +115,16 @@ function setMoneyMode() {
   localStorage.setItem("money_mode_on", "1");
 
   // set icons to the correct color
-  $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
+  $(".money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
 }
 
 function setNonMoneyMode() {
   localStorage.setItem("money_mode_on", "0");
   // set icons to the correct color
   if (localStorage.getItem("dark_mode_on") === "0")
-    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
+    $(".money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
   else
-    $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
+    $(".money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
 }
 
 function toggleMoneyMode() {
@@ -133,9 +140,9 @@ function toggleMoneyMode() {
 }
 
 function setup() {
-  $("#dark-mode-icon").on("click", toggleDarkMode);
-  $("#hamburger-icon").on("click", toggleMenu);
-  $("#money-mode-icon").on("click", toggleMoneyMode);
+  $(".dark-mode-icon").on("click", toggleDarkMode);
+  $(".hamburger-icon").on("click", toggleMenu);
+  $(".money-mode-icon").on("click", toggleMoneyMode);
   console.log("setup");
 
   // reset dark mode status, default to dark mode
