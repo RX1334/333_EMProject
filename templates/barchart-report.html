@@ -1,0 +1,210 @@
+<div class="widget dark">
+  <div class="graph-widget body-small report-graph-widget">
+    <div>Placeholder Identifier | {{lab_name}} {{type_of_graph}}</div>
+    <div id="{{name}}-report-chart">
+      <svg width="608" height="156" class="barchart" id="barchart-nrg"></svg>
+      <svg
+        width="608"
+        height="156"
+        class="barchart"
+        id="barchart-dollars"
+        style="display: none"
+      ></svg>
+      <svg
+        width="608"
+        height="156"
+        class="barchart"
+        id="barchart-co2"
+        style="display: none"
+      ></svg>
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: stretch;
+      "
+    >
+      <!-- Duration Selection List -->
+      <div style="display: flex; flex-direction: row">
+        <input type="radio" id="radio-kWh" name="duration" checked />
+        <label for="radio-kWh" onclick="hideAllBut('#barchart-nrg')"
+          >kWh/Day</label
+        >
+
+        <input type="radio" id="radio-dollars" name="duration" />
+        <label for="radio-dollars" onclick="hideAllBut('#barchart-dollars')"
+          >$/Day</label
+        >
+
+        <input type="radio" id="radio-co2" name="duration" />
+        <label for="radio-co2" onclick="hideAllBut('#barchart-co2')"
+          >Lb CO2/Day</label
+        >
+      </div>
+      <!-- Unit Label -->
+      <div class="report-chart-units">Units: kWh</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // function dataStringToInt(arr) {
+  //   let intArr = [];
+  //   arr.forEach((elem) => {
+  //     let toPush;
+  //     if (arr[0].includes("$")) {
+  //       toPush = elem.substring(1);
+  //     } else if (arr[0].includes(" kW")) {
+  //       toPush = elem.substring(0, elem.length - 3);
+  //     } else if (arr[0].includes(" lb CO2")) {
+  //       toPush = elem.substring(0, elem.length - 7);
+  //     } else {
+  //       console.log("Malformed data array");
+  //     }
+  //     intArr.push(parseInt(toPush));
+  //   });
+  //   return intArr;
+  // }
+
+  function buildReportChart(report_data, id, week) {
+    let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
+    let data = {};
+    // data["time"] = dataStringToInt(report_data);
+    data["time"] = report_data;
+    data["labels"] = week;
+
+    if (dark_mode_on === "0") color = "#2A2A2A";
+    else color = "white";
+
+    // Selecting and defining work area in the SVG
+    var svg = d3.select(id),
+      margin = 24,
+      width = svg.attr("width"),
+      height = svg.attr("height") - margin;
+
+    svg.selectAll("*").remove();
+
+    // Setting X and Y axis ranges
+    var xScale = d3.scaleBand().range([0, width]).padding(0.5),
+      yScale = d3.scalePow().range([height, 0]);
+
+    // Appending a Graph to work with to the SVG
+    var g = svg.append("g");
+
+    xScale.domain(data["labels"]);
+    yScale.domain([0, d3.max(data.time)]);
+
+    arrData = [];
+    for (let i = 0; i < data["labels"].length; i++) {
+      arrData.push({
+        labels: data["labels"][i],
+        time: data["time"][i],
+      });
+    }
+
+    var xAxis = g
+      .append("g")
+      .attr("transform", "translate(0," + (height + 4) + ")")
+      .call(d3.axisBottom(xScale));
+
+    xAxis.selectAll("line").style("display", "none");
+    xAxis.selectAll("path").style("display", "none");
+
+    xAxis
+      .selectAll("text")
+      .style("fill", color)
+      .style("font-size", "12px")
+      .style("font-family", "Public Sans, sans-serif");
+
+    g.selectAll(".bar")
+      .data(arrData)
+      .enter()
+      .append("rect")
+      .style("fill", color)
+      .attr("class", "bar")
+      .attr("x", function (d) {
+        return xScale(d.labels) + 0.5 * xScale.bandwidth() - 2;
+      })
+      .attr("y", function (d) {
+        return yScale(d.time) + margin;
+      })
+      .attr("width", 4)
+      .attr("rx", 2)
+      .attr("height", function (d) {
+        return height - yScale(d.time) - margin;
+      });
+
+    // Get the y axis value on top
+    g.selectAll("text.bar")
+      .data(arrData)
+      .enter()
+      .append("text")
+      .style("fill", color)
+      .style("font-size", "12px")
+      .style("font-family", "Public Sans, sans-serif")
+      .attr("text-color", color)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#70747a")
+      .attr("x", function (d) {
+        return xScale(d.labels) + 0.5 * xScale.bandwidth();
+      })
+      .attr("y", function (d) {
+        return yScale(d.time) + margin - 12;
+      })
+      .text(function (d) {
+        return d.time;
+      });
+  }
+
+  function hideAllBut(id) {
+    $(".barchart").hide();
+    $(id).show();
+    if (id.includes("-nrg")) {
+      $(".report-chart-units").text("Units: kWh");
+    } else if (id.includes("-dollars")) {
+      $(".report-chart-units").text("Units: $");
+    } else if (id.includes("-co2")) {
+      $(".report-chart-units").text("Units: lbs");
+    }
+  }
+
+  function buildAllReportCharts(report_dict) {
+    console.log("building all");
+    buildReportChart(
+      report_dict["energy_consumption_kwh_day"],
+      "#barchart-nrg",
+      report_dict["week"]
+    );
+    buildReportChart(
+      report_dict["energy_consumption_dollars_day"],
+      "#barchart-dollars",
+      report_dict["week"]
+    );
+    buildReportChart(
+      report_dict["energy_consumption_lb_co2_day"],
+      "#barchart-co2",
+      report_dict["week"]
+    );
+  }
+
+  function handle_report_resp(response) {
+    buildAllReportCharts(response);
+  }
+
+  function get_report_data() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const date = urlParams.get("week_name");
+
+    let url = "/report-chart-data?date=" + date;
+    request = $.ajax({
+      type: "GET",
+      url: url,
+      success: handle_report_resp,
+    });
+  }
+
+  get_report_data();
+</script>

@@ -19,6 +19,7 @@ function setLightMode() {
   $(".hamburger-icon").addClass("invisible-icon")
   else $(".x-icon").addClass("invisible-icon")
 
+<<<<<<< HEAD
   if (localStorage.getItem("money_mode_on") === "1") {
     $(".money-mode-icon").addClass("invisible-icon")
     $(".green-icon").removeClass("invisible-icon")
@@ -27,6 +28,16 @@ function setLightMode() {
 
   $(".report-widget-internal-container").addClass("light-report-widget-nest");
   $(".report-widget-internal-container").removeClass("report-widget-nest");
+=======
+  if (localStorage.getItem("money_mode_on") === "1")
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
+  else {
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
+
+    $(".report-widget-internal-container").addClass("light-report-widget-nest");
+    $(".report-widget-internal-container").removeClass("report-widget-nest");
+  }
+>>>>>>> 6297c5c5955d7441524e477142d9dbe946e94585
 
   // change remaining css
   $("body, a").css({ color: "#2A2A2A" });
@@ -57,6 +68,7 @@ function setDarkMode() {
     $(".hamburger-icon").addClass("invisible-icon")
   else $(".x-icon").addClass("invisible-icon")
 
+<<<<<<< HEAD
   if (localStorage.getItem("money_mode_on") === "1") {
     $(".money-mode-icon").addClass("invisible-icon")
     $(".green-icon").removeClass("invisible-icon")
@@ -65,6 +77,18 @@ function setDarkMode() {
 
   $(".report-widget-internal-container").addClass("report-widget-nest");
   $(".report-widget-internal-container").removeClass("light-report-widget-nest");
+=======
+  if (localStorage.getItem("money_mode_on") === "1")
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode_green.svg");
+  else {
+    $("#money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
+
+    $(".report-widget-internal-container").addClass("report-widget-nest");
+    $(".report-widget-internal-container").removeClass(
+      "light-report-widget-nest"
+    );
+  }
+>>>>>>> 6297c5c5955d7441524e477142d9dbe946e94585
 
   // change remaining css
   $("body, a").css({ color: "white" });
@@ -84,6 +108,9 @@ function toggleDarkMode() {
   // If a barchart is located on the page, it will update the colors
   try {
     buildAllCharts();
+  } catch {}
+  try {
+    buildAllReportCharts();
   } catch {}
 }
 
@@ -147,9 +174,14 @@ function setNonMoneyMode() {
   // set icons to the correct color
   $(".green-icon").addClass("invisible-icon");
   if (localStorage.getItem("dark_mode_on") === "0")
+<<<<<<< HEAD
     $(".dark-money-icon").removeClass("invisible-icon");
   else
     $(".light-money-icon").removeClass("invisible-icon");
+=======
+    $(".money-mode-icon").attr("src", "../static/images/MoneyMode_dark.svg");
+  else $(".money-mode-icon").attr("src", "../static/images/MoneyMode.svg");
+>>>>>>> 6297c5c5955d7441524e477142d9dbe946e94585
 }
 
 function toggleMoneyMode() {
@@ -161,6 +193,9 @@ function toggleMoneyMode() {
   // If a barchart is located on the page, it will update the colors
   try {
     buildAllCharts();
+  } catch {}
+  try {
+    buildAllReportCharts();
   } catch {}
 }
 
