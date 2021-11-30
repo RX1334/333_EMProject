@@ -28,6 +28,7 @@ def lab_summaries():
 @app.route('/fumehood_summary', methods=['GET'])
 def fumehood_summary():
     # return fumehoods_usage
+    lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
 
     # Error handling
