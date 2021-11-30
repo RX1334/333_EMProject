@@ -1,5 +1,6 @@
 <div class="widget-container">
     <div id="header-widget" class="widget dark">
+<<<<<<< HEAD
       {% if arrow %}
         <img class="arrow-left-icon light-icon invisible-icon icon" src="../static/images/ArrowLeft.svg" />
         <img class="arrow-left-icon dark-icon invisible-icon icon" src="../static/images/ArrowLeft_dark.svg" />
@@ -9,17 +10,41 @@
         <img class="x-icon light-icon invisible-icon icon" src="../static/images/X.svg" />
         <img class="x-icon dark-icon invisible-icon icon" src="../static/images/X_dark.svg" />
       {% endif %}
+=======
+
+      <img class="hamburger-icon light-icon icon"
+      src="{{ url_for ('static', filename='images/List.svg')}}" />
+      <img class="hamburger-icon dark-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/List_dark.svg')}}" />
+      <img class="x-icon light-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/X.svg')}}" />
+      <img class="x-icon dark-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/X_dark.svg')}}" />
+      <img class="arrow-left-icon light-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/ArrowLeft.svg')}}"" />
+      <img class="arrow-left-icon dark-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/ArrowLeft_dark.svg')}}" />
+
+>>>>>>> 4ecf961496483bb6ada6e43555ecffffe110435e
       <span class="greeting-span body-bold menu-visible">{{page_name}}</span>
+
       <span id="{{lab_name}}-temperature" class="greeting-span body-bold menu-visible"></span>
       <span class="greeting-span body-bold menu-hidden"><a href="/" style="text-decoration: none;">Lab Dashboard</a></span>
       <span class="greeting-span body-bold menu-hidden"><a href="/lab_summary?lab_name=rabinowitz_icahn_201" style="text-decoration: none;">Primary Lab</a></span>
       <span class="greeting-span body-bold menu-hidden"><a href="/report_archive" style="text-decoration: none;">Report Archive</a></span>
       <span class="header-widget-right-align">
-        <img class="money-mode-icon light-icon light-money-icon icon" src="../static/images/MoneyMode.svg" style="margin-right: 8px" />
-        <img class="money-mode-icon dark-icon dark-money-icon invisible-icon icon" src="../static/images/MoneyMode_dark.svg" style="margin-right: 8px" />
-        <img class="money-mode-icon green-icon invisible-icon icon" src="../static/images/MoneyMode_green.svg" style="margin-right: 8px" />
-        <img class="dark-mode-icon light-icon icon" src="../static/images/LightMode.svg" />
-        <img class="dark-mode-icon dark-icon invisible-icon icon" src="../static/images/DarkMode.svg" />
+
+      <img class="money-mode-icon light-icon light-money-icon icon"
+      src="{{ url_for ('static', filename='images/MoneyMode.svg')}}" style="margin-right: 8px" />
+      <img class="money-mode-icon dark-icon dark-money-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/MoneyMode_dark.svg')}}" style="margin-right: 8px" />
+      <img class="money-mode-icon green-icon invisible-icon icon"
+      src="../static/images/MoneyMode_green.svg" style="margin-right: 8px" />
+      <img class="dark-mode-icon light-icon icon"
+      src="{{ url_for ('static', filename='images/LightMode.svg')}}" />
+      <img class="dark-mode-icon dark-icon invisible-icon icon"
+      src="{{ url_for ('static', filename='images/DarkMode.svg')}}" />
+      
       </span>
     </div>
   </div>

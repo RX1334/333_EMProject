@@ -3,8 +3,10 @@
         <span><a href="mailto:?subject={{email_subject}}&body={{email_body}}">Email Report</a></span>
         <span class="email-print-label-right-align" id="{{lab_name}}_{{report_date_stripped}}_in_report" style="cursor: pointer;">
             <span style="margin-right: 16px">Print Report</span>
-            <img class="printer-icon light-icon icon" src="../static/images/Printer.svg">
-            <img class="printer-icon invisible-icon dark-icon icon" src="../static/images/Printer_dark.svg">
+            <img class="printer-icon light-icon icon"
+            src="{{ url_for ('static', filename='images/Printer.svg')}}">
+            <img class="printer-icon invisible-icon dark-icon icon"
+            src="{{ url_for ('static', filename='images/Printer_dark.svg')}}">
         </span>
     </div>
     <script>

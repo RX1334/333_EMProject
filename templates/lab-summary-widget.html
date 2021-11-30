@@ -11,12 +11,12 @@
           >See Lab Details</a
         >
         <img
-          src="../static/images/GearSix.svg"
+          src="{{ url_for ('static', filename='images/GearSix.svg')}}"
           class="lab-summary-options light-icon"
           onclick="options()"
         />
         <img
-          src="../static/images/GearSix_dark.svg"
+          src="{{ url_for ('static', filename='images/GearSix_dark.svg')}}"
           class="lab-summary-options dark-icon invisible-icon"
           onclick="options()"
         />
@@ -200,14 +200,6 @@
     if (checkboxNames.length < 3) {
       let oldChecksArr = localStorage.getItem("checked");
       setChecks(oldChecksArr);
-      // checkboxNames.forEach((id) => {
-      //   $("#" + id).prop("checked", false);
-      // });
-      // let oldChecks = localStorage.getItem("checked");
-      // let oldChecksArr = oldChecks.split(";");
-      // oldChecksArr.forEach((id) => {
-      //   $("#" + id).prop("checked", true);
-      // });
       displayInnerWidgets(oldChecksArr.split(";"));
       return;
     }
