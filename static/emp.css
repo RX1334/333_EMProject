@@ -155,7 +155,7 @@ a {
 
   width: 656px; /* 768 - 112 */
   /* min-width: 656px; */
-  height: 936px; /* 1024 - 56 - 32, since figma doesn't count padding for height */
+  min-height: 936px; /* 1024 - 56 - 32, since figma doesn't count padding for height */
 
   background: linear-gradient(
     32.82deg,
@@ -765,3 +765,4 @@ input:checked + .slider:before {
 .light-report-widget-nest:nth-child(even) {
   background-color: #f7f7f7;
 }
+
