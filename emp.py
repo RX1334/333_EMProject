@@ -222,14 +222,15 @@ def report_archive():
 
 # @app.route('/report_archive_data', methods=['GET'])
 def report_archive_dates():
-    return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.3.21']
+    return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.03.21']
     # return from report_archive_dates() in lab_query.py
 
 # should be replaced by call to lab_query, don't delete, just comment out pls
 def weekly_report(date):
+    ndate = float(date[:5])
     return {
     'date' : date,
-    'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
+    'week' : [ndate, round(ndate+0.01,2), round(ndate+0.02,2), round(ndate+0.03,2), round(ndate+0.04,2), round(ndate+0.05,2), round(ndate+0.06,2)],
     'this_week_energy_consumption' : '323.3 kWh',
     'this_week_avg_power_consumption' : '421.23 kW',
     'this_week_avg_fumehood_usage' : '6 hrs',
@@ -243,7 +244,7 @@ def weekly_report(date):
 def weekly_report_summary():
     date = request.args.get('date')
     # Ideally, this should call the database to get the relevant stored information.
-    # For now, just return fake data. 
+    # For now, just return fake data.
     return {
         'lab-summary-today-kwh': '11037 kWh',
         'lab-summary-current-kw': '53 kWh',
@@ -284,13 +285,13 @@ def report():
     email_subject = lab_name + ' ' + week_name + ' Weekly Report'
     # forms email body
     weeks_data = weekly_report(week_name)
-    email_body = 'Weekly Report for Icahn 201, ' + weeks_data['date'] + '%0D%0A%0D%0A'
-    email_body += 'Total Energy Consumption: ' + weeks_data['this_week_energy_consumption'] + '%0D%0A'
-    email_body += 'Average Power Consumption: ' + weeks_data['this_week_avg_power_consumption'] + '%0D%0A'
-    email_body += 'Average Fumehood Usage: ' + weeks_data['this_week_avg_fumehood_usage'] + '%0D%0A%0D%0A'
+    email_body = 'Weekly Report for Icahn 201, ' + str(weeks_data['date']) + '%0D%0A%0D%0A'
+    email_body += 'Total Energy Consumption: ' + str(weeks_data['this_week_energy_consumption']) + '%0D%0A'
+    email_body += 'Average Power Consumption: ' + str(weeks_data['this_week_avg_power_consumption']) + '%0D%0A'
+    email_body += 'Average Fumehood Usage: ' + str(weeks_data['this_week_avg_fumehood_usage']) + '%0D%0A%0D%0A'
     email_body += 'Energy Consumption by Day:%0D%0A'
     for i in range(7):
-        email_body += weeks_data['week'][i] + ': '
+        email_body += str(weeks_data['week'][i]) + ': '
         email_body += str(weeks_data['energy_consumption_kwh_day'][i]) + ' kWh / '
         email_body += '$' + str(weeks_data['energy_consumption_dollars_day'][i]) + ' / '
         email_body += str(weeks_data['energy_consumption_lb_co2_day'][i]) + ' lb CO2%0D%0A'

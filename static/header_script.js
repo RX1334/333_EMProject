@@ -174,11 +174,16 @@ function toggleMoneyMode() {
   } catch {}
 }
 
+
+
 function setup() {
   $(".dark-mode-icon").on("click", toggleDarkMode);
   $(".hamburger-icon").on("click", toggleMenu);
   $(".x-icon").on("click", toggleMenu);
   $(".money-mode-icon").on("click", toggleMoneyMode);
+  $(".rotate").click(function () {
+    $(this).toggleClass("down");
+  })
   console.log("setup");
 
   // reset dark mode status, default to dark mode

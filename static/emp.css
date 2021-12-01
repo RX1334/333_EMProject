@@ -7,6 +7,10 @@ html {
   background: #e5e5e5;
 }
 
+.invisible {
+  display: none;
+}
+
 body,
 a {
   font-family: "Public Sans", sans-serif;
@@ -399,6 +403,18 @@ input[type="radio"]:checked + label {
   /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
   color: #00c08b;
+}
+
+/* gear rotation */
+.rotate {
+  -moz-transition: all .3s ease-in-out;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.rotate.down {
+  -moz-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  transform:rotate(180deg);
 }
 
 /* ----------------------------------------------------------------------------- */

@@ -1,10 +1,14 @@
 <style>
     table, th, td {
-  border: 1px solid black;
-}
-table {
-    border-collapse: collapse;
-}
+        border: 1px solid black;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%
+    }
+    td {
+        text-align: center;
+    }
 </style>
 <h1>Weekly Report for Icahn 201, {{data_dict['date']}}</h1>
 <p>Total Energy Consumption: {{data_dict['this_week_energy_consumption']}}</p>
@@ -42,4 +46,3 @@ table {
         {% endfor %}
     </tr>
 </table>
-<hr>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script>
+      $(html).hide()
+    </script>
     <title>Energy Monitoring</title>
     <link rel="stylesheet" href="{{ url_for ('static', filename='emp.css')}}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,7 +17,7 @@
     <!-- Importing d3.js for data vis -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
   </head>
-  <body>
+  <body class="invisible">
     <div class="center-screen">
       <div id="dashboard">
         <!-- Content is shunted into here via Jinja2 template, dynamically per page -->
@@ -31,4 +34,11 @@
 
   <!-- print.js library -->
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+  <!-- prevents dark page flash on light mode -->
+  <script>
+    $("document").ready(() => {
+      $('.invisible').removeClass('invisible');
+    });
+  </script>
 </html>
