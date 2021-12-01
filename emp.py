@@ -1,20 +1,112 @@
 from flask import Flask, make_response, request, render_template
+# from flask import redirect, url_for, session, abort
 import requests
 from database import get_fumehood_output
 from lab_query import lab_info, set_units
 import json
 import random
 import urllib
+# from urllib.request import urlopen
+# from urllib.parse import quote
+# from re import sub
+
+# from keys import APP_SECRET_KEY
+
 # ----------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='./templates', static_folder='./static')
+# app.secret_key = APP_SECRET_KEY
 
-# ----------------------------------------------------------------------
-# Routes
-# ----------------------------------------------------------------------
+# # ----------------------------------------------------------------------
+
+# CAS_URL = 'https://fed.princeton.edu/cas/'
+
+# # ----------------------------------------------------------------------
+
+# # Return url after stripping out the "ticket" parameter that was
+# # added by the CAS server.
+
+# def strip_ticket(url):
+#     if url is None:
+#         return "something is badly wrong"
+#     url = sub(r'ticket=[^&]*&?', '', url)
+#     url = sub(r'\?&?$|&$', '', url)
+#     return url
+
+# # ----------------------------------------------------------------------
+
+# # Validate a login ticket by contacting the CAS server. If
+# # valid, return the user's username; otherwise, return None.
+
+# def validate(ticket):
+#     val_url = (CAS_URL + "validate"
+#         + '?service=' + quote(strip_ticket(request.url))
+#         + '&ticket=' + quote(ticket))
+#     lines = []
+#     with urlopen(val_url) as flo:
+#         lines = flo.readlines()   # Should return 2 lines.
+#     if len(lines) != 2:
+#         return None
+#     first_line = lines[0].decode('utf-8')
+#     second_line = lines[1].decode('utf-8')
+#     if not first_line.startswith('yes'):
+#         return None
+#     return second_line
+
+# # ----------------------------------------------------------------------
+
+# # Authenticate the remote user, and return the user's username.
+# # Do not return unless the user is successfully authenticated.
+
+# def authenticate():
+
+#     # If the username is in the session, then the user was
+#     # authenticated previously.  So return the username.
+#     if 'username' in session:
+#         return session.get('username')
+
+#     # If the request does not contain a login ticket, then redirect
+#     # the browser to the login page to get one.
+#     ticket = request.args.get('ticket')
+#     if ticket is None:
+#         login_url = (CAS_URL + 'login?service=' + quote(request.url))
+#         abort(redirect(login_url))
+
+#     # If the login ticket is invalid, then redirect the browser
+#     # to the login page to get a new one.
+#     username = validate(ticket)
+#     if username is None:
+#         login_url = (CAS_URL + 'login?service='
+#             + quote(strip_ticket(request.url)))
+#         abort(redirect(login_url))
+
+#     # The user is authenticated, so store the username in
+#     # the session.
+#     session['username'] = username
+#     return username
+
+# # ----------------------------------------------------------------------
+# # Routes
+# # ----------------------------------------------------------------------
+
+# @app.route('/logout', methods=['GET'])
+# def logout():
+
+#     authenticate()
+
+#     # Delete the user's username from the session.
+#     session.pop('username')
+
+#     # Logout, and redirect the browser to the index page.
+#     logout_url = (CAS_URL +  'logout?service='
+#         + quote(sub('logout', 'index', request.url)))
+#     abort(redirect(logout_url))
 
 @app.route('/', methods=['GET'])
 def lab_summaries():
+
+    # authenticate()
+
     # compiles widgets
     dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
     dashboard_content += render_template('heading-label.html', text='Your Monitored Rooms')
@@ -29,6 +121,9 @@ def lab_summaries():
 # output: html of fumehood summary widgets
 @app.route('/fumehood_summary', methods=['GET'])
 def fumehood_summary():
+
+    # authenticate()
+
     # return fumehoods_usage
     lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
@@ -57,6 +152,9 @@ def fumehood_summary():
 # output: HTML of lab sum page w/ energy, power, graph, fumehoods
 @app.route('/lab_summary', methods=['GET'])
 def lab_summary():
+
+    # authenticate()
+
     # get lab_name
     lab_name = request.args.get('lab_name')
 
@@ -101,6 +199,8 @@ def lab_summary():
 @app.route('/report_archive', methods=['GET'])
 def report_archive():
 
+    # authenticate()
+
     dates_array = report_archive_dates()
 
     # render energy and power widgets
@@ -137,6 +237,9 @@ def weekly_report(date):
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
 @app.route('/weekly_report', methods=['GET'])
 def printed_weekly_report():
+
+    # authenticate()
+
     lab_name = request.args.get('lab_name')
     date = request.args.get('date')
     data_dict = weekly_report(date)
@@ -148,6 +251,9 @@ def printed_weekly_report():
 # report
 @app.route('/report', methods=['GET'])
 def report():
+
+    # authenticate()
+
     # get lab_name
     lab_name = request.args.get('lab_name')
     week_name = request.args.get('week_name')
@@ -190,6 +296,9 @@ def report():
 # Get Report Chart Data
 @app.route('/report-chart-data', methods=['GET'])
 def report_chart():
+
+    # authenticate()
+
     date = request.args.get('date')
     # For now, use fake data, but should call a lab_query func instead
     report_dict = {
@@ -206,6 +315,9 @@ def report_chart():
 
 @app.route('/toggle_money_mode', methods=['GET'])
 def toggle_money_mode():
+
+    # authenticate()
+
     unit_type = request.args.get('units')
     set_units(unit_type)
     print(unit_type)
@@ -222,6 +334,9 @@ def toggle_money_mode():
 #       val=the data value attached to this pointd
 @app.route('/real_time_data', methods=['GET'])
 def real_time_data():
+
+    # authenticate()
+
     # We assume just one lab_name is being requested
     lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
