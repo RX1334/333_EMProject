@@ -86,6 +86,10 @@ def lab_summary():
         dashboard_content += render_template('mini-fume-hood-widget.html', fumehood_id=fumehood_id)
         dashboard_content += '</span>'
     dashboard_content += '</div>'
+    dashboard_content += '<div class="consumption-widget-container widget-container">'
+    dashboard_content += render_template('energy-trend-widget.html', lab_name=lab_name)
+    dashboard_content += render_template('temperature-occupancy-widget.html', lab_name=lab_name)
+    dashboard_content += '</div>'
 
     # bar chart widget
     dashboard_content += render_template('heading-label.html', text='Visualizations')
