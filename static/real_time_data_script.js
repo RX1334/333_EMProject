@@ -34,7 +34,7 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
-  console.log(response);
+  // console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
     // color fumehood open status the correct color
@@ -111,6 +111,16 @@ function handle_rt_resp(response) {
               .text("Fumehood " + fvalue.substring(2));
             continue;
           }
+
+          // convert fumehoods to money
+          if (localStorage.getItem('money_mode_on') === '1' && typeof fvalue === 'string') {
+            if (fvalue.endsWith("kW") || fvalue.endsWith("kWh")) {
+              let money_value = convert_to_money(fvalue);
+              $("#" + id + "-" + fkey).text(money_value);
+              continue;
+            }
+          }
+
           $("#" + id + "-" + fkey).text(fvalue);
           if (fkey.endsWith("-chart-data")) {
             try {
@@ -120,10 +130,24 @@ function handle_rt_resp(response) {
         }
       }
     }
-
+    // if kW or kWh, convert to money mode
+    if (localStorage.getItem('money_mode_on') === '1' && typeof value === 'string') {
+      if (value.endsWith("kW") || value.endsWith("kWh")) {
+        let money_value = convert_to_money(value);
+        $("#" + key).text(money_value);
+        continue;
+      }
+    }
     // shunt in the correct value into the html
     $("#" + key).text(value);
   }
+}
+
+function convert_to_money(value) {
+  let dollar_equiv = 2.25 * parseFloat(value.replace(/[^\d.-]/g, ''));
+  // round to 2 decimal places
+  dollar_equiv = +(Math.round(dollar_equiv + "e+2")  + "e-2");
+  return ('$' + dollar_equiv);
 }
 
 // retrieve real time data
@@ -153,7 +177,7 @@ function get_date() {
 function setup() {
   let cached_rt_data = localStorage.getItem("real_time_data");
   // console.log(cached_rt_data);
-  if (cached_rt_data != null) handle_rt_resp(cached_rt_data);
+  if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
 
   get_rt_data();
   window.setInterval(get_rt_data, 5000);
