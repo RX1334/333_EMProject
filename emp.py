@@ -1,6 +1,7 @@
 from flask import Flask, make_response, request, render_template
+import requests
 from database import get_fumehood_output
-from lab_query import lab_info
+from lab_query import lab_info, set_units
 import json
 import random
 # ----------------------------------------------------------------------
@@ -198,6 +199,14 @@ def report_chart():
         'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
     }
     return report_dict
+
+@app.route('/toggle_money_mode', methods=['GET'])
+def toggle_money_mode():
+    unit_type = request.args.get('units')
+    set_units(unit_type)
+    print(unit_type)
+    return "aaaa"
+
 
 
 # Temporary function for fetching all the relevant
