@@ -31,6 +31,8 @@ def set_units(mode):
     else:
         money_mode = 0
 
+    print(money_mode)
+
 
 def occupancy(root_url, token):
     '''total number of lab occupants'''
@@ -38,7 +40,6 @@ def occupancy(root_url, token):
     occ_e = "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.Local_IO.B47_RML210_OS2;"
     occ_req1 = requests.get(root_url + occ_w, headers={'Authorization': 'Bearer ' + token}, verify=False)
     occ_req2 = requests.get(root_url + occ_e, headers={'Authorization': 'Bearer ' + token}, verify=False)
-    print(occ_req1)
 
     # calculate total occupancy
     return(int((((occ_req1.json()['Properties'])[0])['Value'])['Value']) + int((((occ_req2.json()['Properties'])[0])['Value'])['Value']))
@@ -143,7 +144,7 @@ def time_dates(date_input=None):
         current_date = date.today()
     dates = []
     def month_tostring(month):
-        monthnames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC']
+        monthnames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
         return monthnames[month-1]
     # 1 week by day
     def week_dates():
@@ -221,7 +222,6 @@ def lab_info():
     r = requests.post(root_url + "token", data=user_info, verify=False)
     # retrieve access token from POST
     token = r.json()['access_token']
-    print(token)
     # lab occupancy (1 west, 2 east)
     root_url += "propertyvalues/"
     # calculate total occupancy
@@ -256,10 +256,9 @@ def lab_info():
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
         'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         'rabinowitz_icahn_201-temperature': str(round(temp)) + ' °F',
-        # %'s don't need to be escaped
         'rabinowitz_icahn_201-fumehood-energy-ratio': '68% Fumehood 32% Other',
-        'rabinowitz_icahn_201-occ' : str(occ) + '%',
-        'rabinowitz_icahn_201-ave-nrg': str(round(lab_energy*1.10002, 2))+ ' kWh',
+        'rabinowitz_icahn_201-occ' : occ,
+        'rabinowitz_icahn_201-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
         'rabinowitz_icahn_201-nrg-trend': energy_comp,
         'rabinowitz_icahn_201-chart-data': {
             'dates':  {'labels': week, 'time': info_lab['dates']},
@@ -315,7 +314,7 @@ def lab_info():
     }
     # put_fumehood_output()
     # put_lab_info()
-    print(dict)
+    # print(dict)
     return dict
 
 if __name__ == '__main__':

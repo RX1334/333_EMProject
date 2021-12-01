@@ -1,8 +1,10 @@
 from flask import Flask, make_response, request, render_template
+import requests
 from database import get_fumehood_output
-from lab_query import lab_info
+from lab_query import lab_info, set_units
 import json
 import random
+import urllib
 # ----------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='./templates', static_folder='./static')
@@ -64,8 +66,11 @@ def lab_summary():
         response = make_response(html)
         return response
 
+    page_name = urllib.parse.unquote(lab_name)
+    print(page_name)
+
     # render energy and power widgets
-    dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_name=lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=page_name, lab_name=lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += '<div class="consumption-widget-container widget-container">'
     dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
@@ -198,6 +203,14 @@ def report_chart():
         'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
     }
     return report_dict
+
+@app.route('/toggle_money_mode', methods=['GET'])
+def toggle_money_mode():
+    unit_type = request.args.get('units')
+    set_units(unit_type)
+    print(unit_type)
+    return "aaaa"
+
 
 
 # Temporary function for fetching all the relevant
