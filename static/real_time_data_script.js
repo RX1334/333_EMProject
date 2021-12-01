@@ -146,7 +146,7 @@ function handle_rt_resp(response) {
 function convert_to_money(value) {
   let dollar_equiv = 2.25 * parseFloat(value.replace(/[^\d.-]/g, ''));
   // round to 2 decimal places
-  dollar_equiv = +(Math.round(dollar_equiv + "e+2")  + "e-2");
+  dollar_equiv = dollar_equiv.toFixed(2);
   return ('$' + dollar_equiv);
 }
 
