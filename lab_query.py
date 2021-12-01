@@ -256,7 +256,7 @@ def lab_info():
         'rabinowitz_icahn_201-current-kw': str(round(lab_energy, 2)) + ' kW',
         'rabinowitz_icahn_201-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         'rabinowitz_icahn_201-temperature': str(round(temp)) + ' °F',
-        'rabinowitz_icahn_201-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
+        'rabinowitz_icahn_201-fumehood-energy-ratio': '68% Fumehood 32% Other',
         'rabinowitz_icahn_201-occ' : occ,
         'rabinowitz_icahn_201-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
         'rabinowitz_icahn_201-nrg-trend': energy_comp,
