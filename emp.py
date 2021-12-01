@@ -238,6 +238,18 @@ def weekly_report(date):
     'energy_consumption_lb_co2_day' : [8.1, 7.6, 5.4, 2.1, 9.8, 6.7, 9.4]
     }
 
+# This gets the summary in the weekly report
+@app.route('/weekly_report_summary', methods=['GET'])
+def weekly_report_summary():
+    date = request.args.get('date')
+    # Ideally, this should call the database to get the relevant stored information.
+    # For now, just return fake data. 
+    return {
+        'lab-summary-today-kwh': '11037 kWh',
+        'lab-summary-current-kw': '53 kWh',
+        'lab-summary-number': '16 Hrs'
+    }
+
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
 @app.route('/weekly_report', methods=['GET'])
 def printed_weekly_report():

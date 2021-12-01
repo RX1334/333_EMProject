@@ -28,17 +28,33 @@
     >
       <!-- Duration Selection List -->
       <div style="display: flex; flex-direction: row">
-        <input type="radio" id="radio-kWh" name="duration" checked style="cursor: pointer"/>
+        <input
+          type="radio"
+          id="radio-kWh"
+          name="duration"
+          checked
+          style="cursor: pointer"
+        />
         <label for="radio-kWh" onclick="hideAllBut('#barchart-nrg')"
           >kWh/Day</label
         >
 
-        <input type="radio" id="radio-dollars" name="duration" style="cursor: pointer"/>
+        <input
+          type="radio"
+          id="radio-dollars"
+          name="duration"
+          style="cursor: pointer"
+        />
         <label for="radio-dollars" onclick="hideAllBut('#barchart-dollars')"
           >$/Day</label
         >
 
-        <input type="radio" id="radio-co2" name="duration" style="cursor: pointer"/>
+        <input
+          type="radio"
+          id="radio-co2"
+          name="duration"
+          style="cursor: pointer"
+        />
         <label for="radio-co2" onclick="hideAllBut('#barchart-co2')"
           >lb CO2/Day</label
         >
@@ -50,24 +66,6 @@
 </div>
 
 <script>
-  // function dataStringToInt(arr) {
-  //   let intArr = [];
-  //   arr.forEach((elem) => {
-  //     let toPush;
-  //     if (arr[0].includes("$")) {
-  //       toPush = elem.substring(1);
-  //     } else if (arr[0].includes(" kW")) {
-  //       toPush = elem.substring(0, elem.length - 3);
-  //     } else if (arr[0].includes(" lb CO2")) {
-  //       toPush = elem.substring(0, elem.length - 7);
-  //     } else {
-  //       console.log("Malformed data array");
-  //     }
-  //     intArr.push(parseInt(toPush));
-  //   });
-  //   return intArr;
-  // }
-
   function buildReportChart(report_data, id, week) {
     let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
     let data = {};

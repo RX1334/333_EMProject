@@ -155,8 +155,8 @@ function setup() {
   // console.log(cached_rt_data);
   if (cached_rt_data != null) handle_rt_resp(cached_rt_data);
 
-  // get_rt_data();
-  // window.setInterval(get_rt_data, 5000);
+  get_rt_data();
+  window.setInterval(get_rt_data, 5000);
   get_date();
   window.setInterval(get_date, 3600000);
 }

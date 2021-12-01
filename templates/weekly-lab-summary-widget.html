@@ -1,32 +1,77 @@
 <div class="widget-container">
-    <div class="lab-summary-widget widget dark">
-      <div class="lab-summary-title">
-        <span class="lab-summary-title-name body-small">
-          Summary Statistics
-        </span>
-        <span class="lab-summary-details-options">
-          <a href="/lab_summary?lab_name={{lab_name}}" class="activate_{{lab_name}} lab-summary-details nav-small">See Lab Details</a>
-          <img src="../static/images/GearSix.svg" class="lab-summary-options light-icon" />
-          <img src="../static/images/GearSix_dark.svg" class="lab-summary-options dark-icon invisible-icon" />
-        </span>
-      </div>
-      <div class="lab-summary-content">
-        <span class="lab-summary-today-consumption">
-          <div class="lab-summary-today-kwh widget-medium" id="{{lab_name}}-week-kwh"></div>
-          <div class="lab-summary-today-text body-small">
-            This Week's Energy Consumption
-          </div>
-        </span>
-        <span class="lab-summary-current-consumption">
-          <div class="lab-summary-current-kw widget-medium" id="{{lab_name}}-average-kw"></div>
-          <div class="lab-summary-current-text body-small">
-            This Week's Average Power Consumption
-          </div>
-        </span>
-        <span class="lab-summary-number-active">
-          <div class="lab-summary-number widget-medium" id="{{lab_name}}-hours"></div>
-          <div class="lab-summary-number-text body-small">This Week's Average Fume Hoods Usage Time / Day</div>
-        </span>
-      </div>
+  <div class="lab-summary-widget widget dark">
+    <div class="lab-summary-title">
+      <span class="lab-summary-title-name body-small">
+        Summary Statistics
+      </span>
+      <span class="lab-summary-details-options">
+        <a
+          href="/lab_summary?lab_name={{lab_name}}"
+          class="activate_{{lab_name}} lab-summary-details nav-small"
+          >See Lab Details</a
+        >
+        <!-- <img
+          src="../static/images/GearSix.svg"
+          class="lab-summary-options light-icon"
+        />
+        <img
+          src="../static/images/GearSix_dark.svg"
+          class="lab-summary-options dark-icon invisible-icon"
+        /> -->
+      </span>
+    </div>
+    <div class="lab-summary-content">
+      <span class="lab-summary-today-consumption">
+        <div
+          class="lab-summary-today-kwh widget-medium"
+          id="{{lab_name}}-week-kwh"
+        ></div>
+        <div class="lab-summary-today-text body-small">
+          This Week's Energy Consumption
+        </div>
+      </span>
+      <span class="lab-summary-current-consumption">
+        <div
+          class="lab-summary-current-kw widget-medium"
+          id="{{lab_name}}-average-kw"
+        ></div>
+        <div class="lab-summary-current-text body-small">
+          This Week's Average Power Consumption
+        </div>
+      </span>
+      <span class="lab-summary-number-active">
+        <div
+          class="lab-summary-number widget-medium"
+          id="{{lab_name}}-hours"
+        ></div>
+        <div class="lab-summary-number-text body-small">
+          This Week's Average Fume Hoods Usage Time / Day
+        </div>
+      </span>
     </div>
   </div>
+</div>
+
+<script>
+  function handle_summary_resp(response) {
+    console.log(response);
+    for (const [key, value] of Object.entries(response)) {
+      $("." + key).text(value);
+    }
+  }
+
+  function get_report_summary_data() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const date = urlParams.get("week_name");
+
+    let url = "/weekly_report_summary?date=" + date;
+    request = $.ajax({
+      type: "GET",
+      url: url,
+      success: handle_summary_resp,
+    });
+  }
+
+  get_report_summary_data();
+</script>
