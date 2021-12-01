@@ -162,6 +162,9 @@ function toggleMoneyMode() {
   if (money_mode_on === "0") setMoneyMode();
   else setNonMoneyMode();
 
+  let cached_rt_data = localStorage.getItem("real_time_data");
+  // console.log(cached_rt_data);
+  if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
   // If a barchart is located on the page, it will update the colors
   try {
     buildAllCharts();
