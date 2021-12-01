@@ -324,7 +324,7 @@ def report_chart():
         'this_week_energy_consumption' : '323.3 kWh',
         'this_week_avg_power_consumption' : '421.23 kW',
         'this_week_avg_fumehood_usage' : '6 hrs',
-        'energy_consumption_kwh_day' : [7, 9, 3,5 ,7, 2, 1],
+        'energy_consumption_kwh_day' : [7, 9, 3, 5, 7, 2, 1],
         'energy_consumption_dollars_day' : [3, 3, 2, 3, 7, 4, 5],
         'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
     }

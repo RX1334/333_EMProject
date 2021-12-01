@@ -7,14 +7,13 @@ function setLightMode() {
   $(".dark-icon").removeClass("invisible-icon");
 
   if (localStorage.getItem("menu_open") === "1")
-  $(".hamburger-icon").addClass("invisible-icon")
-  else $(".x-icon").addClass("invisible-icon")
+    $(".hamburger-icon").addClass("invisible-icon");
+  else $(".x-icon").addClass("invisible-icon");
 
   if (localStorage.getItem("money_mode_on") === "1") {
-    $(".money-mode-icon").addClass("invisible-icon")
-    $(".green-icon").removeClass("invisible-icon")
-  }
-  else $(".green-icon").addClass("invisible-icon")
+    $(".money-mode-icon").addClass("invisible-icon");
+    $(".green-icon").removeClass("invisible-icon");
+  } else $(".green-icon").addClass("invisible-icon");
 
   $(".report-widget-internal-container").addClass("light-report-widget-nest");
   $(".report-widget-internal-container").removeClass("report-widget-nest");
@@ -38,17 +37,18 @@ function setDarkMode() {
   $(".light-icon").removeClass("invisible-icon");
 
   if (localStorage.getItem("menu_open") === "1")
-    $(".hamburger-icon").addClass("invisible-icon")
-  else $(".x-icon").addClass("invisible-icon")
+    $(".hamburger-icon").addClass("invisible-icon");
+  else $(".x-icon").addClass("invisible-icon");
 
   if (localStorage.getItem("money_mode_on") === "1") {
-    $(".money-mode-icon").addClass("invisible-icon")
-    $(".green-icon").removeClass("invisible-icon")
-  }
-  else $(".green-icon").addClass("invisible-icon")
+    $(".money-mode-icon").addClass("invisible-icon");
+    $(".green-icon").removeClass("invisible-icon");
+  } else $(".green-icon").addClass("invisible-icon");
 
   $(".report-widget-internal-container").addClass("report-widget-nest");
-  $(".report-widget-internal-container").removeClass("light-report-widget-nest");
+  $(".report-widget-internal-container").removeClass(
+    "light-report-widget-nest"
+  );
 
   // change remaining css
   $("body, a").css({ color: "white" });
@@ -67,10 +67,34 @@ function toggleDarkMode() {
 
   // If a barchart is located on the page, it will update the colors
   try {
-    buildAllCharts();
+    let cached_rt_data = JSON.parse(localStorage.getItem("real_time_data"));
+    for (const [key, value] of Object.entries(cached_rt_data)) {
+      if (key == "fumehoods") {
+        for (let i = 0; i < value.length; i++) {
+          let id = value[i]["id"];
+          id = "fumehood" + i;
+          for (const [fkey, fvalue] of Object.entries(value[i])) {
+            if (fkey.endsWith("-chart-data")) {
+              try {
+                buildAllCharts(fvalue, "#" + id + "-chart");
+              } catch {}
+            }
+          }
+        }
+      }
+      if (key.endsWith("-chart-data")) {
+        let end = key.indexOf("-chart-data");
+        try {
+          buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
+        } catch {}
+        continue;
+      }
+    }
+    // buildAllCharts();
   } catch {}
   try {
-    buildAllReportCharts();
+    // buildAllReportCharts();
+    get_report_data();
   } catch {}
 }
 
@@ -152,8 +176,7 @@ function setNonMoneyMode() {
   $(".green-icon").addClass("invisible-icon");
   if (localStorage.getItem("dark_mode_on") === "0")
     $(".dark-money-icon").removeClass("invisible-icon");
-  else
-    $(".light-money-icon").removeClass("invisible-icon");
+  else $(".light-money-icon").removeClass("invisible-icon");
 }
 
 function toggleMoneyMode() {
@@ -163,18 +186,16 @@ function toggleMoneyMode() {
   else setNonMoneyMode();
 
   let cached_rt_data = localStorage.getItem("real_time_data");
-  // console.log(cached_rt_data);
   if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
   // If a barchart is located on the page, it will update the colors
   try {
     buildAllCharts();
   } catch {}
   try {
-    buildAllReportCharts();
+    // buildAllReportCharts();
+    get_report_data();
   } catch {}
 }
-
-
 
 function setup() {
   $(".dark-mode-icon").on("click", toggleDarkMode);
@@ -183,8 +204,7 @@ function setup() {
   $(".money-mode-icon").on("click", toggleMoneyMode);
   $(".rotate").click(function () {
     $(this).toggleClass("down");
-  })
-  console.log("setup");
+  });
 
   // reset dark mode status, default to dark mode
   if (localStorage.getItem("dark_mode_on") === "0") setLightMode();

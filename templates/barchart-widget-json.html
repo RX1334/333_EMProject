@@ -42,21 +42,39 @@
           checked
           style="cursor: pointer"
         />
-        <label for="1w" onclick="hideAllBut('#barchart-dates')" style="cursor: pointer">Daily</label>
+        <label
+          for="1w"
+          onclick="hideAllBut('#barchart-dates')"
+          style="cursor: pointer"
+          >Daily</label
+        >
 
         <input type="radio" id="1m" name="duration" style="cursor: pointer" />
-        <label for="1m" onclick="hideAllBut('#barchart-weeks')" style="cursor: pointer">Weekly</label>
+        <label
+          for="1m"
+          onclick="hideAllBut('#barchart-weeks')"
+          style="cursor: pointer"
+          >Weekly</label
+        >
 
         <input type="radio" id="6m" name="duration" style="cursor: pointer" />
-        <label for="6m" onclick="hideAllBut('#barchart-sixMonths')" style="cursor: pointer"
+        <label
+          for="6m"
+          onclick="hideAllBut('#barchart-sixMonths')"
+          style="cursor: pointer"
           >Monthly</label
         >
 
         <input type="radio" id="1y" name="duration" style="cursor: pointer" />
-        <label for="1y" onclick="hideAllBut('#barchart-years')" style="cursor: pointer">Yearly</label>
+        <label
+          for="1y"
+          onclick="hideAllBut('#barchart-years')"
+          style="cursor: pointer"
+          >Yearly</label
+        >
       </div>
       <!-- Unit Label -->
-      <div>Units: kWh</div>
+      <div class="unit-label">Units: kWh</div>
     </div>
   </div>
 </div>
@@ -67,6 +85,18 @@
 
     if (dark_mode_on === "0") color = "#2A2A2A";
     else color = "white";
+
+    // Check money mode problems
+    let scale = localStorage.getItem("money_mode_on") === "1" ? 2.25 : 1.0;
+    for (let i = 0; i < data.time.length; i++) {
+      data.time[i] = parseFloat(parseFloat(data.time[i] * scale).toFixed(2));
+    }
+
+    if (localStorage.getItem("money_mode_on") === "1") {
+      $(".unit-label").text("Units: $");
+    } else {
+      $(".unit-label").text("Units: kWh");
+    }
 
     // Selecting and defining work area in the SVG
     var svg = d3.select(name + " " + id),
@@ -79,7 +109,6 @@
     // Setting X and Y axis ranges
     var xScale = d3.scaleBand().range([0, width]).padding(0.5),
       yScale = d3.scalePow().range([height, 0]);
-
     // Appending a Graph to work with to the SVG
     var g = svg.append("g");
 
@@ -154,6 +183,12 @@
   }
 
   function buildAllCharts(data_dict, name) {
+    if (name === undefined) {
+      name = "";
+    }
+    console.log("params:");
+    console.log(data_dict);
+    console.log(name);
     buildChart(data_dict["dates"], "#barchart-dates", name);
     buildChart(data_dict["weeks"], "#barchart-weeks", name);
     buildChart(data_dict["sixMonths"], "#barchart-sixMonths", name);

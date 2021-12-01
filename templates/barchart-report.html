@@ -35,8 +35,10 @@
           checked
           style="cursor: pointer"
         />
-        <label for="radio-kWh" onclick="hideAllBut('#barchart-nrg')"
-        style="cursor: pointer"
+        <label
+          for="radio-kWh"
+          onclick="hideAllBut('#barchart-nrg')"
+          style="cursor: pointer"
           >kWh/Day</label
         >
 
@@ -46,8 +48,10 @@
           name="duration"
           style="cursor: pointer"
         />
-        <label for="radio-dollars" onclick="hideAllBut('#barchart-dollars')"
-        style="cursor: pointer"
+        <label
+          for="radio-dollars"
+          onclick="hideAllBut('#barchart-dollars')"
+          style="cursor: pointer"
           >$/Day</label
         >
 
@@ -57,8 +61,10 @@
           name="duration"
           style="cursor: pointer"
         />
-        <label for="radio-co2" onclick="hideAllBut('#barchart-co2')"
-        style="cursor: pointer"
+        <label
+          for="radio-co2"
+          onclick="hideAllBut('#barchart-co2')"
+          style="cursor: pointer"
           >lb CO2/Day</label
         >
       </div>
@@ -79,6 +85,18 @@
     if (dark_mode_on === "0") color = "#2A2A2A";
     else color = "white";
 
+    if (id.endsWith("-nrg")) {
+      let scale = localStorage.getItem("money_mode_on") === "1" ? 2.25 : 1.0;
+      for (let i = 0; i < data.time.length; i++) {
+        data.time[i] = parseFloat(parseFloat(data.time[i] * scale).toFixed(2));
+      }
+    }
+
+    if (localStorage.getItem("money_mode_on") === "1") {
+      $(".unit-label").text("Units: $");
+    } else {
+      $(".unit-label").text("Units: kWh");
+    }
     // Selecting and defining work area in the SVG
     var svg = d3.select(id),
       margin = 24,
@@ -172,6 +190,7 @@
   }
 
   function buildAllReportCharts(report_dict) {
+    console.log(report_dict);
     console.log("building all");
     buildReportChart(
       report_dict["energy_consumption_kwh_day"],
@@ -191,6 +210,7 @@
   }
 
   function handle_report_resp(response) {
+    console.log(response);
     buildAllReportCharts(response);
   }
 
