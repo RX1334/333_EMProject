@@ -39,59 +39,58 @@ def db_connect():
     stmt_str += "temperature VARCHAR(30), "
     stmt_str += "PRIMARY KEY(lab_id));"
     mycursor.execute(stmt_str)
-    stmt_str = "CREATE TABLE day_fhinfo("
+    stmt_str = "CREATE TABLE day_fhinfo(" # reset every 24hr with cron
     stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "total_consumption DECIMAL(10, 3), " #append to this with the curr data
     stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), " #append to this with the curr data
     stmt_str += "PRIMARY KEY(fh_id));"
     mycursor.execute(stmt_str)
-    stmt_str = "CREATE TABLE day_labinfo("
+    stmt_str = "CREATE TABLE day_labinfo(" # reset every 24hr with cron
     stmt_str += "lab_id VARCHAR(5), "
     stmt_str += "fh_ids VARCHAR(30), " #string list of fh ids
-    stmt_str += "total_consumption DECIMAL(10, 3), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     mycursor.execute(stmt_str)
     stmt_str = "CREATE TABLE week_fhinfo("
     stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "total_consumption DECIMAL(10, 3), " #append to this with the curr data
     stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(fh_id));"
     mycursor.execute(stmt_str)
     stmt_str = "CREATE TABLE week_labinfo("
     stmt_str += "lab_id VARCHAR(5), "
     stmt_str += "fh_ids VARCHAR(30), " #string list of fh ids
-    stmt_str += "total_consumption DECIMAL(10, 3), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "day VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     mycursor.execute(stmt_str)
     stmt_str = "CREATE TABLE month_fhinfo("
     stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "total_consumption DECIMAL(10, 3), " #append to this with the curr data
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "day VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), " 
     stmt_str += "PRIMARY KEY(fh_id));"
     mycursor.execute(stmt_str)
     stmt_str = "CREATE TABLE month_labinfo("
     stmt_str += "lab_id VARCHAR(5), "
     stmt_str += "fh_ids VARCHAR(30), " #string list of fh ids
+    stmt_str += "week VARCHAR(10), "
     stmt_str += "total_consumption DECIMAL(10, 3), "
-    stmt_str += "lab_id VARCHAR(10), "
     stmt_str += "PRIMARY KEY(lab_id));"
     mycursor.execute(stmt_str)
     stmt_str = "CREATE TABLE year_fhinfo("
     stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "total_consumption DECIMAL(10, 3), " #append to this with the curr data
     stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "month VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(fh_id));"
     mycursor.execute(stmt_str)
     stmt_str = "CREATE TABLE year_labinfo("
     stmt_str += "lab_id VARCHAR(5), "
     stmt_str += "fh_ids VARCHAR(30), " #string list of fh ids
-    stmt_str += "total_consumption DECIMAL(10, 3), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "month VARCHAR(10), "
+    stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     mydb.commit()
-    print('success')
     # mycursor = mydb.cursor(buffered=True)
     # stmt_str = "SHOW TABLES"
     # print(mycursor.fetchall())
