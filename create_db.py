@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------
+# create_db.py
 # Authors: abc123
 # Create a dummy database for energy values.
 # Values are randomized but follow approx.
@@ -16,13 +17,14 @@ from lab_query import lab_info
 
 def create_db(cursor):
     stmt_str = "CREATE TABLE curr_fhinfo("
-    stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "energy_consumption DECIMAL(10, 3), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "fh_id VARCHAR(50), "
+    stmt_str += "energy_consumption VARCHAR(1000), "
+    stmt_str += "is_open VARCHAR(5), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "PRIMARY KEY(fh_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE curr_labinfo("
-    stmt_str += "lab_id VARCHAR(5), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "fh_opens VARCHAR(30), "
     stmt_str += "occupants INTEGER(3), "
@@ -32,58 +34,58 @@ def create_db(cursor):
     stmt_str += "PRIMARY KEY(lab_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE day_fhinfo(" # reset every 24hr with cron
-    stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "fh_id VARCHAR(50), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "energy_consumption DECIMAL(10, 3), " #append to this with the curr data
     stmt_str += "PRIMARY KEY(fh_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE day_labinfo(" # reset every 24hr with cron
-    stmt_str += "lab_id VARCHAR(5), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "fh_ids VARCHAR(30), " #string list of fh ids
     stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE week_fhinfo("
-    stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "fh_id VARCHAR(50), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(fh_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE week_labinfo("
-    stmt_str += "lab_id VARCHAR(5), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "fh_ids VARCHAR(30), " #string list of fh ids
     stmt_str += "day VARCHAR(10), " # dummy 0-6, map to real
     stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE month_fhinfo("
-    stmt_str += "fh_id VARCHAR(5), "
+    stmt_str += "fh_id VARCHAR(50), "
     stmt_str += "day VARCHAR(10), " # dummy 0-6, map to real
     stmt_str += "energy_consumption DECIMAL(10, 3), " 
     stmt_str += "PRIMARY KEY(fh_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE month_labinfo("
-    stmt_str += "lab_id VARCHAR(5), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "week VARCHAR(10), " # dummy 0-4, map to real
     stmt_str += "total_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE year_fhinfo("
-    stmt_str += "fh_id VARCHAR(5), "
-    stmt_str += "lab_id VARCHAR(10), "
+    stmt_str += "fh_id VARCHAR(50), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "month VARCHAR(10), " # dummy 0-11, map to real
     stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(fh_id));"
     cursor.execute(stmt_str)
     stmt_str = "CREATE TABLE year_labinfo("
-    stmt_str += "lab_id VARCHAR(5), "
+    stmt_str += "lab_id VARCHAR(50), "
     stmt_str += "month VARCHAR(10), " # dummy 0-11, map to real
     stmt_str += "energy_consumption DECIMAL(10, 3), "
     stmt_str += "PRIMARY KEY(lab_id));"
     cursor.execute(stmt_str)
-    # mycursor = mydb.cursor(buffered=True)
-    # stmt_str = "SHOW TABLES"
-    # print(mycursor.fetchall())
+    mycursor = mydb.cursor(buffered=True)
+    stmt_str = "SHOW TABLES"
+    print(mycursor.fetchall())
 
 def main():
     # Connect to database created with direct server connection
