@@ -3,7 +3,7 @@
 let request = null;
 
 function lab_summary() {
-  let url = "/emapp/lab_summary?lab_name=rabinowitz_icahn_201";
+  let url = "/emapp/lab_summary?lab_id=rabinowitz_icahn_201";
   if (request != null) request.abort();
 
   request = $.ajax({
@@ -153,7 +153,7 @@ function convert_to_money(value) {
 // retrieve real time data
 function get_rt_data() {
   labNames.forEach((labName) => {
-    let url = "/real_time_data?lab_name=" + labName;
+    let url = "/real_time_data?lab_id=" + labName;
     url += "&fumehood_id=" + fumehoodId;
     request = $.ajax({
       type: "GET",

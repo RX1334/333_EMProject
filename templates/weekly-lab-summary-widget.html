@@ -6,8 +6,8 @@
       </span>
       <span class="lab-summary-details-options">
         <a
-          href="/lab_summary?lab_name={{lab_name}}"
-          class="activate_{{lab_name}} lab-summary-details nav-small"
+          href="/lab_summary?lab_id={{lab_id}}"
+          class="activate_{{lab_id}} lab-summary-details nav-small"
           >See Lab Details</a
         >
         <!-- <img
@@ -24,7 +24,7 @@
       <span class="lab-summary-today-consumption">
         <div
           class="lab-summary-today-kwh widget-medium"
-          id="{{lab_name}}-week-kwh"
+          id="{{lab_id}}-week-kwh"
         ></div>
         <div class="lab-summary-today-text body-small">
           This Week's Energy Consumption
@@ -33,7 +33,7 @@
       <span class="lab-summary-current-consumption">
         <div
           class="lab-summary-current-kw widget-medium"
-          id="{{lab_name}}-average-kw"
+          id="{{lab_id}}-average-kw"
         ></div>
         <div class="lab-summary-current-text body-small">
           This Week's Average Power Consumption
@@ -42,7 +42,7 @@
       <span class="lab-summary-number-active">
         <div
           class="lab-summary-number widget-medium"
-          id="{{lab_name}}-hours"
+          id="{{lab_id}}-hours"
         ></div>
         <div class="lab-summary-number-text body-small">
           This Week's Average Fume Hoods Usage Time / Day

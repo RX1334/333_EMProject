@@ -2,12 +2,12 @@
   <div class="lab-summary-widget widget dark">
     <div class="lab-summary-title">
       <span class="lab-summary-title-name body-small">
-        Lab Summary | {{lab_name}}
+        Lab Summary | {{lab_name | safe}}
       </span>
       <span class="lab-summary-details-options">
         <a
-          href="/lab_summary?lab_name={{lab_name}}"
-          class="activate_{{lab_name}} lab-summary-details nav-small"
+          href="/lab_summary?lab_id={{lab_id}}&lab_name={{lab_name}}"
+          class="activate_{{lab_id}} lab-summary-details nav-small"
           >See Lab Details</a
         >
         <img
@@ -64,7 +64,7 @@
       >
         <div
           class="lab-summary-today-kwh widget-medium"
-          id="{{lab_name}}-today-kwh"
+          id="{{lab_id}}-today-kwh"
         >⠀</div>
         <div class="lab-summary-today-text body-small">
           Today's Energy Consumption
@@ -76,7 +76,7 @@
       >
         <div
           class="lab-summary-current-kw widget-medium"
-          id="{{lab_name}}-current-kw"
+          id="{{lab_id}}-current-kw"
         >⠀</div>
         <div class="lab-summary-current-text body-small">
           Current Power Consumption
@@ -88,7 +88,7 @@
       >
         <div
           class="lab-summary-number widget-medium"
-          id="{{lab_name}}-number"
+          id="{{lab_id}}-number"
         >⠀</div>
         <div class="lab-summary-number-text body-small">Fume Hoods in Use</div>
       </span>
@@ -98,7 +98,7 @@
         class="lab-summary-occ-ratio lab-summary-option"
         style="display: none"
       >
-        <div class="lab-summary-occ widget-medium" id="{{lab_name}}-occ">⠀</div>
+        <div class="lab-summary-occ widget-medium" id="{{lab_id}}-occ">⠀</div>
         <div class="lab-summary-occ-text body-small">Occupants</div>
       </span>
 
@@ -109,7 +109,7 @@
       >
         <div
           class="lab-summary-inner-ave-nrg widget-medium"
-          id="{{lab_name}}-ave-nrg"
+          id="{{lab_id}}-ave-nrg"
         >⠀</div>
         <div class="lab-summary-ave-nrg-text body-small">
           Average Energy Used
@@ -123,7 +123,7 @@
       >
         <div
           class="lab-summary-inner-nrg-trend widget-medium"
-          id="{{lab_name}}-nrg-trend"
+          id="{{lab_id}}-nrg-trend"
         >⠀</div>
         <div class="lab-summary-nrg-trend-text body-small">
           Energy Change Since Yesterday
