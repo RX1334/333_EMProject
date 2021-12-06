@@ -42,7 +42,7 @@ def generate_data():
                 fumehoods[fumehood].append(0)
     return data
 
-def pop_db(cursor, time):
+def pop_fh_db(cursor, time):
     data = generate_data()
     for lab in data.keys():
         values = data[lab]['fumehoods']
@@ -50,11 +50,10 @@ def pop_db(cursor, time):
             cons = []
             hours = []
             vals = data[lab]['fumehoods'][fumehood]
-            input = [fumehood, vals[0], vals[1], lab]
             for _ in range(time):
                 cons.append(round(random.uniform(370, 455), 2))
                 hours.append(round(random.uniform(90, 120), 2))
-            if time == 6:
+            if time == 7:
                 for i in range(time):
                     input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
                     stmt_str = "INSERT INTO week_fhinfo( "
@@ -76,6 +75,38 @@ def pop_db(cursor, time):
                     stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                     cursor.execute(stmt_str,input)
 
+def pop_lab_db(cursor, time):
+    labs = ['rabinowitz_icahn_201', 'rabinowitz_icahn_202']
+    for lab in labs:
+        cons = []
+        opens = []
+        totals = []
+        for _ in range(time):
+            cons.append(round(random.uniform(370*4, 455*4), 2))
+            opens.append(round(random.uniform(2,4), 2))
+            totals.append(round(random.uniform(650, 750), 2))
+        if time == 7:
+            for i in range(time):
+                input = [lab+'_'+str(i),lab,i, cons[i], opens[i],totals[i]]
+                stmt_str = "INSERT INTO week_labinfo( "
+                stmt_str += "id,lab_id,day,fh_consumption,fh_opens,avg_consumption)"
+                stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
+                cursor.execute(stmt_str,input)
+        if time == 4:
+            for i in range(time):
+                input = [lab+'_'+str(i),lab,i, cons[i], opens[i],totals[i]]
+                stmt_str = "INSERT INTO month_labinfo( "
+                stmt_str += "id,lab_id,week,fh_consumption,fh_opens,avg_consumption)"
+                stmt_str += "VALUES(%s,%s,%s,%s,%s, %s)"
+                cursor.execute(stmt_str,input)
+        if time == 12:
+            for i in range(time):
+                input = [lab+'_'+str(i),lab,i, cons[i], opens[i],totals[i]]
+                stmt_str = "INSERT INTO year_labinfo( "
+                stmt_str += "id,lab_id,month,fh_consumption,fh_opens,avg_consumption)"
+                stmt_str += "VALUES(%s,%s,%s,%s,%s, %s)"
+                cursor.execute(stmt_str,input)
+
 def main():
     # Connect to database created with direct server connection
     mydb = mysql.connector.connect(
@@ -84,9 +115,12 @@ def main():
     password="wolson@Dev",
     database ="energydb")
     cursor = mydb.cursor(buffered=True)
-    pop_db(cursor, 6) # week
-    pop_db(cursor, 4) # week
-    pop_db(cursor, 12) # year
+    pop_fh_db(cursor, 7) # week
+    pop_fh_db(cursor, 4) # week
+    pop_fh_db(cursor, 12) # year
+    pop_lab_db(cursor, 7) # week
+    pop_lab_db(cursor, 4) # week
+    pop_lab_db(cursor, 12) # year
     mydb.commit()
 #---------------------------------------------------------
 if __name__ == '__main__':
