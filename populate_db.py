@@ -21,29 +21,60 @@ def random_fh_value(interval):
     high = low + .1
     return round(random.uniform(low, high), 2)
 
-def generate_data(num_datapoints):
+def is_fh_open():
+    value = round(random.uniform(0,1), 3)
+    return value < .9 #90% probability of 1
+
+def generate_data():
     data = {}
-    output = []
-    data = {'rabinowitz_icahn_201': {'fh5c':[], 'fh5d':[], 'fh6c':[], 'fh6d':[]}, 
-    'rabinowitz_icahn_202': {'fh7c':[], 'fh8c':[], 'fh7d':[], 'fh8d':[]}}
+    data = {
+    'rabinowitz_icahn_201': {'fumehoods': {'fh5c':[], 'fh5d':[], 'fh6c':[], 'fh6d':[]}}, 
+    'rabinowitz_icahn_202': {'fumehoods': {'fh7c':[], 'fh8c':[], 'fh7d':[], 'fh8d':[]}}}
     for lab in data.keys():
-        fumehoods = data[lab]
+        fumehoods = data[lab]['fumehoods']
         for fumehood in fumehoods.keys():
-            for i in range(num_datapoints):
+            open = is_fh_open()
+            if open:
+                fumehoods[fumehood].append(open)
                 fumehoods[fumehood].append(random_fh_value(5))
+            else:
+                fumehoods[fumehood].append(open)
+                fumehoods[fumehood].append(0)
     return data
 
-def pop_db(cursor):
-    input = []
-    data = generate_data(5)
+def pop_db(cursor, time):
+    data = generate_data()
     for lab in data.keys():
-        for fumehood in data[lab].keys():
-            values = str(data[lab][fumehood])
-            input = [fumehood, values, lab]
-            stmt_str = "INSERT INTO curr_fhinfo( "
-            stmt_str += "fh_id, energy_consumption, lab_id)"
-            stmt_str += "VALUES(%s, %s, %s)"
-            cursor.execute(stmt_str,input)
+        values = data[lab]['fumehoods']
+        for fumehood in values.keys():
+            cons = []
+            hours = []
+            vals = data[lab]['fumehoods'][fumehood]
+            input = [fumehood, vals[0], vals[1], lab]
+            for _ in range(time):
+                cons.append(round(random.uniform(370, 455), 2))
+                hours.append(round(random.uniform(90, 120), 2))
+            if time == 6:
+                for i in range(time):
+                    input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO week_fhinfo( "
+                    stmt_str += "id,fh_id,lab_id,day,energy_consumption,hours_open)"
+                    stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
+                    cursor.execute(stmt_str,input)
+            if time == 4:
+                for i in range(time):
+                    input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO month_fhinfo( "
+                    stmt_str += "id,fh_id,lab_id,week,energy_consumption,hours_open)"
+                    stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
+                    cursor.execute(stmt_str,input)
+            if time == 12:
+                for i in range(time):
+                    input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO year_fhinfo( "
+                    stmt_str += "id,fh_id,lab_id,month,energy_consumption,hours_open)"
+                    stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
+                    cursor.execute(stmt_str,input)
 
 def main():
     # Connect to database created with direct server connection
@@ -53,9 +84,10 @@ def main():
     password="wolson@Dev",
     database ="energydb")
     cursor = mydb.cursor(buffered=True)
-    pop_db(cursor)
+    pop_db(cursor, 6) # week
+    pop_db(cursor, 4) # week
+    pop_db(cursor, 12) # year
     mydb.commit()
-    print('success')
 #---------------------------------------------------------
 if __name__ == '__main__':
     main()
