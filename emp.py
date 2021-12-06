@@ -204,10 +204,10 @@ def lab_summary():
 def report_archive():
 
     # authenticate()
-
-    dates_array = report_archive_dates()
     icahn_201_name = 'Rabinowitz, Icahn 201'
     icahn_201_id = 'rabinowitz_icahn_201'
+    dates_array = report_archive_dates(icahn_201_id)
+
     # render energy and power widgets
     dashboard_content = render_template('header-widget.html', page_name='Report Archive')
     dashboard_content += render_template('report-heading-label.html', lab_name=icahn_201_name, lab_id=icahn_201_id)
@@ -227,12 +227,12 @@ def report_archive():
     return(response)
 
 # @app.route('/report_archive_data', methods=['GET'])
-def report_archive_dates():
+def report_archive_dates(lab_id):
     return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.03.21']
     # return from report_archive_dates() in lab_query.py
 
 # should be replaced by call to lab_query, don't delete, just comment out pls
-def weekly_report(date):
+def weekly_report(lab_id, date):
     ndate = float(date[:5])
     return {
     'date' : date,
@@ -266,7 +266,7 @@ def printed_weekly_report():
     lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
     date = request.args.get('date')
-    data_dict = weekly_report(date)
+    data_dict = weekly_report(lab_id, date)
 
     html = render_template('printed-weekly-report.html', data_dict=data_dict, lab_name=lab_name)
     response = make_response(html)
@@ -292,7 +292,7 @@ def report():
     # forms email subject
     email_subject = lab_name + ' ' + week_name + ' Weekly Report'
     # forms email body
-    weeks_data = weekly_report(week_name)
+    weeks_data = weekly_report(lab_id, week_name)
     email_body = 'Weekly Report for ' + lab_name + ', ' + str(weeks_data['date']) + '%0D%0A%0D%0A'
     email_body += 'Total Energy Consumption: ' + str(weeks_data['this_week_energy_consumption']) + '%0D%0A'
     email_body += 'Average Power Consumption: ' + str(weeks_data['this_week_avg_power_consumption']) + '%0D%0A'
