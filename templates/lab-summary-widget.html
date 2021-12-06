@@ -13,12 +13,12 @@
         <img
           src="{{ url_for ('static', filename='images/GearSix.svg')}}"
           class="lab-summary-options light-icon rotate"
-          onclick="options()"
+          onclick="{{lab_id}}_summary_options()"
         />
         <img
           src="{{ url_for ('static', filename='images/GearSix_dark.svg')}}"
           class="lab-summary-options dark-icon invisible-icon rotate"
-          onclick="options()"
+          onclick="{{lab_id}}_summary_options()"
         />
       </span>
     </div>
@@ -29,29 +29,29 @@
         <form action="/action_page.php">
           <div class="lab-summary-options-row">
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="nrg-cons-check" />
+              <input type="checkbox" class="{{lab_id}}-gear-check" id="nrg-cons-check" />
               <label class="gear-check" for="nrg-cons-check">Energy Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="pwr-cons-check" />
+              <input type="checkbox" class="{{lab_id}}-gear-check" id="pwr-cons-check" />
               <label class="gear-check" for="pwr-cons-check">Power Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="hood-usage-check" />
+              <input type="checkbox" class="{{lab_id}}-gear-check" id="hood-usage-check" />
               <label class="gear-check" for="hood-usage-check">Fume Hood Use Status</label>
             </span>
           </div>
           <div class="lab-summary-options-row">
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="occ-ratio-check" />
+              <input type="checkbox" class="{{lab_id}}-gear-check" id="occ-ratio-check" />
               <label class="gear-check" for="occ-ratio-check">Occupants</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="ave-nrg-check" />
+              <input type="checkbox" class="{{lab_id}}-gear-check" id="ave-nrg-check" />
               <label class="gear-check" for="ave-nrg-check">Average Energy Used</label>
             </span>
             <span class="lab-summary-checkbox-span">
-              <input type="checkbox" id="nrg-trend-check" />
+              <input type="checkbox" class="{{lab_id}}-gear-check" id="nrg-trend-check" />
               <label class="gear-check" for="nrg-trend-check">Energy Change</label>
             </span>
           </div>
@@ -135,18 +135,18 @@
 
 <script>
   // On startup
-  function setup() {
+  function {{lab_id}}_summary_setup() {
     let checkboxNames =
-      localStorage.getItem("checked") ??
+      localStorage.getItem("{{lab_id}}-checked") ??
       "nrg-cons-check;pwr-cons-check;hood-usage-check";
     console.log(checkboxNames);
     setChecks(checkboxNames);
     displayInnerWidgets(checkboxNames.split(";"));
-    localStorage.setItem("checked", checkboxNames);
+    localStorage.setItem("{{lab_id}}-checked", checkboxNames);
 
     // requires you to deselect one before you can choose another
-    $('input[type=checkbox]').change(function(e){
-      if ($('input[type=checkbox]:checked').length > 3) {
+    $('input[type=checkbox].{{lab_id}}-gear-check').change(function(e){
+      if ($('input[type=checkbox].{{lab_id}}-gear-check:checked').length > 3) {
             $(this).prop('checked', false)
       }
     })
@@ -195,7 +195,7 @@
     });
   }
 
-  function options() {
+  function {{lab_id}}_summary_options() {
     let allCheckboxes = $(".lab-summary-gear-disp input");
     let checkboxNames = [];
 
@@ -219,7 +219,7 @@
 
     // This keeps the old ones checked if there are fewer than 3
     if (checkboxNames.length < 3) {
-      let oldChecksArr = localStorage.getItem("checked");
+      let oldChecksArr = localStorage.getItem("{{lab_id}}-checked");
       setChecks(oldChecksArr);
       displayInnerWidgets(oldChecksArr.split(";"));
       return;
@@ -233,8 +233,8 @@
     allOptions.css("display", "none");
     displayInnerWidgets(checkboxNames);
 
-    localStorage.setItem("checked", checkboxNames.join(";"));
+    localStorage.setItem("{{lab_id}}-checked", checkboxNames.join(";"));
   }
 
-  $("document").ready(setup);
+  $("document").ready({{lab_id}}_summary_setup);
 </script>
