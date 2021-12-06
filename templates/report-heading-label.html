@@ -1,12 +1,19 @@
 <div style="margin-bottom: 16px; width: 100%;">
     <div class="body-bold heading-label">
-        <span>{{text}}</span>
-        <span class="heading-label-right-align">
-            <span style="margin-right: 16px;">See All</span>
-            <img class="caret-down-icon light-icon"
+        <span>{{lab_name}} Reports</span>
+        <span class="heading-label-right-align" id="{{lab_id}}-see-all" style="cursor: pointer">
+            <span id="{{lab_id}}-toggle-text" style="margin-right: 16px;">See All</span>
+            <img class="caret-down-icon light-icon arrow-rotate"
             src="{{ url_for ('static', filename='images/CaretDown.svg')}}">
-            <img class="caret-down-icon dark-icon invisible-icon"
+            <img class="caret-down-icon dark-icon invisible-icon arrow-rotate"
             src="{{ url_for ('static', filename='images/CaretDown_dark.svg')}}">
         </span>
     </div>
+    <script>
+        $('#{{lab_id}}-see-all').on('click', () => {
+            $('.{{lab_id}}-report-widget-hideable').toggleClass('invisible-report');
+            $('#{{lab_id}}-toggle-text').text((i, t) => t == 'See All' ? 'Collapse' : 'See All');
+            $('.arrow-rotate').toggleClass('down');
+        });
+    </script>
 </div>

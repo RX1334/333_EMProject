@@ -1,5 +1,10 @@
 <!-- The HTML itself -->
-<div class="widget-container report-widget-nest report-widget-internal-container">
+<div class="widget-container report-widget-nest report-widget-internal-container
+  {% if hidden %}
+    {{lab_id}}-report-widget-hideable
+    invisible-report
+  {% endif %}
+  ">
   <div class="report-widget">
     <span class="body-bold">{{report_date}}</span>
     <span class="report-widget-right-align">

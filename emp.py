@@ -209,10 +209,15 @@ def report_archive():
 
     # render energy and power widgets
     dashboard_content = render_template('header-widget.html', page_name='Report Archive')
-    dashboard_content += render_template('report-heading-label.html', text='Icahn 201 Reports')
+    dashboard_content += render_template('report-heading-label.html', lab_name='Rabinowitz, Icahn 201', lab_id='rabinowitz_icahn_201')
     dashboard_content += '<div class="report-widget-container widget-container">'
+    i = 0
     for date in dates_array:
-        dashboard_content += render_template('report-widget.html', lab_id='rabinowitz_icahn_201', report_date=date, report_date_stripped=date.replace('.', ''))
+        if i < 3:
+            dashboard_content += render_template('report-widget.html', lab_id='rabinowitz_icahn_201', report_date=date, report_date_stripped=date.replace('.', ''))
+        else:
+            dashboard_content += render_template('report-widget.html', lab_id='rabinowitz_icahn_201', report_date=date, report_date_stripped=date.replace('.', ''), hidden='true')
+        i += 1
     dashboard_content += '</div>'
 
     # renders dashboard with those widgets

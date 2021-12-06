@@ -11,6 +11,10 @@ html {
   display: none;
 }
 
+.invisible-report {
+  display: none;
+}
+
 body,
 a {
   font-family: "Public Sans", sans-serif;
@@ -412,6 +416,17 @@ input[type="radio"]:checked + label {
   transition: all 0.3s ease-in-out;
 }
 .rotate.down {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.arrow-rotate {
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.arrow-rotate.down {
   -moz-transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
