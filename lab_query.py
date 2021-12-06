@@ -24,14 +24,14 @@ BUSINESS_DAYS = 261.0
 HOURS = 8.0
 LAB_SIZE = 9000.0
 
-def set_units(mode):
-    '''toggle units for dashboard - either dollar values or energy metrics'''
-    if mode == 'money':
-        money_mode = 1
-    else:
-        money_mode = 0
+# def set_units(mode):
+#     '''toggle units for dashboard - either dollar values or energy metrics'''
+#     if mode == 'money':
+#         money_mode = 1
+#     else:
+#         money_mode = 0
 
-    print(money_mode)
+#     print(money_mode)
 
 
 def occupancy(root_url, token):
@@ -128,8 +128,8 @@ def lab_energy_calc(fh_cons, climate):
         out += fh_cons[fh]
     return out
 
-def lab_money_calc(fh_cons, climate):
-    return lab_energy_calc(fh_cons, climate) * 2.25
+# def lab_money_calc(fh_cons, climate):
+#     return lab_energy_calc(fh_cons, climate) * 2.25
 
 def time_dates(date_input=None):
     '''return list of list of dates (1week,4weeks,6months,12months) for calculation labels'''
@@ -186,7 +186,7 @@ def time_dates(date_input=None):
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
         return year
-        
+
     week = week_dates()
     month = month_dates()
     sixmonths = six_month_dates()
@@ -228,10 +228,10 @@ def lab_info():
     # calculate energy usage from airflow, modify existing dict
     energy_calc(fh_cons)
     climate = climate_energy(root_url, token)
-    if money_mode:
-        lab_energy = lab_energy_calc(fh_cons, climate)
-    else:
-        lab_energy = lab_money_calc(fh_cons, climate)
+    # if money_mode:
+    lab_energy = lab_energy_calc(fh_cons, climate)
+    # else:
+    #     lab_energy = lab_money_calc(fh_cons, climate)
     temp = climate*10
     times = time_dates()
     week = times[0]

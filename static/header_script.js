@@ -150,13 +150,6 @@ function toggleMenu() {
 function setMoneyMode() {
   localStorage.setItem("money_mode_on", "1");
 
-  let url = "/toggle_money_mode?units=money";
-  request = $.ajax({
-    type: "GET",
-    url: url,
-    // success:
-  });
-
   // set icons to the correct color
   $(".money-mode-icon").addClass("invisible-icon");
   $(".green-icon").removeClass("invisible-icon");
@@ -164,13 +157,6 @@ function setMoneyMode() {
 
 function setNonMoneyMode() {
   localStorage.setItem("money_mode_on", "0");
-
-  let url = "/toggle_money_mode?units=energy";
-  request = $.ajax({
-    type: "GET",
-    url: url,
-    // success:
-  });
 
   // set icons to the correct color
   $(".green-icon").addClass("invisible-icon");

@@ -2,7 +2,7 @@ from flask import Flask, make_response, request, render_template
 # from flask import redirect, url_for, session, abort
 import requests
 from database import get_fumehood_output
-from lab_query import lab_info, set_units
+from lab_query import lab_info
 import json
 import random
 import urllib
@@ -334,18 +334,6 @@ def report_chart():
         'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
     }
     return report_dict
-
-@app.route('/toggle_money_mode', methods=['GET'])
-def toggle_money_mode():
-
-    # authenticate()
-
-    unit_type = request.args.get('units')
-    set_units(unit_type)
-    print(unit_type)
-    return "aaaa"
-
-
 
 # Fetch real-time data given a lab name and/or fumehood id
 # args: optional for either lab_name or fumehood_id (if neither provided,
