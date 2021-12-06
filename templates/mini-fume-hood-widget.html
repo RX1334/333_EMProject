@@ -1,4 +1,5 @@
 <a
+  id="{{fumehood_id}}-href"
   href="/fumehood_summary?lab_id={{lab_id}}&lab_name={{lab_name}}&fumehood_id={{fumehood_id}}"
   style="text-decoration: none"
 >
@@ -16,3 +17,21 @@
     <p class="mini-fume-details nav-small">See Details</p>
   </div>
 </a>
+
+<script>
+  function setup() {
+    let cached_rt_data = localStorage.getItem("real_time_data");
+    if (cached_rt_data) {
+      cached_fumes = JSON.parse(cached_rt_data)["fumehoods"];
+      for (let i = 0; i < cached_fumes.length; i++) {
+        let name = "Fumehood " + cached_fumes[i]["id"].substring(2);
+        let oldUrl = $("#fumehood" + i + "-href").attr("href");
+        console.log(oldUrl);
+        oldUrl = oldUrl.concat("&fumehood_name=");
+        oldUrl = oldUrl.concat(name);
+        $("#fumehood" + i + "-href").attr("href", oldUrl);
+      }
+    }
+  }
+  setup();
+</script>

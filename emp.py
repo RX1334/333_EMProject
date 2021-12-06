@@ -128,6 +128,7 @@ def fumehood_summary():
     lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
+    fumehood_name = request.args.get('fumehood_name')
 
     # Error handling
     if not fumehood_id:
@@ -135,12 +136,12 @@ def fumehood_summary():
         response = make_response(html)
         return response
 
-    dashboard_content = render_template('header-widget.html', page_name=fumehood_id, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=fumehood_name, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html',
-                                         name=fumehood_id,
+                                         name=fumehood_name,
                                          lab_id=lab_id,
                                          type_of_graph='Energy Consumption Trend')
 
@@ -353,70 +354,70 @@ def real_time_data():
     # authenticate()
 
     # We assume just one lab_id is being requested
-    lab_id = request.args.get('lab_id')
-    fumehood_id = request.args.get('fumehood_id')
-    data_dict = {}
-    if lab_id:
-        # Here, get the relevant data given a lab_id.
-        # For now, we just use dummy data.
-        data_dict[lab_id + '-number'] = str(random.randint(0, 4)) +  ' of 4'
-        data_dict[lab_id + '-current-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
-        data_dict[lab_id + '-today-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
-        data_dict[lab_id + '-temperature'] = str(random.randint(70, 80)) + ' °F'
-        randint = random.randint(70,90)
-        data_dict[lab_id + '-fumehood-energy-ratio'] = str(randint) + '% Fume Hoods ' + str(100-randint) + '% Other'
-        data_dict[lab_id + '-occ'] = str(random.randint(0, 150)) + '%'
-        data_dict[lab_id + '-ave-nrg'] = str(round(random.uniform(0.5,1.5), 2)) + ' kWh'
-        data_dict[lab_id + '-nrg-trend'] = str(random.randint(50, 150)) + '%'
+    # lab_id = request.args.get('lab_id')
+    # fumehood_id = request.args.get('fumehood_id')
+    # data_dict = {}
+    # if lab_id:
+    #     # Here, get the relevant data given a lab_id.
+    #     # For now, we just use dummy data.
+    #     data_dict[lab_id + '-number'] = str(random.randint(0, 4)) +  ' of 4'
+    #     data_dict[lab_id + '-current-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
+    #     data_dict[lab_id + '-today-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+    #     data_dict[lab_id + '-temperature'] = str(random.randint(70, 80)) + ' °F'
+    #     randint = random.randint(70,90)
+    #     data_dict[lab_id + '-fumehood-energy-ratio'] = str(randint) + '% Fume Hoods ' + str(100-randint) + '% Other'
+    #     data_dict[lab_id + '-occ'] = str(random.randint(0, 150)) + '%'
+    #     data_dict[lab_id + '-ave-nrg'] = str(round(random.uniform(0.5,1.5), 2)) + ' kWh'
+    #     data_dict[lab_id + '-nrg-trend'] = str(random.randint(50, 150)) + '%'
 
-    # HARDCODED DATA, CHANGE LATER
-    for i in range(4):
-        fumehood_id = 'fumehood' + str(i)
-        # We get the relevant data given an id
-        data_dict[fumehood_id + '-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
-        data_dict[fumehood_id + '-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
-        data_dict[fumehood_id + '-today'] = str(random.randint(0, 4)) + ' Hrs'
-        data_dict[fumehood_id + '-avg-day'] = str(round(random.uniform(2,4), 2)) + ' Hrs'
-        data_dict[fumehood_id + '-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
-        data_dict[fumehood_id + '-mini-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
-        data_dict[fumehood_id + '-chart-data'] = {
-            'dates': {
-            'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
-            'time': [round(random.uniform(0.6,1.4), 2) for _ in range(7)],
-            },
-            'weeks': {
-            'labels': ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
-            'time': [round(random.uniform(1.5,10)) for _ in range(4)],
-            },
-            'sixMonths': {
-            'labels': [4, 5, 6, 7, 8, 9],
-            'time': [round(random.uniform(6,40)) for _ in range(6)],
-            },
-            'years': {
-            'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-            'time': [round(random.uniform(6,40)) for _ in range(12)],
-            },
-        }
+    # # HARDCODED DATA, CHANGE LATER
+    # for i in range(4):
+    #     fumehood_id = 'fumehood' + str(i)
+    #     # We get the relevant data given an id
+    #     data_dict[fumehood_id + '-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
+    #     data_dict[fumehood_id + '-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+    #     data_dict[fumehood_id + '-today'] = str(random.randint(0, 4)) + ' Hrs'
+    #     data_dict[fumehood_id + '-avg-day'] = str(round(random.uniform(2,4), 2)) + ' Hrs'
+    #     data_dict[fumehood_id + '-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+    #     data_dict[fumehood_id + '-mini-status'] = 'CLOSED' if random.uniform(0, 1) > 0.5 else 'OPEN'
+    #     data_dict[fumehood_id + '-chart-data'] = {
+    #         'dates': {
+    #         'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+    #         'time': [round(random.uniform(0.6,1.4), 2) for _ in range(7)],
+    #         },
+    #         'weeks': {
+    #         'labels': ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
+    #         'time': [round(random.uniform(1.5,10)) for _ in range(4)],
+    #         },
+    #         'sixMonths': {
+    #         'labels': [4, 5, 6, 7, 8, 9],
+    #         'time': [round(random.uniform(6,40)) for _ in range(6)],
+    #         },
+    #         'years': {
+    #         'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    #         'time': [round(random.uniform(6,40)) for _ in range(12)],
+    #         },
+    #     }
 
-    # Fake chart data
-    data_dict[lab_id + '-chart-data'] = {
-        'dates': {
-        'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
-        'time': [round(random.uniform(6,14), 2) for _ in range(7)],
-        },
-        'weeks': {
-        'labels': ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
-        'time': [round(random.uniform(15,100)) for _ in range(4)],
-        },
-        'sixMonths': {
-        'labels': [4, 5, 6, 7, 8, 9],
-        'time': [round(random.uniform(60,400)) for _ in range(6)],
-        },
-        'years': {
-        'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        'time': [round(random.uniform(60,400)) for _ in range(12)],
-        },
-    }
+    # # Fake chart data
+    # data_dict[lab_id + '-chart-data'] = {
+    #     'dates': {
+    #     'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+    #     'time': [round(random.uniform(6,14), 2) for _ in range(7)],
+    #     },
+    #     'weeks': {
+    #     'labels': ["10.1-10.7", "10.8-10.14", "10.15-10.22", "10.23-10.29"],
+    #     'time': [round(random.uniform(15,100)) for _ in range(4)],
+    #     },
+    #     'sixMonths': {
+    #     'labels': [4, 5, 6, 7, 8, 9],
+    #     'time': [round(random.uniform(60,400)) for _ in range(6)],
+    #     },
+    #     'years': {
+    #     'labels': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    #     'time': [round(random.uniform(60,400)) for _ in range(12)],
+    #     },
+    # }
 
     # return data_dict
     return lab_info()
