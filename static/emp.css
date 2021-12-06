@@ -407,14 +407,14 @@ input[type="radio"]:checked + label {
 
 /* gear rotation */
 .rotate {
-  -moz-transition: all .3s ease-in-out;
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .rotate.down {
-  -moz-transform:rotate(180deg);
-  -webkit-transform:rotate(180deg);
-  transform:rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -465,6 +465,10 @@ input[type="radio"]:checked + label {
 /* Power/Energy Consumption Widgets                                              */
 /* ----------------------------------------------------------------------------- */
 
+.consumption-date {
+  color: none;
+}
+
 .consumption-widget-container {
   display: flex;
   justify-content: space-between;
@@ -475,14 +479,25 @@ input[type="radio"]:checked + label {
   flex-direction: column;
   align-items: flex-start;
   padding: 24px;
+  backdrop-filter: blur(24px);
+
+  border-radius: 4px;
+}
+
+.green-grad {
   background: linear-gradient(
     75.8deg,
     #00c08b -4.3%,
     rgba(0, 192, 139, 0.5) 104.49%
   ) !important;
-  backdrop-filter: blur(24px);
+}
 
-  border-radius: 4px;
+.red-grad {
+  background: linear-gradient(
+    75.8deg,
+    #d14112 -4.3%,
+    rgba(192, 0, 0, 0.5) 104.49%
+  ) !important;
 }
 
 .energy-consumption-widget {
@@ -534,10 +549,6 @@ input[type="radio"]:checked + label {
   align-self: stretch;
   flex-grow: 0;
   /* margin: 4px 0px; */
-}
-
-.energy-consumption-usage {
-  color: #d14112;
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -781,4 +792,3 @@ input:checked + .slider:before {
 .light-report-widget-nest:nth-child(even) {
   background-color: #f7f7f7;
 }
-

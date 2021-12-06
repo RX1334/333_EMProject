@@ -30,6 +30,7 @@ def nrg_trend():
     # We want this just be short numerical info (otherwise the display is clunky). 
     # The helper text in the html file handles this fine. Also, %'s don't need to 
     # be escaped
+    return('8.2%')
     return('-8.2%')
 
 def put_lab_info():

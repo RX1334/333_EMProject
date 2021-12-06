@@ -2,21 +2,112 @@
 
 let request = null;
 
-function lab_summary() {
-  let url = "/emapp/lab_summary?lab_name=rabinowitz_icahn_201";
-  if (request != null) request.abort();
+// --------------------------------------------------------
+// Based on the value, decide whether to color it red or green
+// --------------------------------------------------------
 
-  request = $.ajax({
-    type: "GET",
-    url: url,
-    success: handle_rerender,
+const RED_GREEN_THRESH = {
+  "-today-kwh": 550,
+  "-nrg-trend": 0,
+  "-current-kw": 45,
+  "-number": 2,
+};
+
+function extract_floats_from_string(str) {
+  let regex = /[+-]?\d+(\.\d+)?/g;
+  let floats = str.match(regex).map(function (v) {
+    return parseFloat(v);
   });
+  return floats;
 }
 
-function handle_rerender(response) {
-  console.log("rerender");
-  $("#dashboard").html(response);
-  $(".activate_rabinowitz_icahn_201").on("click", lab_summary);
+function remove_parent_color(object) {
+  object.removeClass(["red", "green", "red-grad", "green-grad"]);
+}
+
+function handle_red_green(key, value) {
+  let floats;
+  try {
+    floats = extract_floats_from_string(value);
+  } catch {}
+  // ----- today-wkh -----
+  if (key.endsWith("-today-kwh")) {
+    remove_parent_color($("#" + key).parent());
+    if (parseFloat(floats[0]) > RED_GREEN_THRESH["-today-kwh"]) {
+      $("#" + key)
+        .parent()
+        .addClass("red");
+    } else {
+      $("#" + key)
+        .parent()
+        .addClass("green");
+    }
+    // ----- nrg-trend -----
+  } else if (
+    key.endsWith("-nrg-trend") &&
+    !$("#" + key).hasClass("lab-summary-inner-nrg-trend")
+  ) {
+    remove_parent_color(
+      $("#" + key)
+        .parent()
+        .parent()
+    );
+    if (parseFloat(floats[0]) > RED_GREEN_THRESH["-nrg-trend"]) {
+      $("#" + key)
+        .parent()
+        .parent()
+        .addClass("red-grad");
+    } else {
+      $("#" + key)
+        .parent()
+        .parent()
+        .addClass("green-grad");
+    }
+    // ----- current-kw ------
+  } else if (
+    key.endsWith("-current-kw") &&
+    !$("#" + key).hasClass("lab-summary-current-kw")
+  ) {
+    remove_parent_color(
+      $("#" + key)
+        .parent()
+        .parent()
+    );
+    if (parseFloat(floats[0]) > RED_GREEN_THRESH["-current-kw"]) {
+      $("#" + key)
+        .parent()
+        .parent()
+        .addClass("red-grad");
+    } else {
+      $("#" + key)
+        .parent()
+        .parent()
+        .addClass("green-grad");
+    }
+    // ----- number -----
+  } else if (key.endsWith("-number") && !key.startsWith("lab-summary")) {
+    remove_parent_color($("#" + key).parent());
+    remove_parent_color(
+      $("#" + key)
+        .parent()
+        .siblings()
+    );
+    let num = 0;
+    for (let i = 0; i < Object.values(value).length; i++) {
+      if (Object.values(value)[i] == "OPEN") {
+        num++;
+      }
+    }
+    if (num <= RED_GREEN_THRESH["-number"]) {
+      $("#" + key)
+        .parent()
+        .addClass("green");
+    } else {
+      $("#" + key)
+        .parent()
+        .addClass("red");
+    }
+  }
 }
 
 // --------------------------------------------------------
@@ -37,6 +128,7 @@ function handle_rt_resp(response) {
   // console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
+    handle_red_green(key, value);
     // color fumehood open status the correct color
     if (key.endsWith("-mini-status")) {
       let closed = value == "CLOSED";
@@ -113,7 +205,10 @@ function handle_rt_resp(response) {
           }
 
           // convert fumehoods to money
-          if (localStorage.getItem('money_mode_on') === '1' && typeof fvalue === 'string') {
+          if (
+            localStorage.getItem("money_mode_on") === "1" &&
+            typeof fvalue === "string"
+          ) {
             if (fvalue.endsWith("kW") || fvalue.endsWith("kWh")) {
               let money_value = convert_to_money(fvalue);
               $("#" + id + "-" + fkey).text(money_value);
@@ -131,7 +226,10 @@ function handle_rt_resp(response) {
       }
     }
     // if kW or kWh, convert to money mode
-    if (localStorage.getItem('money_mode_on') === '1' && typeof value === 'string') {
+    if (
+      localStorage.getItem("money_mode_on") === "1" &&
+      typeof value === "string"
+    ) {
       if (value.endsWith("kW") || value.endsWith("kWh")) {
         let money_value = convert_to_money(value);
         $("#" + key).text(money_value);
@@ -144,10 +242,10 @@ function handle_rt_resp(response) {
 }
 
 function convert_to_money(value) {
-  let dollar_equiv = 2.25 * parseFloat(value.replace(/[^\d.-]/g, ''));
+  let dollar_equiv = 2.25 * parseFloat(value.replace(/[^\d.-]/g, ""));
   // round to 2 decimal places
   dollar_equiv = dollar_equiv.toFixed(2);
-  return ('$' + dollar_equiv);
+  return "$" + dollar_equiv;
 }
 
 // retrieve real time data
@@ -180,9 +278,26 @@ function setup() {
   if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
 
   get_rt_data();
-  window.setInterval(get_rt_data, 5000);
+  window.setInterval(get_rt_data, 5 * 1000);
   get_date();
-  window.setInterval(get_date, 3600000);
+  window.setInterval(get_date, 3600 * 1000);
 }
 
 $("document").ready(setup);
+
+// function lab_summary() {
+//   let url = "/emapp/lab_summary?lab_name=rabinowitz_icahn_201";
+//   if (request != null) request.abort();
+
+//   request = $.ajax({
+//     type: "GET",
+//     url: url,
+//     success: handle_rerender,
+//   });
+// }
+
+// function handle_rerender(response) {
+//   console.log("rerender");
+//   $("#dashboard").html(response);
+//   $(".activate_rabinowitz_icahn_201").on("click", lab_summary);
+// }

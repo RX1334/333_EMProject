@@ -123,18 +123,13 @@ def energy_calc(fh_cons):
     return fh_cons
 
 def lab_energy_calc(fh_cons, climate):
-    out = 0.0
+    out = climate
     for fh in fh_cons.keys():
         out += fh_cons[fh]
-    out += climate
     return out
 
 def lab_money_calc(fh_cons, climate):
-    out = 0.0
-    for fh in fh_cons.keys():
-        out += fh_cons[fh]
-    out += climate
-    return out*2.25
+    return lab_energy_calc(fh_cons, climate) * 2.25
 
 def time_dates(date_input=None):
     '''return list of list of dates (1week,4weeks,6months,12months) for calculation labels'''
@@ -191,6 +186,7 @@ def time_dates(date_input=None):
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
         return year
+        
     week = week_dates()
     month = month_dates()
     sixmonths = six_month_dates()

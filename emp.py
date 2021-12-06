@@ -342,8 +342,7 @@ def toggle_money_mode():
 
 
 
-# Temporary function for fetching all the relevant
-# real-time data given either a lab name or a fumehood id
+# Fetch real-time data given a lab name and/or fumehood id
 # args: optional for either lab_name or fumehood_id (if neither provided,
 #       just return None)
 # rets: dictionary of key val pairs, where it returns all the necessary data to update

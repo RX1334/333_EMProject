@@ -90,13 +90,14 @@
       for (let i = 0; i < data.time.length; i++) {
         data.time[i] = parseFloat(parseFloat(data.time[i] * scale).toFixed(2));
       }
+
+      if (localStorage.getItem("money_mode_on") === "1") {
+        $(".report-chart-units").text("Units: $");
+      } else {
+        $(".report-chart-units-label").text("Units: kWh");
+      }
     }
 
-    if (localStorage.getItem("money_mode_on") === "1") {
-      $(".unit-label").text("Units: $");
-    } else {
-      $(".unit-label").text("Units: kWh");
-    }
     // Selecting and defining work area in the SVG
     var svg = d3.select(id),
       margin = 24,
