@@ -5,6 +5,10 @@ let request = null;
 // --------------------------------------------------------
 // Based on the value, decide whether to color it red or green
 // --------------------------------------------------------
+function lab_summary() {
+  let url = "/emapp/lab_summary?lab_id=rabinowitz_icahn_201";
+  if (request != null) request.abort();
+}
 
 const RED_GREEN_THRESH = {
   "-today-kwh": 550,
@@ -251,7 +255,7 @@ function convert_to_money(value) {
 // retrieve real time data
 function get_rt_data() {
   labNames.forEach((labName) => {
-    let url = "/real_time_data?lab_name=" + labName;
+    let url = "/real_time_data?lab_id=" + labName;
     url += "&fumehood_id=" + fumehoodId;
     request = $.ajax({
       type: "GET",

@@ -4,17 +4,17 @@
     <span class="body-bold">{{report_date}}</span>
     <span class="report-widget-right-align">
       <span style="margin-right: 16px;">
-        <a href="/report?lab_name={{lab_name}}&week_name={{report_date}}" class="body-small" style="margin: 1px 0px; line-height: 22px;">See Report Details</a>
+        <a href="/report?lab_id={{lab_id}}&week_name={{report_date}}" class="body-small" style="margin: 1px 0px; line-height: 22px;">See Report Details</a>
       </span>
-      <span id="{{lab_name}}_{{report_date_stripped}}">
+      <span id="{{lab_id}}_{{report_date_stripped}}">
       <img class="printer-icon light-icon" src="../static/images/Printer.svg">
       <img class="printer-icon dark-icon invisible-icon" src="../static/images/Printer_dark.svg">
       </span>
     </span>
   </div>
   <script>
-    $("#{{lab_name}}_{{report_date_stripped}}").on("click", () => {
-      let url = "/weekly_report?lab_name={{lab_name}}&date={{report_date}}";
+    $("#{{lab_id}}_{{report_date_stripped}}").on("click", () => {
+      let url = "/weekly_report?lab_id={{lab_id}}&date={{report_date}}";
       request = $.ajax({
         type: "GET",
         url: url,

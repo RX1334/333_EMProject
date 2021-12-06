@@ -110,7 +110,7 @@ def lab_summaries():
     # compiles widgets
     dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
     dashboard_content += render_template('heading-label.html', text='Your Monitored Rooms')
-    dashboard_content += render_template('lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
+    dashboard_content += render_template('lab-summary-widget.html', lab_id='rabinowitz_icahn_201', lab_name='Rabinowitz, Icahn 201')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -125,6 +125,7 @@ def fumehood_summary():
     # authenticate()
 
     # return fumehoods_usage
+    lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
     fumehood_id = request.args.get('fumehood_id')
 
@@ -134,13 +135,13 @@ def fumehood_summary():
         response = make_response(html)
         return response
 
-    dashboard_content = render_template('header-widget.html', page_name=fumehood_id, back_arrow_link='/lab_summary?lab_name=' + lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=fumehood_id, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html',
                                          name=fumehood_id,
-                                         lab_name='rabinowitz_icahn_201',
+                                         lab_id=lab_id,
                                          type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
@@ -148,31 +149,29 @@ def fumehood_summary():
     response = make_response(html)
     return(response)
 
-# arguments: lab_name
+# arguments: lab_id
 # output: HTML of lab sum page w/ energy, power, graph, fumehoods
 @app.route('/lab_summary', methods=['GET'])
 def lab_summary():
 
     # authenticate()
 
-    # get lab_name
+    # get lab_id
+    lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
 
     # temp error handling
-    if not lab_name:
+    if not lab_id:
         html = ''
         response = make_response(html)
         return response
 
-    page_name = urllib.parse.unquote(lab_name)
-    print(page_name)
-
     # render energy and power widgets
-    dashboard_content = render_template('header-widget.html', page_name=page_name, lab_name=lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_id=lab_id)
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += '<div class="consumption-widget-container widget-container">'
-    dashboard_content += render_template('energy-consumption-widget.html', lab_name=lab_name)
-    dashboard_content += render_template('power-consumption-widget.html', lab_name=lab_name)
+    dashboard_content += render_template('energy-consumption-widget.html', lab_id=lab_id)
+    dashboard_content += render_template('power-consumption-widget.html', lab_id=lab_id)
     dashboard_content += '</div>'
 
     # include the fumehood widgets
@@ -181,18 +180,18 @@ def lab_summary():
     for i in range(num_fumehoods):
         fumehood_id = "fumehood" + str(i)
         dashboard_content += '<span>'
-        dashboard_content += render_template('mini-fume-hood-widget.html', fumehood_id=fumehood_id)
+        dashboard_content += render_template('mini-fume-hood-widget.html', lab_id=lab_id, lab_name=lab_name, fumehood_id=fumehood_id)
         dashboard_content += '</span>'
     dashboard_content += '</div>'
     dashboard_content += '<div class="consumption-widget-container widget-container">'
-    dashboard_content += render_template('energy-trend-widget.html', lab_name=lab_name)
-    dashboard_content += render_template('temperature-occupancy-widget.html', lab_name=lab_name)
+    dashboard_content += render_template('energy-trend-widget.html', lab_id=lab_id)
+    dashboard_content += render_template('temperature-occupancy-widget.html', lab_id=lab_id)
     dashboard_content += '</div>'
 
     # bar chart widget
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html', name=lab_name,
-                                         lab_name=lab_name, type_of_graph='Energy Consumption Trend')
+                                         lab_id=lab_id, type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -212,7 +211,7 @@ def report_archive():
     dashboard_content += render_template('report-heading-label.html', text='Icahn 201 Reports')
     dashboard_content += '<div class="report-widget-container widget-container">'
     for date in dates_array:
-        dashboard_content += render_template('report-widget.html', lab_name='rabinowitz_icahn_201', report_date=date, report_date_stripped=date.replace('.', ''))
+        dashboard_content += render_template('report-widget.html', lab_id='rabinowitz_icahn_201', report_date=date, report_date_stripped=date.replace('.', ''))
     dashboard_content += '</div>'
 
     # renders dashboard with those widgets
@@ -257,7 +256,7 @@ def printed_weekly_report():
 
     # authenticate()
 
-    lab_name = request.args.get('lab_name')
+    lab_id = request.args.get('lab_id')
     date = request.args.get('date')
     data_dict = weekly_report(date)
 
@@ -271,18 +270,18 @@ def report():
 
     # authenticate()
 
-    # get lab_name
-    lab_name = request.args.get('lab_name')
+    # get lab_id
+    lab_id = request.args.get('lab_id')
     week_name = request.args.get('week_name')
 
     # temp error handling
-    if not lab_name or not week_name:
+    if not lab_id or not week_name:
         html = ''
         response = make_response(html)
         return response
 
     # forms email subject
-    email_subject = lab_name + ' ' + week_name + ' Weekly Report'
+    email_subject = lab_id + ' ' + week_name + ' Weekly Report'
     # forms email body
     weeks_data = weekly_report(week_name)
     email_body = 'Weekly Report for Icahn 201, ' + str(weeks_data['date']) + '%0D%0A%0D%0A'
@@ -299,11 +298,11 @@ def report():
     # compiles widgets
     dashboard_content = render_template('header-widget.html', page_name='Week of ' + week_name + ' Report', back_arrow_link='/report_archive')
     dashboard_content += render_template('heading-label.html', text='Statistics')
-    dashboard_content += render_template('weekly-lab-summary-widget.html', lab_name='rabinowitz_icahn_201')
+    dashboard_content += render_template('weekly-lab-summary-widget.html', lab_id='rabinowitz_icahn_201')
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
-    dashboard_content += render_template('barchart-report.html', name=week_name.replace('.', ''), lab_name='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
-    dashboard_content += render_template('email-print-report.html', lab_name=lab_name, report_date_stripped=week_name.replace('.', ''), report_date=week_name, email_subject=email_subject, email_body=email_body)
+    # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_id='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
+    dashboard_content += render_template('barchart-report.html', week_name=week_name, lab_id='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
+    dashboard_content += render_template('email-print-report.html', lab_id=lab_id, report_date_stripped=week_name.replace('.', ''), report_date=week_name, email_subject=email_subject, email_body=email_body)
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -353,22 +352,22 @@ def real_time_data():
 
     # authenticate()
 
-    # We assume just one lab_name is being requested
-    lab_name = request.args.get('lab_name')
+    # We assume just one lab_id is being requested
+    lab_id = request.args.get('lab_id')
     fumehood_id = request.args.get('fumehood_id')
     data_dict = {}
-    if lab_name:
-        # Here, get the relevant data given a lab_name.
+    if lab_id:
+        # Here, get the relevant data given a lab_id.
         # For now, we just use dummy data.
-        data_dict[lab_name + '-number'] = str(random.randint(0, 4)) +  ' of 4'
-        data_dict[lab_name + '-current-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
-        data_dict[lab_name + '-today-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
-        data_dict[lab_name + '-temperature'] = str(random.randint(70, 80)) + ' °F'
+        data_dict[lab_id + '-number'] = str(random.randint(0, 4)) +  ' of 4'
+        data_dict[lab_id + '-current-kw'] = str(round(random.uniform(0.5,1.5), 2)) + ' kW'
+        data_dict[lab_id + '-today-kwh'] = str(round(random.uniform(2,4), 2)) + ' kWh'
+        data_dict[lab_id + '-temperature'] = str(random.randint(70, 80)) + ' °F'
         randint = random.randint(70,90)
-        data_dict[lab_name + '-fumehood-energy-ratio'] = str(randint) + '% Fume Hoods ' + str(100-randint) + '% Other'
-        data_dict[lab_name + '-occ'] = str(random.randint(0, 150)) + '%'
-        data_dict[lab_name + '-ave-nrg'] = str(round(random.uniform(0.5,1.5), 2)) + ' kWh'
-        data_dict[lab_name + '-nrg-trend'] = str(random.randint(50, 150)) + '%'
+        data_dict[lab_id + '-fumehood-energy-ratio'] = str(randint) + '% Fume Hoods ' + str(100-randint) + '% Other'
+        data_dict[lab_id + '-occ'] = str(random.randint(0, 150)) + '%'
+        data_dict[lab_id + '-ave-nrg'] = str(round(random.uniform(0.5,1.5), 2)) + ' kWh'
+        data_dict[lab_id + '-nrg-trend'] = str(random.randint(50, 150)) + '%'
 
     # HARDCODED DATA, CHANGE LATER
     for i in range(4):
@@ -400,7 +399,7 @@ def real_time_data():
         }
 
     # Fake chart data
-    data_dict[lab_name + '-chart-data'] = {
+    data_dict[lab_id + '-chart-data'] = {
         'dates': {
         'labels': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
         'time': [round(random.uniform(6,14), 2) for _ in range(7)],
