@@ -30,29 +30,29 @@
           <div class="lab-summary-options-row">
             <span class="lab-summary-checkbox-span">
               <input type="checkbox" id="nrg-cons-check" />
-              <label for="nrg-cons-check">Energy Consumption</label>
+              <label class="gear-check" for="nrg-cons-check">Energy Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
               <input type="checkbox" id="pwr-cons-check" />
-              <label for="pwr-cons-check">Power Consumption</label>
+              <label class="gear-check" for="pwr-cons-check">Power Consumption</label>
             </span>
             <span class="lab-summary-checkbox-span">
               <input type="checkbox" id="hood-usage-check" />
-              <label for="hood-usage-check">Fume Hood Use Status</label>
+              <label class="gear-check" for="hood-usage-check">Fume Hood Use Status</label>
             </span>
           </div>
           <div class="lab-summary-options-row">
             <span class="lab-summary-checkbox-span">
               <input type="checkbox" id="occ-ratio-check" />
-              <label for="occ-ratio-check">Occupants</label>
+              <label class="gear-check" for="occ-ratio-check">Occupants</label>
             </span>
             <span class="lab-summary-checkbox-span">
               <input type="checkbox" id="ave-nrg-check" />
-              <label for="ave-nrg-check">Average Energy Used</label>
+              <label class="gear-check" for="ave-nrg-check">Average Energy Used</label>
             </span>
             <span class="lab-summary-checkbox-span">
               <input type="checkbox" id="nrg-trend-check" />
-              <label for="nrg-trend-check">Energy Change</label>
+              <label class="gear-check" for="nrg-trend-check">Energy Change</label>
             </span>
           </div>
         </form>
@@ -143,6 +143,13 @@
     setChecks(checkboxNames);
     displayInnerWidgets(checkboxNames.split(";"));
     localStorage.setItem("checked", checkboxNames);
+
+    // requires you to deselect one before you can choose another
+    $('input[type=checkbox]').change(function(e){
+      if ($('input[type=checkbox]:checked').length > 3) {
+            $(this).prop('checked', false)
+      }
+    })
   }
 
   function setChecks(checkStr) {

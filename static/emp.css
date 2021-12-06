@@ -807,3 +807,28 @@ input:checked + .slider:before {
 .light-report-widget-nest:nth-child(even) {
   background-color: #f7f7f7;
 }
+
+/*------------------------------*/
+/* gear */
+/* .gear-check::before {
+  content: url(../static/images/Plus.svg);
+}
+
+:checked + .gear-check::before {
+  content: url(../static/images/House.svg);
+} */
+
+input[type=checkbox] {
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.lab-summary-checkbox-span {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.gear-check {
+  cursor: pointer;
+}
