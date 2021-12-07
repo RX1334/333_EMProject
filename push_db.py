@@ -26,6 +26,8 @@ def put_lab_db(lab, fh, climate, total):
         database ="energydb")
     except Exception as ex:
         print("Server error.", ex)
+        # TEMPORARY RETURN FOR LOCAL TESTING
+        return
     cursor = mydb.cursor(buffered=True)
     stmt_str = "SELECT fh_consumption, climate_consumption, total_consumption FROM today_labinfo WHERE lab_id = "
     stmt_str += "%s;"
@@ -54,6 +56,8 @@ def put_fh_db(fh, lab, nrg, hr):
         database ="energydb")
     except Exception as ex:
         print("Server error.", ex)
+        # TEMPORARY RETURN FOR LOCAL TESTING, DELETE LATER
+        return
     cursor = mydb.cursor(buffered=True)
     stmt_str = "SELECT energy_consumption, hours_open FROM today_fhinfo WHERE fh_id = "
     stmt_str += "%s;"

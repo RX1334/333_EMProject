@@ -220,6 +220,7 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
+  console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
     handle_red_green(key, value);
