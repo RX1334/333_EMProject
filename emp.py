@@ -111,6 +111,7 @@ def lab_summaries():
     dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
     dashboard_content += render_template('heading-label.html', text='Your Monitored Rooms')
     dashboard_content += render_template('lab-summary-widget.html', lab_id='rabinowitz_icahn_201', lab_name='Rabinowitz, Icahn 201')
+    dashboard_content += render_template('lab-summary-widget.html', lab_id='rabinowitz_icahn_202', lab_name='Rabinowitz, Icahn 202')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
