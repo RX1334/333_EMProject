@@ -55,23 +55,30 @@ def pop_fh_db(cursor, time):
                 hours.append(round(random.uniform(90, 120), 2))
             if time == 7:
                 for i in range(time):
-                    input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
-                    stmt_str = "INSERT INTO week_fhinfo( "
+                    input = [fumehood+'_'+str(i),fumehood,lab,i, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO daily_fhinfo( "
                     stmt_str += "id,fh_id,lab_id,day,energy_consumption,hours_open)"
                     stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                     cursor.execute(stmt_str,input)
             if time == 4:
                 for i in range(time):
-                    input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
-                    stmt_str = "INSERT INTO month_fhinfo( "
+                    input = [fumehood+'_'+str(i),fumehood,lab,i, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO weekly_fhinfo( "
                     stmt_str += "id,fh_id,lab_id,week,energy_consumption,hours_open)"
                     stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                     cursor.execute(stmt_str,input)
             if time == 12:
                 for i in range(time):
-                    input = [fumehood+'_'+str(i),fumehood,i,lab, cons[i],hours[i]]
-                    stmt_str = "INSERT INTO year_fhinfo( "
+                    input = [fumehood+'_'+str(i),fumehood,lab,i, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO monthly_fhinfo( "
                     stmt_str += "id,fh_id,lab_id,month,energy_consumption,hours_open)"
+                    stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
+                    cursor.execute(stmt_str,input)
+            if time == 5:
+                for i in range(time):
+                    input = [fumehood+'_'+str(i),fumehood,lab,i, cons[i],hours[i]]
+                    stmt_str = "INSERT INTO yearly_fhinfo( "
+                    stmt_str += "id,fh_id,lab_id,year,energy_consumption,hours_open)"
                     stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                     cursor.execute(stmt_str,input)
 
@@ -79,32 +86,42 @@ def pop_lab_db(cursor, time):
     labs = ['rabinowitz_icahn_201', 'rabinowitz_icahn_202']
     for lab in labs:
         cons = []
-        opens = []
+        climates = []
         totals = []
         for _ in range(time):
-            cons.append(round(random.uniform(370*4, 455*4), 2))
-            opens.append(round(random.uniform(2,4), 2))
-            totals.append(round(random.uniform(650, 750), 2))
+            con = round(random.uniform(370*4, 455*4), 2)
+            total = round(random.uniform(2000, 2500), 2)
+            climate = total - con
+            cons.append(con)
+            climates.append(climate)
+            totals.append(total)
         if time == 7:
             for i in range(time):
-                input = [lab+'_'+str(i),lab,i, cons[i], opens[i],totals[i]]
-                stmt_str = "INSERT INTO week_labinfo( "
-                stmt_str += "id,lab_id,day,fh_consumption,fh_opens,avg_consumption)"
+                input = [lab+'_'+str(i),lab,i, cons[i], climates[i],totals[i]]
+                stmt_str = "INSERT INTO daily_labinfo( "
+                stmt_str += "id,lab_id,day,fh_consumption,climate_consumption, total_consumption)"
                 stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                 cursor.execute(stmt_str,input)
         if time == 4:
             for i in range(time):
-                input = [lab+'_'+str(i),lab,i, cons[i], opens[i],totals[i]]
-                stmt_str = "INSERT INTO month_labinfo( "
-                stmt_str += "id,lab_id,week,fh_consumption,fh_opens,avg_consumption)"
-                stmt_str += "VALUES(%s,%s,%s,%s,%s, %s)"
+                input = [lab+'_'+str(i),lab,i, cons[i], climates[i],totals[i]]
+                stmt_str = "INSERT INTO weekly_labinfo( "
+                stmt_str += "id,lab_id,week,fh_consumption,climate_consumption, total_consumption)"
+                stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                 cursor.execute(stmt_str,input)
         if time == 12:
             for i in range(time):
-                input = [lab+'_'+str(i),lab,i, cons[i], opens[i],totals[i]]
-                stmt_str = "INSERT INTO year_labinfo( "
-                stmt_str += "id,lab_id,month,fh_consumption,fh_opens,avg_consumption)"
-                stmt_str += "VALUES(%s,%s,%s,%s,%s, %s)"
+                input = [lab+'_'+str(i),lab,i, cons[i], climates[i],totals[i]]
+                stmt_str = "INSERT INTO monthly_labinfo( "
+                stmt_str += "id,lab_id,month,fh_consumption,climate_consumption, total_consumption)"
+                stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
+                cursor.execute(stmt_str,input)
+        if time == 5:
+            for i in range(time):
+                input = [lab+'_'+str(i),lab,i, cons[i], climates[i],totals[i]]
+                stmt_str = "INSERT INTO yearly_labinfo( "
+                stmt_str += "id,lab_id,year,fh_consumption,climate_consumption, total_consumption)"
+                stmt_str += "VALUES(%s,%s,%s,%s,%s,%s)"
                 cursor.execute(stmt_str,input)
 
 def main():
@@ -115,12 +132,14 @@ def main():
     password="wolson@Dev",
     database ="energydb")
     cursor = mydb.cursor(buffered=True)
-    pop_fh_db(cursor, 7) # week
-    pop_fh_db(cursor, 4) # week
-    pop_fh_db(cursor, 12) # year
-    pop_lab_db(cursor, 7) # week
-    pop_lab_db(cursor, 4) # week
-    pop_lab_db(cursor, 12) # year
+    pop_fh_db(cursor, 7) # last 7 days
+    pop_fh_db(cursor, 4) # last 4 weeks
+    pop_fh_db(cursor, 12) # last 12 months
+    pop_fh_db(cursor, 5) # last 5 years
+    pop_lab_db(cursor, 7) # last 7 days
+    pop_lab_db(cursor, 4) # last 4 weeks
+    pop_lab_db(cursor, 12) # last 12 months
+    pop_lab_db(cursor, 5) # last 5 years
     mydb.commit()
 #---------------------------------------------------------
 if __name__ == '__main__':
