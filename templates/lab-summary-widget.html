@@ -23,7 +23,7 @@
     </div>
     <div class="lab-summary-content">
       <!-- The gear box display -->
-      <div class="body-small lab-summary-gear-disp" style="display: none">
+      <div class="body-small {{lab_id}}-lab-summary-gear-disp" style="display: none">
         <div>Select 3 options.</div>
         <form action="/action_page.php">
           <div class="lab-summary-options-row">
@@ -192,7 +192,7 @@
 
     function {{lab_id}}_summary_setChecks(checkStr) {
       let checkArr = checkStr.split(";");
-      let allCheckboxes = $(".lab-summary-gear-disp input");
+      let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
       allCheckboxes.each(function (index) {
         $(this).prop("checked", false);
       });
@@ -206,7 +206,7 @@
     function {{lab_id}}_summary_displayInnerWidgets(arr) {
       // First, hide all the displays
       console.log("in display");
-      $(".lab-summary-gear-disp").css("display", "none");
+      $(".{{lab_id}}-lab-summary-gear-disp").css("display", "none");
 
       // Now, just show the relevant displays
       arr.forEach((id) => {
@@ -234,14 +234,14 @@
     }
 
     function {{lab_id}}_summary_options() {
-      let allCheckboxes = $(".lab-summary-gear-disp input");
+      let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
       let checkboxNames = [];
 
       // If the gear was clicked when the options weren't displayed, display
       // them and do nothing more
       let allOptions = $(".lab-summary-option");
-      if ($(".lab-summary-gear-disp").css("display") == "none") {
-        $(".lab-summary-gear-disp").css("display", "");
+      if ($(".{{lab_id}}-lab-summary-gear-disp").css("display") == "none") {
+        $(".{{lab_id}}-lab-summary-gear-disp").css("display", "");
         allOptions.css("display", "none");
         return;
       }
