@@ -6,7 +6,7 @@ let request = null;
 // Based on the value, decide whether to color it red or green
 // --------------------------------------------------------
 function lab_summary() {
-  let url = "/emapp/lab_summary?lab_id=rabinowitz_icahn_201";
+  let url = "/lab_summary?lab_id=rabinowitz_icahn_201";
   if (request != null) request.abort();
 }
 
@@ -210,7 +210,7 @@ function handle_red_green(key, value) {
 // --------------------------------------------------------
 
 // Change to url params in the future
-const labNames = ["rabinowitz_icahn_201"];
+const labNames = ["rabinowitz_icahn_201", "rabinowitz_icahn_202"];
 const fumehoodId = "fumehood0";
 
 // get fumehood # from url params

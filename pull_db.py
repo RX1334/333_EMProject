@@ -16,10 +16,10 @@ def week_report(lab_name, week):
     # Connect to database created with direct server connection
     try:
         mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="wolson@Dev",
-        database ="energydb")
+        host="energymonitor.princeton.edu",
+        user="labenerg_wolson",
+        password="lab_energy_monitoring_cos333",
+        database ="labenerg_EMDatabase")
     except Exception as ex:
         print("Server error.", ex)
     cursor = mydb.cursor(buffered=True)
@@ -37,10 +37,10 @@ def pull_lab_data(time, lab):
     # Connect to database created with direct server connection
     try:
         mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="wolson@Dev",
-        database ="energydb")
+        host="energymonitor.princeton.edu",
+        user="labenerg_wolson",
+        password="lab_energy_monitoring_cos333",
+        database ="labenerg_EMDatabase")
     except Exception as ex:
         print("Server error.", ex)
     cursor = mydb.cursor(buffered=True)
@@ -73,10 +73,10 @@ def pull_fh_data(time, lab, fh):
     '''pull data from historical table'''
     try:
         mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="wolson@Dev",
-        database ="energydb")
+        host="energymonitor.princeton.edu",
+        user="labenerg_wolson",
+        password="lab_energy_monitoring_cos333",
+        database ="labenerg_EMDatabase")
     except Exception as ex:
         print("Server error.", ex)
     cursor = mydb.cursor(buffered=True)

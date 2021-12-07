@@ -20,10 +20,10 @@ def put_lab_db(lab, fh, climate, total):
     # Connect to database created with direct server connection
     try:
         mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="wolson@Dev",
-        database ="energydb")
+        host="energymonitor.princeton.edu",
+        user="labenerg_wolson",
+        password="lab_energy_monitoring_cos333",
+        database ="labenerg_EMDatabase")
     except Exception as ex:
         print("Server error.", ex)
         # TEMPORARY RETURN FOR LOCAL TESTING
@@ -50,10 +50,10 @@ def put_fh_db(fh, lab, nrg, hr):
     # Connect to database created with direct server connection
     try:
         mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="wolson@Dev",
-        database ="energydb")
+        host="energymonitor.princeton.edu",
+        user="labenerg_wolson",
+        password="lab_energy_monitoring_cos333",
+        database ="labenerg_EMDatabase")
     except Exception as ex:
         print("Server error.", ex)
         # TEMPORARY RETURN FOR LOCAL TESTING, DELETE LATER

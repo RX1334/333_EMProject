@@ -272,7 +272,7 @@ input[type="radio"]:checked + label {
   order: 3;
   align-self: stretch;
   flex-grow: 0;
-  margin: 12px 0px;
+  margin: 6px 0px 0px 0px;
 }
 
 .lab-summary-checkbox-span {
@@ -779,7 +779,7 @@ input:checked + .slider:before {
   flex-grow: 1;
 }
 
-.report-widget-container {
+.report-widget-container, .lab-summary-widget-container {
   margin-bottom: 16px;
   border-radius: 4px;
   overflow: hidden;
