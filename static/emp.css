@@ -779,7 +779,7 @@ input:checked + .slider:before {
   flex-grow: 1;
 }
 
-.report-widget-container {
+.report-widget-container, .lab-summary-widget-container {
   margin-bottom: 16px;
   border-radius: 4px;
   overflow: hidden;
