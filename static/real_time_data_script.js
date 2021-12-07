@@ -14,7 +14,7 @@ const RED_GREEN_THRESH = {
   "-today-kwh": 550,
   "-nrg-trend": 0,
   "-current-kw": 30,
-  "-number": 1,
+  "-number": 2,
   "-ave-nrg": 19,
   "-kwh": 10,
   "-today": 3,
