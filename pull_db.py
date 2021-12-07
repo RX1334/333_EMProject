@@ -9,12 +9,30 @@ from random import randrange
 from sys import argv, stderr
 import sys
 from datetime import date, timedelta
-from typing import ItemsView
 import mysql.connector
 import random
-from lab_query import lab_info
 
-def pull_lab_data(time, lab, index):
+def week_report(lab_name, week):
+    # Connect to database created with direct server connection
+    try:
+        mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="wolson@Dev",
+        database ="energydb")
+    except Exception as ex:
+        print("Server error.", ex)
+    cursor = mydb.cursor(buffered=True)
+    stmt_str = "SELECT fh_consumption, climate_consumption, total_consumption FROM weekly_labinfo WHERE lab_id = "
+    stmt_str += "%s AND week = 0;"
+    input = [lab_name]
+    cursor.execute(stmt_str, input)
+    out = cursor.fetchall()[0]
+    mydb.commit()
+    return([float(i) for i in out])
+
+
+def pull_lab_data(time, lab):
     '''pull data from historical table'''
     # Connect to database created with direct server connection
     try:
@@ -28,25 +46,30 @@ def pull_lab_data(time, lab, index):
     cursor = mydb.cursor(buffered=True)
     if time == 'daily':
         stmt_str = "SELECT fh_consumption, climate_consumption, total_consumption FROM daily_labinfo WHERE lab_id = "
-        stmt_str += "%s AND day = %s;"
+        stmt_str += "%s;"
     elif time == 'weekly':
         stmt_str = "SELECT fh_consumption, climate_consumption, total_consumption FROM weekly_labinfo WHERE lab_id = "
-        stmt_str += "%s AND week = %s;"
+        stmt_str += "%s;"
     elif time == 'monthly':
         stmt_str = "SELECT fh_consumption, climate_consumption, total_consumption FROM monthly_labinfo WHERE lab_id = "
-        stmt_str += "%s AND month = %s;"
+        stmt_str += "%s;"
     elif time == 'yearly':
         stmt_str = "SELECT fh_consumption, climate_consumption, total_consumption FROM yearly_labinfo WHERE lab_id = "
-        stmt_str += "%s AND year = %s;"
+        stmt_str += "%s;"
     else:
         return('Invalid Query')
-    input = [lab, index]
+    input = [lab]
     cursor.execute(stmt_str, input)
-    out = cursor.fetchall()[0]
+    out = cursor.fetchall()
+    output = {'fh': [], 'climate': [], 'total':[]}
+    for i in out:
+        output['fh'].append(float(i[0]))
+        output['climate'].append(float(i[1]))
+        output['total'].append(float(i[2]))
     mydb.commit()
-    return{'fh': float(out[0]), 'climate': float(out[1]), 'total':float(out[2])}
+    return(output)
 
-def pull_fh_data(time, lab, fh, index):
+def pull_fh_data(time, lab, fh):
     '''pull data from historical table'''
     try:
         mydb = mysql.connector.connect(
@@ -59,33 +82,37 @@ def pull_fh_data(time, lab, fh, index):
     cursor = mydb.cursor(buffered=True)
     if time == 'daily':
         stmt_str = "SELECT energy_consumption, hours_open FROM daily_fhinfo WHERE lab_id = "
-        stmt_str += "%s AND fh_id = %s AND day = %s;"
+        stmt_str += "%s AND fh_id = %s;"
     elif time == 'weekly':
         stmt_str = "SELECT energy_consumption, hours_open FROM weekly_fhinfo WHERE lab_id = "
-        stmt_str += "%s AND fh_id = %s AND week = %s;"
+        stmt_str += "%s AND fh_id = %s;"
     elif time == 'monthly':
         stmt_str = "SELECT energy_consumption, hours_open FROM monthly_fhinfo WHERE lab_id = "
-        stmt_str += "%s AND fh_id = %s AND month = %s;"
+        stmt_str += "%s AND fh_id = %s;"
     elif time == 'yearly':
         stmt_str = "SELECT energy_consumption, hours_open FROM yearly_fhinfo WHERE lab_id = "
-        stmt_str += "%s AND fh_id = %s AND year = %s;"
+        stmt_str += "%s AND fh_id = %s;"
     else:
         return('Invalid Query')
-    input = [lab, fh, index]
+    input = [lab, fh]
     cursor.execute(stmt_str, input)
     mydb.commit()
-    out = cursor.fetchall()[0]
-    return{'energy': float(out[0]), 'hours':float(out[1])}
+    out = cursor.fetchall()
+    output = {'energy':[], 'hours':[]}
+    for i in out:
+        output['energy'].append(float(i[0]))
+        output['hours'].append(float(i[1]))
+    return output
 
 def main():
-    print(pull_lab_data('daily', 'rabinowitz_icahn_201', 1))
-    print(pull_lab_data('weekly', 'rabinowitz_icahn_201', 1))
-    print(pull_lab_data('monthly', 'rabinowitz_icahn_201', 1))
-    print(pull_lab_data('yearly', 'rabinowitz_icahn_201', 1))
-    print(pull_lab_data('daily', 'rabinowitz_icahn_201', 1))
-    print(pull_fh_data('weekly', 'rabinowitz_icahn_201', 'fh5c', 1))
-    print(pull_fh_data('monthly', 'rabinowitz_icahn_202', 'fh7c', 1))
-    print(pull_fh_data('yearly', 'rabinowitz_icahn_201', 'fh6c', 1))
+    print(pull_lab_data('daily', 'rabinowitz_icahn_201'))
+    print(pull_lab_data('weekly', 'rabinowitz_icahn_201'))
+    print(pull_lab_data('monthly', 'rabinowitz_icahn_201'))
+    print(pull_lab_data('yearly', 'rabinowitz_icahn_201'))
+    print(pull_lab_data('daily', 'rabinowitz_icahn_201'))
+    print(pull_fh_data('weekly', 'rabinowitz_icahn_201', 'fh5c'))
+    print(pull_fh_data('monthly', 'rabinowitz_icahn_202', 'fh7c'))
+    print(pull_fh_data('yearly', 'rabinowitz_icahn_201', 'fh6c'))
 #---------------------------------------------------------
 if __name__ == '__main__':
     main()

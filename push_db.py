@@ -14,7 +14,6 @@ import sys
 from datetime import date, timedelta
 import mysql.connector
 import random
-from lab_query import lab_info
 
 def put_lab_db(lab, fh, climate, total):
     '''append instantaneous data to daily total table'''
@@ -38,7 +37,7 @@ def put_lab_db(lab, fh, climate, total):
     fumehood += fh
     clim += climate
     tot += total
-    values = [lab, str(fumehood), str(clim), str(total)]
+    values = [lab, str(fumehood), str(clim), str(tot)]
     stmt_str = "REPLACE INTO today_labinfo(lab_id, fh_consumption, climate_consumption, total_consumption) "
     stmt_str += "VALUES(%s, %s, %s, %s);"
     cursor.execute(stmt_str, values)
