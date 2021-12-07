@@ -377,12 +377,7 @@ input[type="radio"]:checked + label {
   flex-grow: 1;
 }
 
-.lab-summary-current-text {
-  color: #00c08b;
-}
-
 .lab-summary-current-kw {
-  color: #00c08b;
   margin: 4px 0px;
 }
 
@@ -395,7 +390,6 @@ input[type="radio"]:checked + label {
 }
 
 .lab-summary-number {
-  color: #00c08b;
   margin: 4px 0px;
 }
 
@@ -406,7 +400,6 @@ input[type="radio"]:checked + label {
 .lab-summary-number-text {
   /* Removing this aligns the end of this w the right side, idk if we want that */
   width: 181.33px;
-  color: #00c08b;
 }
 
 /* gear rotation */
@@ -818,7 +811,7 @@ input:checked + .slider:before {
   content: url(../static/images/House.svg);
 } */
 
-input[type=checkbox] {
+input[type="checkbox"] {
   margin-right: 6px;
   cursor: pointer;
 }

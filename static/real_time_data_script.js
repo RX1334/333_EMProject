@@ -13,8 +13,13 @@ function lab_summary() {
 const RED_GREEN_THRESH = {
   "-today-kwh": 550,
   "-nrg-trend": 0,
-  "-current-kw": 45,
-  "-number": 2,
+  "-current-kw": 30,
+  "-number": 1,
+  "-ave-nrg": 19,
+  "-kwh": 10,
+  "-today": 3,
+  "-today": 4,
+  "-avg-day": 4,
 };
 
 function extract_floats_from_string(str) {
@@ -34,6 +39,7 @@ function handle_red_green(key, value) {
   try {
     floats = extract_floats_from_string(value);
   } catch {}
+
   // ----- today-wkh -----
   if (key.endsWith("-today-kwh")) {
     remove_parent_color($("#" + key).parent());
@@ -46,62 +52,92 @@ function handle_red_green(key, value) {
         .parent()
         .addClass("green");
     }
+
     // ----- nrg-trend -----
-  } else if (
-    key.endsWith("-nrg-trend") &&
-    !$("#" + key).hasClass("lab-summary-inner-nrg-trend")
-  ) {
-    remove_parent_color(
-      $("#" + key)
-        .parent()
-        .parent()
-    );
-    if (parseFloat(floats[0]) > RED_GREEN_THRESH["-nrg-trend"]) {
-      $("#" + key)
-        .parent()
-        .parent()
-        .addClass("red-grad");
+  } else if (key.endsWith("-nrg-trend")) {
+    if ($("#" + key).hasClass("lab-summary-inner-nrg-trend")) {
+      remove_parent_color($("#" + key));
+      remove_parent_color($("#" + key).siblings());
+      if (parseFloat(floats[0]) > RED_GREEN_THRESH["-nrg-trend"]) {
+        $("#" + key).addClass("red");
+        $("#" + key)
+          .siblings()
+          .addClass("red");
+      } else {
+        $("#" + key).addClass("green");
+        $("#" + key)
+          .siblings()
+          .addClass("green");
+      }
     } else {
-      $("#" + key)
-        .parent()
-        .parent()
-        .addClass("green-grad");
+      remove_parent_color(
+        $("#" + key)
+          .parent()
+          .parent()
+      );
+      if (parseFloat(floats[0]) > RED_GREEN_THRESH["-nrg-trend"]) {
+        $("#" + key)
+          .parent()
+          .parent()
+          .addClass("red-grad");
+      } else {
+        $("#" + key)
+          .parent()
+          .parent()
+          .addClass("green-grad");
+      }
     }
+
     // ----- current-kw ------
-  } else if (
-    key.endsWith("-current-kw") &&
-    !$("#" + key).hasClass("lab-summary-current-kw")
-  ) {
-    remove_parent_color(
-      $("#" + key)
-        .parent()
-        .parent()
-    );
-    if (parseFloat(floats[0]) > RED_GREEN_THRESH["-current-kw"]) {
-      $("#" + key)
-        .parent()
-        .parent()
-        .addClass("red-grad");
+  } else if (key.endsWith("-current-kw")) {
+    if ($("#" + key).hasClass("lab-summary-current-kw")) {
+      remove_parent_color($("#" + key));
+      remove_parent_color($("#" + key).siblings());
+      if (parseFloat(floats[0]) > RED_GREEN_THRESH["-current-kw"]) {
+        $("#" + key).addClass("red");
+        $("#" + key)
+          .siblings()
+          .addClass("red");
+        return;
+      } else {
+        $("#" + key).addClass("green");
+        $("#" + key)
+          .siblings()
+          .addClass("green");
+      }
     } else {
-      $("#" + key)
-        .parent()
-        .parent()
-        .addClass("green-grad");
+      remove_parent_color(
+        $("#" + key)
+          .parent()
+          .parent()
+      );
+      if (parseFloat(floats[0]) > RED_GREEN_THRESH["-current-kw"]) {
+        $("#" + key)
+          .parent()
+          .parent()
+          .addClass("red-grad");
+      } else {
+        $("#" + key)
+          .parent()
+          .parent()
+          .addClass("green-grad");
+      }
     }
+
     // ----- number -----
-  } else if (key.endsWith("-number") && !key.startsWith("lab-summary")) {
-    remove_parent_color($("#" + key).parent());
-    remove_parent_color(
-      $("#" + key)
-        .parent()
-        .siblings()
-    );
+  } else if (key.endsWith("-number")) {
     let num = 0;
     for (let i = 0; i < Object.values(value).length; i++) {
       if (Object.values(value)[i] == "OPEN") {
         num++;
       }
     }
+    remove_parent_color($("#" + key).parent());
+    remove_parent_color(
+      $("#" + key)
+        .parent()
+        .siblings()
+    );
     if (num <= RED_GREEN_THRESH["-number"]) {
       $("#" + key)
         .parent()
@@ -110,6 +146,61 @@ function handle_red_green(key, value) {
       $("#" + key)
         .parent()
         .addClass("red");
+    }
+
+    // ----- ave-nrg -----
+  } else if (key.endsWith("-ave-nrg")) {
+    if (!$("#" + key).hasClass("widget-medium")) {
+      return;
+    }
+    remove_parent_color($("#" + key));
+    remove_parent_color($("#" + key).siblings());
+    if (floats[0] > RED_GREEN_THRESH["-ave-nrg"]) {
+      $("#" + key).addClass("red");
+      $("#" + key)
+        .siblings()
+        .addClass("red");
+    } else {
+      $("#" + key).addClass("green");
+      $("#" + key)
+        .siblings()
+        .addClass("green");
+    }
+    // ----- kwh -----
+  } else if (key.endsWith("-kwh")) {
+    remove_parent_color($("#" + key).parent());
+    if (value > RED_GREEN_THRESH["-kwh"]) {
+      $("#" + key)
+        .parent()
+        .addClass("red");
+    } else {
+      $("#" + key)
+        .parent()
+        .addClass("green");
+    }
+    // ----- today -----
+  } else if (key.endsWith("-today")) {
+    remove_parent_color($("#" + key).parent());
+    if (value > RED_GREEN_THRESH["-today"]) {
+      $("#" + key)
+        .parent()
+        .addClass("red");
+    } else {
+      $("#" + key)
+        .parent()
+        .addClass("green");
+    }
+    // ----- today -----
+  } else if (key.endsWith("-avg-day")) {
+    remove_parent_color($("#" + key).parent());
+    if (value > RED_GREEN_THRESH["-avg-day"]) {
+      $("#" + key)
+        .parent()
+        .addClass("red");
+    } else {
+      $("#" + key)
+        .parent()
+        .addClass("green");
     }
   }
 }
@@ -129,7 +220,6 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
-  // console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
     handle_red_green(key, value);
@@ -201,6 +291,7 @@ function handle_rt_resp(response) {
         $("#fumehood" + i + "-name").text("Fumehood " + id.slice(-2));
         id = "fumehood" + i;
         for (const [fkey, fvalue] of Object.entries(value[i])) {
+          handle_red_green(id + "-" + fkey, fvalue);
           if (fkey == "id") {
             $("#" + id + "-mini-status")
               .siblings(".mini-fume-name")
