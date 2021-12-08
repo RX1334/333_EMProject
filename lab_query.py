@@ -211,13 +211,13 @@ def weekly_report(lab_name, week_date):
         dollars.append(round(random.uniform(8,12), 2))
         co2.append(round(random.uniform(10,12), 2))
     cal = time_dates(week_date)
-    dict = {'date': week_date, 
-    'week': cal[0], 
+    dict = {'date': week_date,
+    'week': cal[0],
     'this_week_energy_consumption': energy,
-    'this_week_avg_power_consumption': power, 
-    'this_week_avg_fumehood_usage': usage, 
-    'energy_consumption_kwh_day': energy_cons, 
-    'energy_consumption_dollars_day': dollars, 
+    'this_week_avg_power_consumption': power,
+    'this_week_avg_fumehood_usage': usage,
+    'energy_consumption_kwh_day': energy_cons,
+    'energy_consumption_dollars_day': dollars,
     'energy_consumption_lb_co2_day': co2}
     return dict
 def get_fumehoods(lab_name):
@@ -237,14 +237,14 @@ def graph_info(lab_name):
         'daily':  {'labels': days, 'time': daily_lab['total']},
         'weekly':  {'labels': weeks, 'time':weekly_lab['total']},
         'monthly': {'labels': months, 'time': monthly_lab['total']},
-        'yearly':  {'labels': years, 'time': yearly_lab['total']}}, 
+        'yearly':  {'labels': years, 'time': yearly_lab['total']}},
         'fumehoods':[]}
     for fumehood in fumehoods:
         daily_fh = pull_fh_data('daily', lab_name,fumehood)
         weekly_fh = pull_fh_data('weekly', lab_name,fumehood)
         monthly_fh = pull_fh_data('monthly', lab_name,fumehood)
         yearly_fh = pull_fh_data('yearly', lab_name,fumehood)
-        dict['fumehoods'].append({'id': fumehood, 
+        dict['fumehoods'].append({'id': fumehood,
         '-chart-data':{'daily':  {'labels': days, 'time': daily_fh['energy']},
                     'weekly':  {'labels': weeks, 'time': weekly_fh['energy']},
                     'monthly': {'labels': months, 'time': monthly_fh['energy']},
@@ -288,13 +288,8 @@ def lab_info(lab_name):
         lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
         lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
         lab_name+'-occ' : occ,
-<<<<<<< HEAD
-        lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
-        lab_name+'-nrg-trend': energy_comp,
-=======
         lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
-        lab_name+'-nrg-trend': energy_comp, 
->>>>>>> 01a061fe4570fcc7f7d47b7e4e87c12d356befdc
+        lab_name+'-nrg-trend': energy_comp,
         'fumehoods': []}
     for fh in fh_names:
         dict['fumehoods'].append(fh_cons[fh][1])
