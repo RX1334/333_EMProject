@@ -329,31 +329,7 @@ input[type="radio"]:checked + label {
   margin: 4px 0px;
 }
 
-.lab-summary-today-consumption {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  flex-grow: 1;
-}
-
-.lab-summary-occ-ratio {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  flex-grow: 1;
-}
-
-.lab-summary-ave-nrg {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  flex-grow: 1;
-}
-
-.lab-summary-nrg-trend {
+.gear-display-style {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

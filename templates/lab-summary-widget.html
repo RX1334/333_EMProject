@@ -98,7 +98,7 @@
       </div>
 
       <span
-        class="lab-summary-today-consumption lab-summary-option"
+        class="{{lab_id}}-lab-summary-today-consumption lab-summary-option gear-display-style"
         style="display: none"
       >
         <div
@@ -111,8 +111,9 @@
           Today's Energy Consumption
         </div>
       </span>
+
       <span
-        class="lab-summary-current-consumption lab-summary-option"
+        class="{{lab_id}}-lab-summary-current-consumption lab-summary-option gear-display-style"
         style="display: none"
       >
         <div
@@ -126,7 +127,7 @@
         </div>
       </span>
       <span
-        class="lab-summary-number-active lab-summary-option"
+        class="{{lab_id}}-lab-summary-number-active lab-summary-option gear-display-style"
         style="display: none"
       >
         <div class="lab-summary-number widget-medium" id="{{lab_id}}-number">
@@ -137,7 +138,7 @@
 
       <!-- Occ Ratio -->
       <span
-        class="lab-summary-occ-ratio lab-summary-option"
+        class="{{lab_id}}-lab-summary-occ-ratio lab-summary-option gear-display-style"
         style="display: none"
       >
         <div class="lab-summary-occ widget-medium" id="{{lab_id}}-occ">⠀</div>
@@ -146,7 +147,7 @@
 
       <!-- ave nrg -->
       <span
-        class="lab-summary-ave-nrg lab-summary-option"
+        class="{{lab_id}}-lab-summary-ave-nrg lab-summary-option gear-display-style"
         style="display: none"
       >
         <div
@@ -162,7 +163,7 @@
 
       <!-- nrg trend -->
       <span
-        class="lab-summary-nrg-trend lab-summary-option"
+        class="{{lab_id}}-lab-summary-nrg-trend lab-summary-option gear-display-style"
         style="display: none"
       >
         <div
@@ -219,22 +220,22 @@
     arr.forEach((id) => {
       switch (id) {
         case "nrg-cons-check":
-          $(".lab-summary-today-consumption").css("display", "flex");
+          $(".{{lab_id}}-lab-summary-today-consumption").css("display", "flex");
           break;
         case "pwr-cons-check":
-          $(".lab-summary-current-consumption").css("display", "flex");
+          $(".{{lab_id}}-lab-summary-current-consumption").css("display", "flex");
           break;
         case "hood-usage-check":
-          $(".lab-summary-number-active").css("display", "flex");
+          $(".{{lab_id}}-lab-summary-number-active").css("display", "flex");
           break;
         case "occ-ratio-check":
-          $(".lab-summary-occ-ratio").css("display", "flex");
+          $(".{{lab_id}}-lab-summary-occ-ratio").css("display", "flex");
           break;
         case "ave-nrg-check":
-          $(".lab-summary-ave-nrg").css("display", "flex");
+          $(".{{lab_id}}-lab-summary-ave-nrg").css("display", "flex");
           break;
         case "nrg-trend-check":
-          $(".lab-summary-nrg-trend").css("display", "flex");
+          $(".{{lab_id}}-lab-summary-nrg-trend").css("display", "flex");
           break;
       }
     });
