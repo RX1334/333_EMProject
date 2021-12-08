@@ -278,10 +278,8 @@ def lab_info(lab_name):
     for fh in fh_cons.keys():
         total_fh_push += fh_cons[fh][1]
     lab_energy = total_fh_push + climate
-    # print([total_fh_push, climate, lab_energy])
     put_lab_db(lab_name, total_fh_push, climate,lab_energy)
     fh_names = get_fumehoods(lab_name)
-    # print(fh_opens)
     for fh in fh_names:
         if fh_opens[fh] == 'OPEN':
             put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
@@ -296,8 +294,11 @@ def lab_info(lab_name):
         lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
         lab_name+'-occ' : occ,
         lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
-        lab_name+'-nrg-trend': energy_comp}
+        lab_name+'-nrg-trend': energy_comp, 
+        'fumehoods': []}
+    for fh in fh_names:
+        dict['fumehoods'].append(fh_cons[fh][1])
     return dict
 
 if __name__ == '__main__':
-    print(weekly_report('rabinowitz_icahn_201', '10.21'))
+    print(lab_info('rabinowitz_icahn_201'))
