@@ -348,7 +348,7 @@ def report_chart():
 #       val=the data value attached to this pointd
 @app.route('/real_time_data', methods=['GET'])
 def real_time_data():
-
+    lab_id = request.args.get('lab_id')
     # authenticate()
 
     # We assume just one lab_id is being requested
@@ -418,7 +418,7 @@ def real_time_data():
     # }
 
     # return data_dict
-    return lab_info('rabinowitz_icahn_201')
+    return lab_info(lab_id)
 
 @app.route('/get_graph_info', methods=['GET'])
 def get_graph_info():

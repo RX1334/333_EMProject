@@ -210,9 +210,8 @@ function handle_red_green(key, value) {
 // --------------------------------------------------------
 
 // Change to url params in the future
-// const labNames = ["rabinowitz_icahn_201", "rabinowitz_icahn_202"];
-const labNames = ["rabinowitz_icahn_201"];
-const fumehoodId = "fumehood0";
+const labNames = ["rabinowitz_icahn_201", "rabinowitz_icahn_202"];
+// const labNames = ["rabinowitz_icahn_201"];
 
 // get fumehood # from url params
 // const queryString = window.location.search;
@@ -221,107 +220,110 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
-  localStorage.setItem("real_time_data", JSON.stringify(response));
-  for (const [key, value] of Object.entries(response)) {
-    handle_red_green(key, value);
-    // color fumehood open status the correct color
-    if (key.endsWith("-mini-status")) {
-      let closed = value == "CLOSED";
-      $("#" + key)
-        .children("span")
-        .text(value);
-      $("#" + key)
-        .children("span")
-        .addClass(closed ? "green" : "red");
-      $("#" + key)
-        .children("span")
-        .removeClass(closed ? "red" : "green");
-      $("#" + key)
-        .children("img")
-        .attr(
-          "src",
-          closed
-            ? "../static/images/GreenDot.svg"
-            : "../static/images/RedDot.svg"
-        );
-      continue;
-    }
-    if (key.endsWith("-status")) {
-      $("#" + key).addClass(value == "OPEN" ? "red" : "green");
-      $("#" + key).removeClass(value == "OPEN" ? "green" : "red");
-    }
-    if (key.endsWith("-chart-data")) {
-      let end = key.indexOf("-chart-data");
-      try {
-        buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
-      } catch {}
-      continue;
-    }
-    if (key.endsWith("-number")) {
-      let numOpen = 0;
-      let i = 0;
-      for (const vkey of Object.keys(value)) {
-        $("#fumehood" + i + "-mini-status").removeClass("red");
-        $("#fumehood" + i + "-mini-status").removeClass("green");
-        let html;
-        if (value[vkey] == "OPEN") {
-          html =
-            "<p style='font-weight: bold'>" +
-            value[vkey] +
-            "</p><img src='../static/images/RedDot.svg'></img>";
-          $("#fumehood" + i + "-mini-status").addClass("red");
-        } else {
-          html =
-            "<p style='font-weight: bold'>" +
-            value[vkey] +
-            "</p><img src='../static/images/GreenDot.svg'></img>";
-          $("#fumehood" + i + "-mini-status").addClass("green");
-        }
-        $("#fumehood" + i + "-mini-status").html(html);
-        i += 1;
-        if (value[vkey] == "OPEN") {
-          numOpen++;
-        }
-      }
-      $("#" + key).text(numOpen + " of " + Object.keys(value).length);
-      continue;
-    }
-    if (key == "fumehoods") {
-      let fIdx = 0;
-      Object.entries(value).forEach((arr) => {
-        console.log(arr);
-        let fkey = arr[0];
-        let fvalue = arr[1];
-        let id = "fumehood" + fIdx;
+  const labname =response.labid;
+  localStorage.setItem(labname + "_real_time_data", JSON.stringify(response));
 
-        $("#" + id + "-name").text("Fumehood " + fkey.slice(-2));
-
-        if (localStorage.getItem("money_mode_on") === "1") {
-          let money_value = convert_to_money(String(fvalue[1]));
-          $("#" + id + "-kw").text(money_value + " kW");
-        } else {
-          $("#" + id + "-kw").text(fvalue[1].toFixed(2) + " kW");
-        }
-        fIdx++;
-        $("#" + id + "-kwh").text(3 + " kWh");
-        $("#" + id + "-today").text(4 + " Hrs");
-        $("#" + id + "-avg-day").text(5 + " Hrs");
-      });
-    }
-    // if kW or kWh, convert to money mode
-    if (
-      localStorage.getItem("money_mode_on") === "1" &&
-      typeof value === "string"
-    ) {
-      if (value.endsWith("kW") || value.endsWith("kWh")) {
-        let money_value = convert_to_money(value);
-        $("#" + key).text(money_value);
+for (const [key, value] of Object.entries(response)) {
+      handle_red_green(key, value);
+      // color fumehood open status the correct color
+      if (key.endsWith("-mini-status")) {
+        let closed = value == "CLOSED";
+        $("#" + key)
+          .children("span")
+          .text(value);
+        $("#" + key)
+          .children("span")
+          .addClass(closed ? "green" : "red");
+        $("#" + key)
+          .children("span")
+          .removeClass(closed ? "red" : "green");
+        $("#" + key)
+          .children("img")
+          .attr(
+            "src",
+            closed
+              ? "../static/images/GreenDot.svg"
+              : "../static/images/RedDot.svg"
+          );
         continue;
       }
+      if (key.endsWith("-status")) {
+        $("#" + key).addClass(value == "OPEN" ? "red" : "green");
+        $("#" + key).removeClass(value == "OPEN" ? "green" : "red");
+      }
+      if (key.endsWith("-chart-data")) {
+        let end = key.indexOf("-chart-data");
+        try {
+          buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
+        } catch {}
+        continue;
+      }
+      if (key.endsWith("-number")) {
+        let numOpen = 0;
+        let i = 0;
+        for (const vkey of Object.keys(value)) {
+          $("#fumehood" + i + "-mini-status").removeClass("red");
+          $("#fumehood" + i + "-mini-status").removeClass("green");
+          let html;
+          if (value[vkey] == "OPEN") {
+            html =
+              "<p style='font-weight: bold'>" +
+              value[vkey] +
+              "</p><img src='../static/images/RedDot.svg'></img>";
+            $("#fumehood" + i + "-mini-status").addClass("red");
+          } else {
+            html =
+              "<p style='font-weight: bold'>" +
+              value[vkey] +
+              "</p><img src='../static/images/GreenDot.svg'></img>";
+            $("#fumehood" + i + "-mini-status").addClass("green");
+          }
+          $("#fumehood" + i + "-mini-status").html(html);
+          i += 1;
+          if (value[vkey] == "OPEN") {
+            numOpen++;
+          }
+        }
+        $("#" + key).text(numOpen + " of " + Object.keys(value).length);
+        continue;
+      }
+      if (key == "fumehoods") {
+        let fIdx = 0;
+        Object.entries(value).forEach((arr) => {
+          console.log(arr);
+          let fkey = arr[0];
+          let fvalue = arr[1];
+          let id = "fumehood" + fIdx;
+
+          $("#" + id + "-name").text("Fumehood " + fkey.slice(-2));
+
+          console.log(fvalue);
+          if (localStorage.getItem("money_mode_on") === "1") {
+            let money_value = convert_to_money(String(fvalue[1]));
+            $("#" + id + "-kw").text(money_value + " kW");
+          } else {
+            $("#" + id + "-kw").text(fvalue[1].toFixed(2) + " kW");
+          }
+          fIdx++;
+          $("#" + id + "-kwh").text(3 + " kWh");
+          $("#" + id + "-today").text(4 + " Hrs");
+          $("#" + id + "-avg-day").text(5 + " Hrs");
+        });
+      }
+      // if kW or kWh, convert to money mode
+      if (
+        localStorage.getItem("money_mode_on") === "1" &&
+        typeof value === "string"
+      ) {
+        if (value.endsWith("kW") || value.endsWith("kWh")) {
+          let money_value = convert_to_money(value);
+          $("#" + key).text(money_value);
+          continue;
+        }
+      }
+      // shunt in the correct value into the html
+      $("#" + key).text(value);
     }
-    // shunt in the correct value into the html
-    $("#" + key).text(value);
-  }
 }
 
 function convert_to_money(value) {
@@ -335,7 +337,6 @@ function convert_to_money(value) {
 function get_rt_data() {
   labNames.forEach((labName) => {
     let url = "/real_time_data?lab_id=" + labName;
-    url += "&fumehood_id=" + fumehoodId;
     request = $.ajax({
       type: "GET",
       url: url,
@@ -356,8 +357,11 @@ function get_date() {
 
 // set up document
 function setup() {
-  let cached_rt_data = localStorage.getItem("real_time_data");
-  if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
+  const labs = ['rabinowitz_icahn_201', 'rabinowitz_icahn_202'];
+  for (const lab in labs) {
+    let cached_rt_data = localStorage.getItem(lab + "_real_time_data");
+    if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
+  }
 
   get_rt_data();
   window.setInterval(get_rt_data, 5 * 1000);
