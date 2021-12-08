@@ -220,9 +220,9 @@ def weekly_report(lab_name, week_date):
     cal = time_dates(forward_date)[0]
     dict = {'date': week_date,
     'week': cal,
-    'this_week_energy_consumption': round(sum(energy), 2),
-    'this_week_avg_power_consumption': round(sum(power)/len(power),2),
-    'this_week_avg_fumehood_usage': round(sum(usage)/len(usage), 2),
+    'this_week_energy_consumption': str(round(sum(energy), 2)) + ' kWh',
+    'this_week_avg_power_consumption': str(round(sum(power)/len(power),2)) + ' kW',
+    'this_week_avg_fumehood_usage': str(round(sum(usage)/len(usage), 2)) + ' hrs',
     'energy_consumption_kwh_day': energy_cons,
     'energy_consumption_dollars_day': dollars,
     'energy_consumption_lb_co2_day': co2}

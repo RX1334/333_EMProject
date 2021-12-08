@@ -23,27 +23,27 @@
     <div class="lab-summary-content">
       <span class="lab-summary-today-consumption">
         <div
-          class="lab-summary-today-kwh widget-medium"
+          class="lab-summary-today-kwh this_week_energy_consumption widget-medium"
           id="{{lab_id}}-week-kwh"
-        ></div>
+        >⠀</div>
         <div class="lab-summary-today-text body-small">
           This Week's Energy Consumption
         </div>
       </span>
       <span class="lab-summary-current-consumption">
         <div
-          class="lab-summary-current-kw widget-medium"
+          class="lab-summary-current-kw this_week_avg_power_consumption widget-medium"
           id="{{lab_id}}-average-kw"
-        ></div>
+        >⠀</div>
         <div class="lab-summary-current-text body-small">
           This Week's Average Power Consumption
         </div>
       </span>
       <span class="lab-summary-number-active">
         <div
-          class="lab-summary-number widget-medium"
+          class="lab-summary-number this_week_avg_fumehood_usage widget-medium"
           id="{{lab_id}}-hours"
-        ></div>
+        >⠀</div>
         <div class="lab-summary-number-text body-small">
           This Week's Average Fume Hoods Usage Time / Day
         </div>
@@ -63,8 +63,9 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const date = urlParams.get("week_name");
+    const lab_id = urlParams.get("lab_id");
 
-    let url = "/weekly_report_summary?date=" + date;
+    let url = "/weekly_report_summary?date=" + date + "&lab_id=" + lab_id;
     request = $.ajax({
       type: "GET",
       url: url,
