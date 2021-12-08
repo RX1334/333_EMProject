@@ -7,6 +7,7 @@ import json, requests, os, time, random
 import string as strng
 from datetime import date, timedelta, datetime
 from push_db import put_fh_db, put_lab_db
+from database import nrg_trend
 from pull_db import pull_fh_data, pull_lab_data, week_report
 
 # disable https warning
@@ -211,13 +212,13 @@ def weekly_report(lab_name, week_date):
         dollars.append(round(random.uniform(8,12), 2))
         co2.append(round(random.uniform(10,12), 2))
     cal = time_dates(week_date)
-    dict = {'date': week_date,
-    'week': cal[0],
+    dict = {'date': week_date, 
+    'week': cal[0], 
     'this_week_energy_consumption': energy,
-    'this_week_avg_power_consumption': power,
-    'this_week_avg_fumehood_usage': usage,
-    'energy_consumption_kwh_day': energy_cons,
-    'energy_consumption_dollars_day': dollars,
+    'this_week_avg_power_consumption': power, 
+    'this_week_avg_fumehood_usage': usage, 
+    'energy_consumption_kwh_day': energy_cons, 
+    'energy_consumption_dollars_day': dollars, 
     'energy_consumption_lb_co2_day': co2}
     return dict
 def get_fumehoods(lab_name):
@@ -237,14 +238,14 @@ def graph_info(lab_name):
         'daily':  {'labels': days, 'time': daily_lab['total']},
         'weekly':  {'labels': weeks, 'time':weekly_lab['total']},
         'monthly': {'labels': months, 'time': monthly_lab['total']},
-        'yearly':  {'labels': years, 'time': yearly_lab['total']}},
+        'yearly':  {'labels': years, 'time': yearly_lab['total']}}, 
         'fumehoods':[]}
     for fumehood in fumehoods:
         daily_fh = pull_fh_data('daily', lab_name,fumehood)
         weekly_fh = pull_fh_data('weekly', lab_name,fumehood)
         monthly_fh = pull_fh_data('monthly', lab_name,fumehood)
         yearly_fh = pull_fh_data('yearly', lab_name,fumehood)
-        dict['fumehoods'].append({'id': fumehood,
+        dict['fumehoods'].append({'id': fumehood, 
         '-chart-data':{'daily':  {'labels': days, 'time': daily_fh['energy']},
                     'weekly':  {'labels': weeks, 'time': weekly_fh['energy']},
                     'monthly': {'labels': months, 'time': monthly_fh['energy']},
@@ -293,8 +294,6 @@ def lab_info(lab_name):
         'fumehoods': []}
     for fh in fh_names:
         dict['fumehoods'].append(fh_cons[fh][1])
-    dict['fumehoods'] = fh_cons
-    print(fh_cons)
     return dict
 
 if __name__ == '__main__':
