@@ -205,8 +205,6 @@ def time_dates(date_input=None):
 def weekly_report(lab_name, week_date):
     # need to add logic for consistent start date (e.g. every sunday)
     data = week_report(lab_name, week_date)
-    print('HERE')
-    print(data)
     energy, power, usage, energy_cons, dollars, co2 = [[],[],[],[],[],[]]
     for _ in range(7):
         energy.append(round(data[0]*random.uniform(0.5,1), 2))
@@ -215,9 +213,13 @@ def weekly_report(lab_name, week_date):
         energy_cons.append(round(data[0]*random.uniform(0.5,1), 2))
         dollars.append(round(random.uniform(8,12), 2))
         co2.append(round(random.uniform(10,12), 2))
-    cal = time_dates(week_date)
+    mo = week_date.split('.')[0]
+    day = week_date.split('.')[1]
+    forward_date = datetime(2021, int(mo), int(day))
+    forward_date = (forward_date + timedelta(weeks=1) - timedelta(days=1)).strftime("%m.%d")
+    cal = time_dates(forward_date)[0]
     dict = {'date': week_date,
-    'week': cal[0],
+    'week': cal,
     'this_week_energy_consumption': energy,
     'this_week_avg_power_consumption': power,
     'this_week_avg_fumehood_usage': usage,
@@ -225,6 +227,7 @@ def weekly_report(lab_name, week_date):
     'energy_consumption_dollars_day': dollars,
     'energy_consumption_lb_co2_day': co2}
     return dict
+
 def get_fumehoods(lab_name):
     if lab_name == 'rabinowitz_icahn_201':
         return ['fh5c', 'fh5d', 'fh6c', 'fh6d']
@@ -300,4 +303,4 @@ def lab_info(lab_name):
     return dict
 
 if __name__ == '__main__':
-    print(weekly_report('rabinowitz_icahn_201', '10.21'))
+    weekly_report('rabinowitz_icahn_201', '10.21')
