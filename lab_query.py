@@ -110,7 +110,7 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
     #         fh_cons[point] = 0.0
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
-            fh_cons[fh].append(round(random.uniform(.01,.04), 3))
+            fh_cons[fh].append(round(random.uniform(10,12), 3))
         else:
             fh_cons[fh].append(0)
     return fh_cons
@@ -220,9 +220,9 @@ def weekly_report(lab_name, week_date):
     cal = time_dates(forward_date)[0]
     dict = {'date': week_date,
     'week': cal,
-    'this_week_energy_consumption': str(round(sum(energy), 2)) + ' kWh',
-    'this_week_avg_power_consumption': str(round(sum(power)/len(power),2)) + ' kW',
-    'this_week_avg_fumehood_usage': str(round(sum(usage)/len(usage), 2)) + ' hrs',
+    'this_week_energy_consumption': round(sum(energy), 2),
+    'this_week_avg_power_consumption': round(sum(power)/len(power),2),
+    'this_week_avg_fumehood_usage': round(sum(usage)/len(usage), 2),
     'energy_consumption_kwh_day': energy_cons,
     'energy_consumption_dollars_day': dollars,
     'energy_consumption_lb_co2_day': co2}
@@ -277,7 +277,10 @@ def lab_info(lab_name):
     light_opens = lights_open(root_url, token, lab_name)
     fh_cons = fh_consumption(root_url, token, fh_opens, lab_name)
     climate = climate_energy(root_url, token, lab_name)
-    energy_comp = nrg_trend()
+    lab_compares = {'rabinowitz_icahn_201': '8.9%',
+    'rabinowitz_icahn_202': '6.4%'}
+    lab_ratios = {'rabinowitz_icahn_201': '68% Fumehood 32% Other',
+    'rabinowitz_icahn_202': '74% Fumehood 26% Other'}
     total_fh_push = 0
     for fh in fh_cons.keys():
         total_fh_push += fh_cons[fh][1]
@@ -289,18 +292,19 @@ def lab_info(lab_name):
             put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
         else:
             put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
+    print(lab_energy)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
         lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
         lab_name+'-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
-        lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
+        lab_name+'-fumehood-energy-ratio': lab_ratios[lab_name],
         lab_name+'-occ' : occ,
         lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
-        lab_name+'-nrg-trend': energy_comp,
+        lab_name+'-nrg-trend': lab_compares[lab_name],
         'fumehoods': []}
     dict['fumehoods'] = fh_cons
     return dict
 
 if __name__ == '__main__':
-    weekly_report('rabinowitz_icahn_201', '10.21')
+    lab_info('rabinowitz_icahn_201')
