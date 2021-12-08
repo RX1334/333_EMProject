@@ -289,7 +289,6 @@ function handle_rt_resp(response) {
     if (key == "fumehoods") {
       let fIdx = 0;
       Object.entries(value).forEach((arr) => {
-        console.log(arr);
         let fkey = arr[0];
         let fvalue = arr[1];
         let id = "fumehood" + fIdx;
