@@ -290,14 +290,12 @@ for (const [key, value] of Object.entries(response)) {
       if (key == "fumehoods") {
         let fIdx = 0;
         Object.entries(value).forEach((arr) => {
-          console.log(arr);
           let fkey = arr[0];
           let fvalue = arr[1];
           let id = "fumehood" + fIdx;
 
           $("#" + id + "-name").text("Fumehood " + fkey.slice(-2));
 
-          console.log(fvalue);
           if (localStorage.getItem("money_mode_on") === "1") {
             let money_value = convert_to_money(String(fvalue[1]));
             $("#" + id + "-kw").text(money_value + " kW");
@@ -358,10 +356,11 @@ function get_date() {
 // set up document
 function setup() {
   const labs = ['rabinowitz_icahn_201', 'rabinowitz_icahn_202'];
-  for (const lab in labs) {
+  labs.forEach((lab) => {
     let cached_rt_data = localStorage.getItem(lab + "_real_time_data");
     if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
-  }
+  });
+
 
   get_rt_data();
   window.setInterval(get_rt_data, 5 * 1000);

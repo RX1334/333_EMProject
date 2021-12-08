@@ -132,10 +132,14 @@ def lab_energy_calc(fh_cons, climate, lab_id):
     out += climate
     return out
 
-def report_archive_dates():
+def report_archive_dates(lab_id):
+    if (lab_id == 'rabinowitz_icahn_201'):
+        lab_id_number = 12
+    else:
+        lab_id_number = 8
     current_date = date.today()
     weeks = []
-    for i in range(1,12):
+    for i in range(1,lab_id_number):
         week = current_date - timedelta(weeks=i)
         str = week.strftime("%m")+ "." + week.strftime("%d") + "." + week.strftime("%y")
         weeks.append(str)
