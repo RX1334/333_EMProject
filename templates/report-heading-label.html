@@ -3,7 +3,7 @@
         <span>{{lab_name}} Reports</span>
         <span class="heading-label-right-align" id="{{lab_id}}-see-all" style="cursor: pointer">
             <span id="{{lab_id}}-toggle-text" style="margin-right: 16px;">See All</span>
-            <img class="caret-down-icon light-icon arrow-rotate"
+            <img id="{{lab_id}}-arrow" class="caret-down-icon light-icon arrow-rotate"
             src="{{ url_for ('static', filename='images/CaretDown.svg')}}">
             <img class="caret-down-icon dark-icon invisible-icon arrow-rotate"
             src="{{ url_for ('static', filename='images/CaretDown_dark.svg')}}">
@@ -13,7 +13,7 @@
         $('#{{lab_id}}-see-all').on('click', () => {
             $('.{{lab_id}}-report-widget-hideable').toggleClass('invisible-report');
             $('#{{lab_id}}-toggle-text').text((i, t) => t == 'See All' ? 'Collapse' : 'See All');
-            $('.arrow-rotate').toggleClass('down');
+            $('#{{lab_id}}-arrow').toggleClass('down');
         });
     </script>
 </div>

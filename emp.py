@@ -206,12 +206,15 @@ def lab_summary():
 def report_archive():
 
     # authenticate()
+
+    dashboard_content = render_template('header-widget.html', page_name='Report Archive')
+
+    # icahn 201
     icahn_201_name = 'Rabinowitz, Icahn 201'
     icahn_201_id = 'rabinowitz_icahn_201'
     dates_array = report_archive_dates(icahn_201_id)
 
     # render energy and power widgets
-    dashboard_content = render_template('header-widget.html', page_name='Report Archive')
     dashboard_content += render_template('report-heading-label.html', lab_name=icahn_201_name, lab_id=icahn_201_id)
     dashboard_content += '<div class="report-widget-container widget-container">'
     i = 0
@@ -220,6 +223,23 @@ def report_archive():
             dashboard_content += render_template('report-widget.html', lab_id=icahn_201_id, lab_name=icahn_201_name, report_date=date, report_date_stripped=date.replace('.', ''))
         else:
             dashboard_content += render_template('report-widget.html', lab_id=icahn_201_id, lab_name=icahn_201_name, report_date=date, report_date_stripped=date.replace('.', ''), hidden='true')
+        i += 1
+    dashboard_content += '</div>'
+
+    # icahn 202
+    icahn_202_name = 'Rabinowitz, Icahn 202'
+    icahn_202_id = 'rabinowitz_icahn_202'
+    dates_array = report_archive_dates(icahn_202_id)
+
+    # render energy and power widgets
+    dashboard_content += render_template('report-heading-label.html', lab_name=icahn_202_name, lab_id=icahn_202_id)
+    dashboard_content += '<div class="report-widget-container widget-container">'
+    i = 0
+    for date in dates_array:
+        if i < 3:
+            dashboard_content += render_template('report-widget.html', lab_id=icahn_202_id, lab_name=icahn_202_name, report_date=date, report_date_stripped=date.replace('.', ''))
+        else:
+            dashboard_content += render_template('report-widget.html', lab_id=icahn_202_id, lab_name=icahn_202_name, report_date=date, report_date_stripped=date.replace('.', ''), hidden='true')
         i += 1
     dashboard_content += '</div>'
 

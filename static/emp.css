@@ -770,7 +770,7 @@ input:checked + .slider:before {
 }
 
 .report-widget-nest:nth-child(even) {
-  background-color: #414141;
+  background-color:#363636;
 }
 
 .light-report-widget-nest:nth-child(odd) {
