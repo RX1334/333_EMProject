@@ -6,9 +6,6 @@
 import json, requests, os, time, random
 import string as strng
 from datetime import date, timedelta, datetime
-# from post import post_to_db
-from database import nrg_trend, week_report
-# from database import get_fumehood_output, get_lab_info
 from push_db import put_fh_db, put_lab_db
 from pull_db import pull_fh_data, pull_lab_data, week_report
 
@@ -134,7 +131,7 @@ def lab_energy_calc(fh_cons, climate, lab_id):
     out += climate
     return out
 
-def report_archive_dates(lab_id):
+def report_archive_dates():
     current_date = date.today()
     weeks = []
     for i in range(1,12):
@@ -203,6 +200,8 @@ def time_dates(date_input=None):
 def weekly_report(lab_name, week_date):
     # need to add logic for consistent start date (e.g. every sunday)
     data = week_report(lab_name, week_date)
+    print('HERE')
+    print(data)
     energy, power, usage, energy_cons, dollars, co2 = [[],[],[],[],[],[]]
     for _ in range(7):
         energy.append(round(data[0]*random.uniform(0.5,1), 2))
@@ -212,16 +211,15 @@ def weekly_report(lab_name, week_date):
         dollars.append(round(random.uniform(8,12), 2))
         co2.append(round(random.uniform(10,12), 2))
     cal = time_dates(week_date)
-    dict = {'date': week_date,
-    'week': cal[0],
+    dict = {'date': week_date, 
+    'week': cal[0], 
     'this_week_energy_consumption': energy,
-    'this_week_avg_power_consumption': power,
-    'this_week_avg_fumehood_usage': usage,
-    'energy_consumption_kwh_day': energy_cons,
-    'energy_consumption_dollars_day': dollars,
+    'this_week_avg_power_consumption': power, 
+    'this_week_avg_fumehood_usage': usage, 
+    'energy_consumption_kwh_day': energy_cons, 
+    'energy_consumption_dollars_day': dollars, 
     'energy_consumption_lb_co2_day': co2}
     return dict
-
 def get_fumehoods(lab_name):
     if lab_name == 'rabinowitz_icahn_201':
         return ['fh5c', 'fh5d', 'fh6c', 'fh6d']
@@ -239,14 +237,14 @@ def graph_info(lab_name):
         'daily':  {'labels': days, 'time': daily_lab['total']},
         'weekly':  {'labels': weeks, 'time':weekly_lab['total']},
         'monthly': {'labels': months, 'time': monthly_lab['total']},
-        'yearly':  {'labels': years, 'time': yearly_lab['total']}},
+        'yearly':  {'labels': years, 'time': yearly_lab['total']}}, 
         'fumehoods':[]}
     for fumehood in fumehoods:
         daily_fh = pull_fh_data('daily', lab_name,fumehood)
         weekly_fh = pull_fh_data('weekly', lab_name,fumehood)
         monthly_fh = pull_fh_data('monthly', lab_name,fumehood)
         yearly_fh = pull_fh_data('yearly', lab_name,fumehood)
-        dict['fumehoods'].append({'id': fumehood,
+        dict['fumehoods'].append({'id': fumehood, 
         '-chart-data':{'daily':  {'labels': days, 'time': daily_fh['energy']},
                     'weekly':  {'labels': weeks, 'time': weekly_fh['energy']},
                     'monthly': {'labels': months, 'time': monthly_fh['energy']},
@@ -287,15 +285,20 @@ def lab_info(lab_name):
         lab_name+'-number': fh_opens,
         lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
         lab_name+'-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
-        lab_name+'-temperature': str(round(random.uniform(71,75))) + ' °F',
-        lab_name+'-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
+        lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
+        lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
         lab_name+'-occ' : occ,
+<<<<<<< HEAD
         lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
         lab_name+'-nrg-trend': energy_comp,
+=======
+        lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
+        lab_name+'-nrg-trend': energy_comp, 
+>>>>>>> 01a061fe4570fcc7f7d47b7e4e87c12d356befdc
         'fumehoods': []}
     for fh in fh_names:
         dict['fumehoods'].append(fh_cons[fh][1])
     return dict
 
 if __name__ == '__main__':
-    print(lab_info('rabinowitz_icahn_201'))
+    print(weekly_report('rabinowitz_icahn_201', '10.21'))
