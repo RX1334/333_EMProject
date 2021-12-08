@@ -54,7 +54,6 @@
 
 <script>
   function handle_summary_resp(response) {
-    // console.log(response);
     for (const [key, value] of Object.entries(response)) {
       $("." + key).text(value);
     }

@@ -37,9 +37,9 @@
               <input
                 type="checkbox"
                 class="{{lab_id}}-gear-check"
-                id="nrg-cons-check"
+                id="{{lab_id}}-nrg-cons-check"
               />
-              <label class="gear-check" for="nrg-cons-check"
+              <label class="gear-check" for="{{lab_id}}-nrg-cons-check"
                 >Energy Consumption</label
               >
             </span>
@@ -47,9 +47,9 @@
               <input
                 type="checkbox"
                 class="{{lab_id}}-gear-check"
-                id="pwr-cons-check"
+                id="{{lab_id}}-pwr-cons-check"
               />
-              <label class="gear-check" for="pwr-cons-check"
+              <label class="gear-check" for="{{lab_id}}-pwr-cons-check"
                 >Power Consumption</label
               >
             </span>
@@ -57,9 +57,9 @@
               <input
                 type="checkbox"
                 class="{{lab_id}}-gear-check"
-                id="hood-usage-check"
+                id="{{lab_id}}-hood-usage-check"
               />
-              <label class="gear-check" for="hood-usage-check"
+              <label class="gear-check" for="{{lab_id}}-hood-usage-check"
                 >Fume Hood Use Status</label
               >
             </span>
@@ -69,17 +69,19 @@
               <input
                 type="checkbox"
                 class="{{lab_id}}-gear-check"
-                id="occ-ratio-check"
+                id="{{lab_id}}-occ-ratio-check"
               />
-              <label class="gear-check" for="occ-ratio-check">Occupants</label>
+              <label class="gear-check" for="{{lab_id}}-occ-ratio-check"
+                >Occupants</label
+              >
             </span>
             <span class="lab-summary-checkbox-span">
               <input
                 type="checkbox"
                 class="{{lab_id}}-gear-check"
-                id="ave-nrg-check"
+                id="{{lab_id}}-ave-nrg-check"
               />
-              <label class="gear-check" for="ave-nrg-check"
+              <label class="gear-check" for="{{lab_id}}-ave-nrg-check"
                 >Average Energy Used</label
               >
             </span>
@@ -87,9 +89,9 @@
               <input
                 type="checkbox"
                 class="{{lab_id}}-gear-check"
-                id="nrg-trend-check"
+                id="{{lab_id}}-nrg-trend-check"
               />
-              <label class="gear-check" for="nrg-trend-check"
+              <label class="gear-check" for="{{lab_id}}-nrg-trend-check"
                 >Energy Change</label
               >
             </span>
@@ -183,9 +185,10 @@
 <script>
   // On startup
   function {{lab_id}}_summary_setup() {
+
     let checkboxNames =
       localStorage.getItem("{{lab_id}}-checked") ??
-      "nrg-cons-check;pwr-cons-check;hood-usage-check";
+      "{{lab_id}}-nrg-cons-check;{{lab_id}}-pwr-cons-check;{{lab_id}}-hood-usage-check";
     {{lab_id}}_summary_setChecks(checkboxNames);
     {{lab_id}}_summary_displayInnerWidgets(checkboxNames.split(";"));
     localStorage.setItem("{{lab_id}}-checked", checkboxNames);
@@ -199,13 +202,16 @@
   }
 
   function {{lab_id}}_summary_setChecks(checkStr) {
+    console.log(checkStr)
     let checkArr = checkStr.split(";");
     let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
     allCheckboxes.each(function (index) {
       $(this).prop("checked", false);
     });
     checkArr.forEach((id) => {
-      $("#" + id).prop("checked", true);
+      console.log(id)
+      $(".{{lab_id}}-lab-summary-gear-disp #" + id).prop("checked", true);
+      console.log($('#' + id).prop("checked"))
     });
   }
 
@@ -213,28 +219,27 @@
   // that were checked in the function
   function {{lab_id}}_summary_displayInnerWidgets(arr) {
     // First, hide all the displays
-    console.log("in display");
     $(".{{lab_id}}-lab-summary-gear-disp").css("display", "none");
 
     // Now, just show the relevant displays
     arr.forEach((id) => {
       switch (id) {
-        case "nrg-cons-check":
+        case "{{lab_id}}-nrg-cons-check":
           $(".{{lab_id}}-lab-summary-today-consumption").css("display", "flex");
           break;
-        case "pwr-cons-check":
+        case "{{lab_id}}-pwr-cons-check":
           $(".{{lab_id}}-lab-summary-current-consumption").css("display", "flex");
           break;
-        case "hood-usage-check":
+        case "{{lab_id}}-hood-usage-check":
           $(".{{lab_id}}-lab-summary-number-active").css("display", "flex");
           break;
-        case "occ-ratio-check":
+        case "{{lab_id}}-occ-ratio-check":
           $(".{{lab_id}}-lab-summary-occ-ratio").css("display", "flex");
           break;
-        case "ave-nrg-check":
+        case "{{lab_id}}-ave-nrg-check":
           $(".{{lab_id}}-lab-summary-ave-nrg").css("display", "flex");
           break;
-        case "nrg-trend-check":
+        case "{{lab_id}}-nrg-trend-check":
           $(".{{lab_id}}-lab-summary-nrg-trend").css("display", "flex");
           break;
       }
