@@ -220,6 +220,7 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
+  console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
     handle_red_green(key, value);
@@ -286,6 +287,7 @@ function handle_rt_resp(response) {
       continue;
     }
     if (key == "fumehoods") {
+      continue; // For now, fix this later
       for (let i = 0; i < value.length; i++) {
         let id = value[i]["id"];
         $("#fumehood" + i + "-name").text("Fumehood " + id.slice(-2));
