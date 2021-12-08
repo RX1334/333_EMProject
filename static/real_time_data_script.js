@@ -210,7 +210,8 @@ function handle_red_green(key, value) {
 // --------------------------------------------------------
 
 // Change to url params in the future
-const labNames = ["rabinowitz_icahn_201", "rabinowitz_icahn_202"];
+// const labNames = ["rabinowitz_icahn_201", "rabinowitz_icahn_202"];
+const labNames = ["rabinowitz_icahn_201"];
 const fumehoodId = "fumehood0";
 
 // get fumehood # from url params
@@ -220,7 +221,6 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
-  console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
     handle_red_green(key, value);
@@ -287,40 +287,25 @@ function handle_rt_resp(response) {
       continue;
     }
     if (key == "fumehoods") {
-      continue; // For now, fix this later
-      for (let i = 0; i < value.length; i++) {
-        let id = value[i]["id"];
-        $("#fumehood" + i + "-name").text("Fumehood " + id.slice(-2));
-        id = "fumehood" + i;
-        for (const [fkey, fvalue] of Object.entries(value[i])) {
-          handle_red_green(id + "-" + fkey, fvalue);
-          if (fkey == "id") {
-            $("#" + id + "-mini-status")
-              .siblings(".mini-fume-name")
-              .text("Fumehood " + fvalue.substring(2));
-            continue;
-          }
+      let fIdx = 0;
+      Object.entries(value).forEach((arr) => {
+        let fkey = arr[0];
+        let fvalue = arr[1];
+        let id = "fumehood" + fIdx;
 
-          // convert fumehoods to money
-          if (
-            localStorage.getItem("money_mode_on") === "1" &&
-            typeof fvalue === "string"
-          ) {
-            if (fvalue.endsWith("kW") || fvalue.endsWith("kWh")) {
-              let money_value = convert_to_money(fvalue);
-              $("#" + id + "-" + fkey).text(money_value);
-              continue;
-            }
-          }
+        $("#" + id + "-name").text("Fumehood " + fkey.slice(-2));
 
-          $("#" + id + "-" + fkey).text(fvalue);
-          if (fkey.endsWith("-chart-data")) {
-            try {
-              buildAllCharts(fvalue, "#" + id + "-chart");
-            } catch {}
-          }
+        if (localStorage.getItem("money_mode_on") === "1") {
+          let money_value = convert_to_money(fvalue[1]);
+          $("#" + id + "-kw").text(money_value + " kW");
+        } else {
+          $("#" + id + "-kw").text(fvalue[1].toFixed(2) + " kW");
         }
-      }
+        fIdx++;
+        $("#" + id + "-kwh").text(3 + " kWh");
+        $("#" + id + "-today").text(4 + " Hrs");
+        $("#" + id + "-avg-day").text(5 + " Hrs");
+      });
     }
     // if kW or kWh, convert to money mode
     if (
@@ -371,7 +356,6 @@ function get_date() {
 // set up document
 function setup() {
   let cached_rt_data = localStorage.getItem("real_time_data");
-  // console.log(cached_rt_data);
   if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
 
   get_rt_data();

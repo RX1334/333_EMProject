@@ -90,10 +90,8 @@
       for (let i = 0; i < data.time.length; i++) {
         data.time[i] = parseFloat(parseFloat(data.time[i] * scale).toFixed(2));
       }
-      console.log(id);
       if (localStorage.getItem("money_mode_on") === "1") {
         $(".report-chart-units").text("Units: $");
-        console.log("in money");
       } else {
         $(".report-chart-units").text("Units: kWh");
       }
@@ -192,7 +190,6 @@
   }
 
   function buildAllReportCharts(report_dict) {
-    console.log(report_dict);
     console.log("building all");
     buildReportChart(
       report_dict["energy_consumption_kwh_day"],
@@ -212,7 +209,6 @@
   }
 
   function handle_report_resp(response) {
-    console.log(response);
     buildAllReportCharts(response);
   }
 
@@ -229,5 +225,10 @@
     });
   }
 
-  get_report_data();
+  function report_setup() {
+    get_report_data();
+    window.setInterval(get_report_data, 60 * 60 * 1000);
+  }
+
+  report_setup();
 </script>

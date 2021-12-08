@@ -298,6 +298,8 @@ def lab_info(lab_name):
         'fumehoods': []}
     for fh in fh_names:
         dict['fumehoods'].append(fh_cons[fh][1])
+    dict['fumehoods'] = fh_cons
+    print(dict['fumehoods'])
     return dict
 
 if __name__ == '__main__':

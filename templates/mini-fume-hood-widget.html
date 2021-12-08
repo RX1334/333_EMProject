@@ -19,19 +19,20 @@
 </a>
 
 <script>
-  function setup() {
+  function fh_setup() {
     let cached_rt_data = localStorage.getItem("real_time_data");
     if (cached_rt_data) {
       cached_fumes = JSON.parse(cached_rt_data)["fumehoods"];
-      for (let i = 0; i < cached_fumes.length; i++) {
-        let name = "Fumehood " + cached_fumes[i]["id"].substring(2);
+      let i = 0;
+      Object.entries(cached_fumes).forEach((arr) => {
+        let name = "Fumehood " + arr[0].substring(2);
         let oldUrl = $("#fumehood" + i + "-href").attr("href");
-        console.log(oldUrl);
         oldUrl = oldUrl.concat("&fumehood_name=");
         oldUrl = oldUrl.concat(name);
         $("#fumehood" + i + "-href").attr("href", oldUrl);
-      }
+        i++;
+      });
     }
   }
-  setup();
+  fh_setup();
 </script>

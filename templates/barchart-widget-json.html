@@ -81,7 +81,6 @@
 
 <script>
   function buildChart(data, id, name) {
-    console.log(data, id, name);
     let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
 
     if (dark_mode_on === "0") color = "#2A2A2A";
@@ -217,7 +216,6 @@
     const labId = urlParams.get("lab_id");
     let prevChartData = JSON.parse(localStorage.getItem(labId + "-chart-data"));
     if (prevChartData) {
-      console.log(prevChartData);
       handle_graph_resp(prevChartData);
       return;
     }
