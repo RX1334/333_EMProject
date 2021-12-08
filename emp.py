@@ -278,10 +278,11 @@ def weekly_report_summary():
     date = request.args.get('date')
     print(date)
     lab_id = request.args.get('lab_id')
-    if date != 'None':
-        data = weekly_report(lab_id, date)
-    else:
-        data = graph_info(lab_id)
+    # if date != 'None':
+    #     data = weekly_report(lab_id, date)
+    # else:
+    #     data = graph_info(lab_id)
+    data = weekly_report(lab_id, date)
     return data
 
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS

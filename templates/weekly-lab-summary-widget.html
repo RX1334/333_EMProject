@@ -57,12 +57,14 @@
     for (const [key, value] of Object.entries(response)) {
       $("." + key).text(value);
     }
+
+    console.log(key);
   }
 
   function get_report_summary_data() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const date = 'None';
+    const date = urlParams.get("week_name");
     const lab_id = urlParams.get("lab_id");
 
     let url = "/weekly_report_summary?date=" + date + "&lab_id=" + lab_id;
