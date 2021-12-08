@@ -1,6 +1,6 @@
 <div class="widget dark">
   <div class="graph-widget body-small report-graph-widget">
-    <div>{{week_name}} {{type_of_graph}}</div>
+    <div>Week of {{week_name}} {{type_of_graph}}</div>
     <div id="{{lab_id}}-report-chart">
       <svg width="608" height="156" class="barchart" id="barchart-nrg"></svg>
       <svg
@@ -216,8 +216,9 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const date = urlParams.get("week_name");
+    const lab_id = urlParams.get("lab_id")
 
-    let url = "/report-chart-data?date=" + date;
+    let url = "/weekly_report_summary?date=" + date + "&lab_id=" + lab_id;
     request = $.ajax({
       type: "GET",
       url: url,

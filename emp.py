@@ -274,13 +274,6 @@ def weekly_report_summary():
     lab_id = request.args.get('lab_id')
     weeks_data = weekly_report(lab_id, date)
     return weeks_data
-    # # Ideally, this should call the database to get the relevant stored information.
-    # return {
-    #     'lab-summary-today-kwh': '11037 kWh',
-    #     'lab-summary-current-kw': '53 kWh',
-    #     'lab-summary-number': '16 Hrs'
-    # }
-    # return weekly_report(lab_id, date)
 
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
 @app.route('/weekly_report', methods=['GET'])
