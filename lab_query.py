@@ -290,13 +290,13 @@ def lab_info(lab_name):
         lab_name+'-temperature': str(round(random.uniform(71,75))) + ' °F',
         lab_name+'-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
         lab_name+'-occ' : occ,
-        lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
-        lab_name+'-nrg-trend': energy_comp,
         lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
         lab_name+'-nrg-trend': energy_comp, 
         'fumehoods': []}
     for fh in fh_names:
         dict['fumehoods'].append(fh_cons[fh][1])
+    dict['fumehoods'] = fh_cons
+    print(fh_cons)
     return dict
 
 if __name__ == '__main__':
