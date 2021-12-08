@@ -2,7 +2,7 @@ from flask import Flask, make_response, request, render_template
 # from flask import redirect, url_for, session, abort
 import requests
 from database import get_fumehood_output
-from lab_query import lab_info, graph_info
+from lab_query import lab_info, graph_info, report_archive_dates, weekly_report
 import json
 import random
 import urllib
@@ -228,24 +228,24 @@ def report_archive():
     response = make_response(html)
     return(response)
 
-# @app.route('/report_archive_data', methods=['GET'])
-def report_archive_dates(lab_id):
-    return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.03.21']
-    # return from report_archive_dates() in lab_query.py
+# # @app.route('/report_archive_data', methods=['GET'])
+# def report_archive_dates(lab_id):
+#     return ['10.31.21', '10.24.21', '10.17.21', '10.10.21', '10.03.21']
+#     # return from report_archive_dates() in lab_query.py
 
 # should be replaced by call to lab_query, don't delete, just comment out pls
-def weekly_report(lab_id, date):
-    ndate = float(date[:5])
-    return {
-    'date' : date,
-    'week' : [ndate, round(ndate+0.01,2), round(ndate+0.02,2), round(ndate+0.03,2), round(ndate+0.04,2), round(ndate+0.05,2), round(ndate+0.06,2)],
-    'this_week_energy_consumption' : '323.3 kWh',
-    'this_week_avg_power_consumption' : '421.23 kW',
-    'this_week_avg_fumehood_usage' : '6 hrs',
-    'energy_consumption_kwh_day' : [3.1, 3.3, 3.2, 3.7, 3.9, 4.2, 3.2],
-    'energy_consumption_dollars_day' : [7.68, 5.64, 9.00, 10.23, 11.21, 13.21, 9.81],
-    'energy_consumption_lb_co2_day' : [8.1, 7.6, 5.4, 2.1, 9.8, 6.7, 9.4]
-    }
+# def weekly_report(lab_id, date):
+#     ndate = float(date[:5])
+#     return {
+#     'date' : date,
+#     'week' : [ndate, round(ndate+0.01,2), round(ndate+0.02,2), round(ndate+0.03,2), round(ndate+0.04,2), round(ndate+0.05,2), round(ndate+0.06,2)],
+#     'this_week_energy_consumption' : '323.3 kWh',
+#     'this_week_avg_power_consumption' : '421.23 kW',
+#     'this_week_avg_fumehood_usage' : '6 hrs',
+#     'energy_consumption_kwh_day' : [3.1, 3.3, 3.2, 3.7, 3.9, 4.2, 3.2],
+#     'energy_consumption_dollars_day' : [7.68, 5.64, 9.00, 10.23, 11.21, 13.21, 9.81],
+#     'energy_consumption_lb_co2_day' : [8.1, 7.6, 5.4, 2.1, 9.8, 6.7, 9.4]
+#     }
 
 # This gets the summary in the weekly report
 @app.route('/weekly_report_summary', methods=['GET'])
