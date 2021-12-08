@@ -62,7 +62,7 @@
   function get_report_summary_data() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const date = urlParams.get("week_name");
+    const date = 'None';
     const lab_id = urlParams.get("lab_id");
 
     let url = "/weekly_report_summary?date=" + date + "&lab_id=" + lab_id;

@@ -163,6 +163,11 @@ def lab_summary():
     lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
 
+    if lab_id == 'rabinowitz_icahn_201':
+        fumehood_names = ['5c', '5d', '6c', '6d']
+    else:
+        fumehood_names = ['7c', '7d', '8c', '8d']
+
     # temp error handling
     if not lab_id:
         html = ''
@@ -183,7 +188,7 @@ def lab_summary():
     for i in range(num_fumehoods):
         fumehood_id = "fumehood" + str(i)
         dashboard_content += '<span>'
-        dashboard_content += render_template('mini-fume-hood-widget.html', lab_id=lab_id, lab_name=lab_name, fumehood_id=fumehood_id)
+        dashboard_content += render_template('mini-fume-hood-widget.html', lab_id=lab_id, lab_name=lab_name, fumehood_id=fumehood_id, fumehood_name='Fumehood ' + fumehood_names[i])
         dashboard_content += '</span>'
     dashboard_content += '</div>'
     dashboard_content += '<div class="consumption-widget-container widget-container">'
@@ -271,9 +276,13 @@ def report_archive():
 @app.route('/weekly_report_summary', methods=['GET'])
 def weekly_report_summary():
     date = request.args.get('date')
+    print(date)
     lab_id = request.args.get('lab_id')
-    weeks_data = weekly_report(lab_id, date)
-    return weeks_data
+    if date != 'None':
+        data = weekly_report(lab_id, date)
+    else:
+        data = graph_info(lab_id)
+    return data
 
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
 @app.route('/weekly_report', methods=['GET'])
@@ -337,24 +346,24 @@ def report():
     return(response)
 
 # Get Report Chart Data
-@app.route('/report-chart-data', methods=['GET'])
-def report_chart():
+# @app.route('/report-chart-data', methods=['GET'])
+# def report_chart():
 
-    # authenticate()
+#     # authenticate()
 
-    date = request.args.get('date')
-    # For now, use fake data, but should call a lab_query func instead
-    report_dict = {
-        'date' : '10.31.21',
-        'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
-        'this_week_energy_consumption' : '323.3 kWh',
-        'this_week_avg_power_consumption' : '421.23 kW',
-        'this_week_avg_fumehood_usage' : '6 hrs',
-        'energy_consumption_kwh_day' : [7, 9, 3, 5, 7, 2, 1],
-        'energy_consumption_dollars_day' : [3, 3, 2, 3, 7, 4, 5],
-        'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
-    }
-    return report_dict
+#     date = request.args.get('date')
+#     # For now, use fake data, but should call a lab_query func instead
+#     report_dict = {
+#         'date' : '10.31.21',
+#         'week' : ['10.31', '11.1', '11.2', '11.3', '11.4', '11.5', '11.6'],
+#         'this_week_energy_consumption' : '323.3 kWh',
+#         'this_week_avg_power_consumption' : '421.23 kW',
+#         'this_week_avg_fumehood_usage' : '6 hrs',
+#         'energy_consumption_kwh_day' : [7, 9, 3, 5, 7, 2, 1],
+#         'energy_consumption_dollars_day' : [3, 3, 2, 3, 7, 4, 5],
+#         'energy_consumption_lb_co2_day' : [4, 7, 5, 9, 6, 3, 4]
+#     }
+#     return report_dict
 
 # Fetch real-time data given a lab name and/or fumehood id
 # args: optional for either lab_name or fumehood_id (if neither provided,
