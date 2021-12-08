@@ -299,7 +299,8 @@ function handle_rt_resp(response) {
           let money_value = convert_to_money(fvalue[1]);
           $("#" + id + "-kw").text(money_value + " kW");
         } else {
-          $("#" + id + "-kw").text(fvalue[1].toFixed(2) + " kW");
+          console.log(fvalue);
+          $("#" + id + "-kw").text(fvalue.toFixed(2) + " kW");
         }
         fIdx++;
         $("#" + id + "-kwh").text(3 + " kWh");

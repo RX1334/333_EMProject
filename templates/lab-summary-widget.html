@@ -1,4 +1,6 @@
-<div class="widget-container report-widget-nest report-widget-internal-container">
+<div
+  class="widget-container report-widget-nest report-widget-internal-container"
+>
   <div class="lab-summary-widget">
     <div class="lab-summary-title">
       <span class="lab-summary-title-name body-small">
@@ -8,7 +10,8 @@
         <a
           href="/lab_summary?lab_id={{lab_id}}&lab_name={{lab_name}}"
           class="activate_{{lab_id}} lab-summary-details nav-small"
-          >See Lab Details</a>
+          >See Lab Details</a
+        >
         <img
           src="{{ url_for ('static', filename='images/GearSix.svg')}}"
           class="lab-summary-options light-icon rotate"
@@ -23,7 +26,10 @@
     </div>
     <div class="lab-summary-content">
       <!-- The gear box display -->
-      <div class="body-small {{lab_id}}-lab-summary-gear-disp" style="display: none">
+      <div
+        class="body-small {{lab_id}}-lab-summary-gear-disp"
+        style="display: none"
+      >
         <div>Select 3 options.</div>
         <form action="/action_page.php">
           <div class="lab-summary-options-row">
@@ -276,5 +282,4 @@
 
     $("document").ready({{lab_id}}_summary_setup);
   </script>
-
 </div>
