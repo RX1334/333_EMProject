@@ -134,7 +134,7 @@ def lab_energy_calc(fh_cons, climate, lab_id):
     out += climate
     return out
 
-def report_archive_dates(lab_id):
+def report_archive_dates():
     current_date = date.today()
     weeks = []
     for i in range(1,12):
@@ -187,14 +187,12 @@ def time_dates(date_input=None):
                 year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
-        year.reverse()
         return year
     def year_dates():
         current_year = str(date.today().strftime("%y"))
         years = []
         for i in range(5):
              years.append(int(str(20)+current_year)-i)
-        years.reverse()
         return years
     week = week_dates()
     month = month_dates()
@@ -205,7 +203,7 @@ def time_dates(date_input=None):
 def weekly_report(lab_name, week_date):
     # need to add logic for consistent start date (e.g. every sunday)
     data = week_report(lab_name, week_date)
-    energy, power, usage, energy_cons, dollars, co2 = [[],[],[],[],[],[]]
+    energy, power, usage, energy_cons, dollars, co2 = [[],[],[],[],[],[],[]]
     for i in range(6):
         energy.append(round(data[0]*random.uniform(0.5,1), 2))
         power.append(round(data[0]*random.uniform(0.5,1), 2))
@@ -214,13 +212,13 @@ def weekly_report(lab_name, week_date):
         dollars.append(round(random.uniform(8,12), 2))
         co2.append(round(random.uniform(10,12), 2))
     cal = time_dates(week_date)
-    dict = {'date': week_date,
-    'week': cal[0],
+    dict = {'date': week_date, 
+    'week': cal[0], 
     'this_week_energy_consumption': energy,
-    'this_week_avg_power_consumption': power,
-    'this_week_avg_fumehood_usage': usage,
-    'energy_consumption_kwh_day': energy_cons,
-    'energy_consumption_dollars_day': dollars,
+    'this_week_avg_power_consumption': power, 
+    'this_week_avg_fumehood_usage': usage, 
+    'energy_consumption_kwh_day': energy_cons, 
+    'energy_consumption_dollars_day': dollars, 
     'energy_consumption_lb_co2_day': co2}
     return dict
 
@@ -237,18 +235,18 @@ def graph_info(lab_name):
     weekly_lab = pull_lab_data('weekly', lab_name)
     monthly_lab = pull_lab_data('monthly', lab_name)
     yearly_lab = pull_lab_data('yearly', lab_name)
-    dict = {lab_name + '-chart-data': {
+    dict = {lab_name+ '-chart-data': {
         'daily':  {'labels': days, 'time': daily_lab['total']},
         'weekly':  {'labels': weeks, 'time':weekly_lab['total']},
         'monthly': {'labels': months, 'time': monthly_lab['total']},
-        'yearly':  {'labels': years, 'time': yearly_lab['total']}},
+        'yearly':  {'labels': years, 'time': yearly_lab['total']}}, 
         'fumehoods':[]}
     for fumehood in fumehoods:
         daily_fh = pull_fh_data('daily', lab_name,fumehood)
         weekly_fh = pull_fh_data('weekly', lab_name,fumehood)
         monthly_fh = pull_fh_data('monthly', lab_name,fumehood)
         yearly_fh = pull_fh_data('yearly', lab_name,fumehood)
-        dict['fumehoods'].append({'id': fumehood,
+        dict['fumehoods'].append({'id': fumehood, 
         '-chart-data':{'daily':  {'labels': days, 'time': daily_fh['energy']},
                     'weekly':  {'labels': weeks, 'time': weekly_fh['energy']},
                     'monthly': {'labels': months, 'time': monthly_fh['energy']},
@@ -290,16 +288,13 @@ def lab_info(lab_name):
         lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
         lab_name+'-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         lab_name+'-temperature': str(round(random.uniform(71,75))) + ' °F',
-        # Percents don't need to be escaped
-        lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
+        lab_name+'-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
         lab_name+'-occ' : occ,
-        lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
-        lab_name+'-nrg-trend': energy_comp,
+        lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
+        lab_name+'-nrg-trend': energy_comp, 
         'fumehoods': []}
     for fh in fh_names:
         dict['fumehoods'].append(fh_cons[fh][1])
-    dict['fumehoods'] = fh_cons
-    print(dict['fumehoods'])
     return dict
 
 if __name__ == '__main__':
