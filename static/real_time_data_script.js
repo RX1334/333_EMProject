@@ -287,6 +287,7 @@ for (const [key, value] of Object.entries(response)) {
         $("#" + key).text(numOpen + " of " + Object.keys(value).length);
         continue;
       }
+<<<<<<< HEAD
       if (key == "fumehoods") {
         let fIdx = 0;
         Object.entries(value).forEach((arr) => {
@@ -294,6 +295,17 @@ for (const [key, value] of Object.entries(response)) {
           let fkey = arr[0];
           let fvalue = arr[1];
           let id = "fumehood" + fIdx;
+=======
+      $("#" + key).text(numOpen + " of " + Object.keys(value).length);
+      continue;
+    }
+    if (key == "fumehoods") {
+      let fIdx = 0;
+      Object.entries(value).forEach((arr) => {
+        let fkey = arr[0];
+        let fvalue = arr[1];
+        let id = "fumehood" + fIdx;
+>>>>>>> 1b6b11ee52c9caf831a40db788360786bfb69231
 
           $("#" + id + "-name").text("Fumehood " + fkey.slice(-2));
 
