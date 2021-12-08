@@ -252,7 +252,11 @@ def report_archive():
 def weekly_report_summary():
     date = request.args.get('date')
     # Ideally, this should call the database to get the relevant stored information.
-    print(weekly_report('1', date))
+    return {
+        'lab-summary-today-kwh': '11037 kWh',
+        'lab-summary-current-kw': '53 kWh',
+        'lab-summary-number': '16 Hrs'
+    }
     return weekly_report('1', date)
 
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
