@@ -2,7 +2,7 @@ from flask import Flask, make_response, request, render_template
 # from flask import redirect, url_for, session, abort
 import requests
 from database import get_fumehood_output
-from lab_query import lab_info
+from lab_query import lab_info, graph_info
 import json
 import random
 import urllib
@@ -143,7 +143,7 @@ def fumehood_summary():
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-widget-json.html',
+    dashboard_content += render_template('barchart-report.html',
                                          name=fumehood_name,
                                          lab_id=lab_id,
                                          type_of_graph='Energy Consumption Trend')
@@ -420,3 +420,8 @@ def real_time_data():
 
     # return data_dict
     return lab_info('rabinowitz_icahn_201')
+
+@app.route('/get_graph_info', methods=['GET'])
+def get_graph_info():
+    lab_id = request.args.get('lab_id')
+    return graph_info(lab_id)

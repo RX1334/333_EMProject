@@ -187,12 +187,14 @@ def time_dates(date_input=None):
                 year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
+        year.reverse()
         return year
     def year_dates():
         current_year = str(date.today().strftime("%y"))
         years = []
         for i in range(5):
              years.append(int(str(20)+current_year)-i)
+        years.reverse()
         return years
     week = week_dates()
     month = month_dates()
@@ -235,7 +237,7 @@ def graph_info(lab_name):
     weekly_lab = pull_lab_data('weekly', lab_name)
     monthly_lab = pull_lab_data('monthly', lab_name)
     yearly_lab = pull_lab_data('yearly', lab_name)
-    dict = {lab_name+ '-chart-data': {
+    dict = {lab_name + '-chart-data': {
         'daily':  {'labels': days, 'time': daily_lab['total']},
         'weekly':  {'labels': weeks, 'time':weekly_lab['total']},
         'monthly': {'labels': months, 'time': monthly_lab['total']},
@@ -276,10 +278,10 @@ def lab_info(lab_name):
     for fh in fh_cons.keys():
         total_fh_push += fh_cons[fh][1]
     lab_energy = total_fh_push + climate
-    print([total_fh_push, climate, lab_energy])
+    # print([total_fh_push, climate, lab_energy])
     put_lab_db(lab_name, total_fh_push, climate,lab_energy)
     fh_names = get_fumehoods(lab_name)
-    print(fh_opens)
+    # print(fh_opens)
     for fh in fh_names:
         if fh_opens[fh] == 'OPEN':
             put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
@@ -290,9 +292,10 @@ def lab_info(lab_name):
         lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
         lab_name+'-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
         lab_name+'-temperature': str(round(random.uniform(71,75))) + ' °F',
-        lab_name+'-fumehood-energy-ratio': '68%% Fumehood 32%% Other',
+        # Percents don't need to be escaped
+        lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
         lab_name+'-occ' : occ,
-        lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
+        lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
         lab_name+'-nrg-trend': energy_comp}
     return dict
 

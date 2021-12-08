@@ -67,29 +67,30 @@ function toggleDarkMode() {
 
   // If a barchart is located on the page, it will update the colors
   try {
-    let cached_rt_data = JSON.parse(localStorage.getItem("real_time_data"));
-    for (const [key, value] of Object.entries(cached_rt_data)) {
-      if (key == "fumehoods") {
-        for (let i = 0; i < value.length; i++) {
-          let id = value[i]["id"];
-          id = "fumehood" + i;
-          for (const [fkey, fvalue] of Object.entries(value[i])) {
-            if (fkey.endsWith("-chart-data")) {
-              try {
-                buildAllCharts(fvalue, "#" + id + "-chart");
-              } catch {}
-            }
-          }
-        }
-      }
-      if (key.endsWith("-chart-data")) {
-        let end = key.indexOf("-chart-data");
-        try {
-          buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
-        } catch {}
-        continue;
-      }
-    }
+    lab_graph_setup();
+    // let cached_rt_data = JSON.parse(localStorage.getItem("real_time_data"));
+    // for (const [key, value] of Object.entries(cached_rt_data)) {
+    //   if (key == "fumehoods") {
+    //     for (let i = 0; i < value.length; i++) {
+    //       let id = value[i]["id"];
+    //       id = "fumehood" + i;
+    //       for (const [fkey, fvalue] of Object.entries(value[i])) {
+    //         if (fkey.endsWith("-chart-data")) {
+    //           try {
+    //             buildAllCharts(fvalue, "#" + id + "-chart");
+    //           } catch {}
+    //         }
+    //       }
+    //     }
+    //   }
+    //   if (key.endsWith("-chart-data")) {
+    //     let end = key.indexOf("-chart-data");
+    //     try {
+    //       buildAllCharts(value, "#" + key.substring(0, end) + "-chart");
+    //     } catch {}
+    //     continue;
+    //   }
+    // }
     // buildAllCharts();
   } catch {}
   try {
@@ -175,7 +176,7 @@ function toggleMoneyMode() {
   if (cached_rt_data != null) handle_rt_resp(JSON.parse(cached_rt_data));
   // If a barchart is located on the page, it will update the colors
   try {
-    buildAllCharts();
+    lab_graph_setup();
   } catch {}
   try {
     // buildAllReportCharts();

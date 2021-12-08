@@ -81,6 +81,7 @@
 
 <script>
   function buildChart(data, id, name) {
+    console.log(data, id, name);
     let dark_mode_on = localStorage.getItem("dark_mode_on") ?? "1";
 
     if (dark_mode_on === "0") color = "#2A2A2A";
@@ -186,14 +187,42 @@
     if (name === undefined) {
       name = "";
     }
-    // console.log("params:");
-    // console.log(data_dict);
-    // console.log(name);
-    buildChart(data_dict["dates"], "#barchart-dates", name);
-    buildChart(data_dict["weeks"], "#barchart-weeks", name);
-    buildChart(data_dict["sixMonths"], "#barchart-sixMonths", name);
-    buildChart(data_dict["years"], "#barchart-years", name);
+    buildChart(data_dict["daily"], "#barchart-dates", name);
+    buildChart(data_dict["weekly"], "#barchart-weeks", name);
+    buildChart(data_dict["monthly"], "#barchart-sixMonths", name);
+    buildChart(data_dict["yearly"], "#barchart-years", name);
   }
 
-  buildAllCharts();
+  function handle_graph_resp(response) {
+    Object.keys(response).forEach((key) => {
+      if (key.endsWith("-chart-data")) {
+        localStorage.setItem(key, JSON.stringify(response));
+        buildAllCharts(response[key]);
+      }
+    });
+  }
+
+  function get_graph_info(labId) {
+    let url = "/get_graph_info?lab_id=" + labId;
+    request = $.ajax({
+      type: "GET",
+      url: url,
+      success: handle_graph_resp,
+    });
+  }
+
+  function lab_graph_setup() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const labId = urlParams.get("lab_id");
+    let prevChartData = JSON.parse(localStorage.getItem(labId + "-chart-data"));
+    if (prevChartData) {
+      console.log(prevChartData);
+      handle_graph_resp(prevChartData);
+      return;
+    }
+    get_graph_info(labId);
+  }
+  // buildAllCharts();
+  lab_graph_setup();
 </script>

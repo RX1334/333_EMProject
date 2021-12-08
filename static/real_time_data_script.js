@@ -220,7 +220,6 @@ const fumehoodId = "fumehood0";
 
 // try to cram data into the corresponding tag with id
 function handle_rt_resp(response) {
-  console.log(response);
   localStorage.setItem("real_time_data", JSON.stringify(response));
   for (const [key, value] of Object.entries(response)) {
     handle_red_green(key, value);
@@ -380,20 +379,3 @@ function setup() {
 }
 
 $("document").ready(setup);
-
-// function lab_summary() {
-//   let url = "/emapp/lab_summary?lab_name=rabinowitz_icahn_201";
-//   if (request != null) request.abort();
-
-//   request = $.ajax({
-//     type: "GET",
-//     url: url,
-//     success: handle_rerender,
-//   });
-// }
-
-// function handle_rerender(response) {
-//   console.log("rerender");
-//   $("#dashboard").html(response);
-//   $(".activate_rabinowitz_icahn_201").on("click", lab_summary);
-// }
