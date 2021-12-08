@@ -3,6 +3,10 @@
   padding: 0px;
 }
 
+img {
+  display: block;
+}
+
 html {
   background: #e5e5e5;
 }
