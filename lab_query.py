@@ -252,9 +252,7 @@ def graph_info(lab_name):
                     'yearly':  {'labels': years, 'time': yearly_fh['energy']}}})
     return dict
 
-def lab_info():
-    lab_names = ['rabinowitz_icahn_201', 'rabinowitz_icahn_202']
-    output = []
+def lab_info(lab_name):
     # root_url = "https://desigocc.princeton.edu/api/api/"
     # username = "testuser"
     # password = "testuser"
@@ -267,38 +265,36 @@ def lab_info():
     root_url = None
     token = None
     # calculate total occupancy
-    for lab_name in lab_names:
-        occ = occupancy(root_url, token, lab_name)
-        fh_opens = fh_open(root_url, token, lab_name)
-        light_opens = lights_open(root_url, token, lab_name)
-        fh_cons = fh_consumption(root_url, token, fh_opens, lab_name)
-        climate = climate_energy(root_url, token, lab_name)
-        energy_comp = nrg_trend()
-        total_fh_push = 0
-        for fh in fh_cons.keys():
-            total_fh_push += fh_cons[fh][1]
-        lab_energy = total_fh_push + climate
-        put_lab_db(lab_name, total_fh_push, climate,lab_energy)
-        fh_names = get_fumehoods(lab_name)
-        for fh in fh_names:
-            if fh_opens[fh] == 'OPEN':
-                put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
-            else:
-                put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
-        dict = {'labid': lab_name,
-            lab_name+'-number': fh_opens,
-            lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
-            lab_name+'-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
-            lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
-            lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
-            lab_name+'-occ' : occ,
-            lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
-            lab_name+'-nrg-trend': energy_comp, 
-            'fumehoods': []}
-        for fh in fh_names:
-            dict['fumehoods'].append(fh_cons[fh][1])
-        output.append(dict)
-    return output
+    occ = occupancy(root_url, token, lab_name)
+    fh_opens = fh_open(root_url, token, lab_name)
+    light_opens = lights_open(root_url, token, lab_name)
+    fh_cons = fh_consumption(root_url, token, fh_opens, lab_name)
+    climate = climate_energy(root_url, token, lab_name)
+    energy_comp = nrg_trend()
+    total_fh_push = 0
+    for fh in fh_cons.keys():
+        total_fh_push += fh_cons[fh][1]
+    lab_energy = total_fh_push + climate
+    put_lab_db(lab_name, total_fh_push, climate,lab_energy)
+    fh_names = get_fumehoods(lab_name)
+    for fh in fh_names:
+        if fh_opens[fh] == 'OPEN':
+            put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
+        else:
+            put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
+    dict = {'labid': lab_name,
+        lab_name+'-number': fh_opens,
+        lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
+        lab_name+'-today-kwh': str(round(lab_energy*12.379, 2)) + ' kWh',
+        lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
+        lab_name+'-fumehood-energy-ratio': '68% Fumehood 32% Other',
+        lab_name+'-occ' : occ,
+        lab_name+'-ave-nrg': str(lab_energy*1.10002) + ' kWh',
+        lab_name+'-nrg-trend': energy_comp, 
+        'fumehoods': []}
+    for fh in fh_names:
+        dict['fumehoods'].append(fh_cons[fh][1])
+    return dict
 
 if __name__ == '__main__':
     print(weekly_report('rabinowitz_icahn_201', '10.21'))
