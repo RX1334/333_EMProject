@@ -238,7 +238,7 @@ def report_archive():
 #     ndate = float(date[:5])
 #     return {
 #     'date' : date,
-#     'week' : [ndate, round(ndate+0.01,2), round(ndate+0.02,2), round(ndate+0.03,2), round(ndate+0.04,2), round(ndate+0.05,2), round(ndate+0.06,2)],
+#     'week' : ['11.2', '11.3', ...],
 #     'this_week_energy_consumption' : '323.3 kWh',
 #     'this_week_avg_power_consumption' : '421.23 kW',
 #     'this_week_avg_fumehood_usage' : '6 hrs',
@@ -252,12 +252,8 @@ def report_archive():
 def weekly_report_summary():
     date = request.args.get('date')
     # Ideally, this should call the database to get the relevant stored information.
-    # For now, just return fake data.
-    return {
-        'lab-summary-today-kwh': '11037 kWh',
-        'lab-summary-current-kw': '53 kWh',
-        'lab-summary-number': '16 Hrs'
-    }
+    print(weekly_report('1', date))
+    return weekly_report('1', date)
 
 # the printed weekly report, DONT DELETE THIS OR THE PRINT FAILS
 @app.route('/weekly_report', methods=['GET'])
