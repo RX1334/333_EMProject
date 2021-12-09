@@ -85,6 +85,20 @@ app = Flask(__name__, template_folder='./templates', static_folder='./static')
 #     session['username'] = username
 #     return username
 
+def validate_params(param):
+    if param == 'lab_id':
+        return ['rabinowitz_icahn_201', 'rabinowitz_icahn_202']
+    if param == 'fumehood_id':
+        return ['fumehood' + str(i) for i in range(8)]
+    return []
+
+def render_404():
+    dashboard_content = render_template('header-widget.html', page_name='Page Not Found')
+    html = render_template('master_template.html', dashboard_content=dashboard_content)
+    response = make_response(html)
+    return(response)
+
+
 # # ----------------------------------------------------------------------
 # # Routes
 # # ----------------------------------------------------------------------
@@ -134,10 +148,13 @@ def fumehood_summary():
     fumehood_name = request.args.get('fumehood_name')
 
     # Error handling
-    if not fumehood_id:
-        html = ''
-        response = make_response(html)
-        return response
+    if not fumehood_id or not lab_name or not lab_id: # or not fumehood_name:
+        return render_404()
+    if lab_id not in validate_params('lab_id'):
+        return render_404()
+    if fumehood_id not in validate_params('fumehood_id'):
+        return render_404()
+
     dashboard_content = render_template('header-widget.html', page_name=fumehood_name, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
@@ -163,16 +180,16 @@ def lab_summary():
     lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
 
+    # Error handling
+    if not lab_name or not lab_id:
+        return render_404()
+    if lab_id not in validate_params('lab_id'):
+        return render_404()
+
     if lab_id == 'rabinowitz_icahn_201':
         fumehood_names = ['5c', '5d', '6c', '6d']
     else:
         fumehood_names = ['7c', '7d', '8c', '8d']
-
-    # temp error handling
-    if not lab_id:
-        html = ''
-        response = make_response(html)
-        return response
 
     # render energy and power widgets
     dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_id=lab_id)
@@ -278,6 +295,7 @@ def weekly_report_summary():
     date = request.args.get('date')
     print(date)
     lab_id = request.args.get('lab_id')
+
     # if date != 'None':
     #     data = weekly_report(lab_id, date)
     # else:
@@ -311,11 +329,13 @@ def report():
     lab_name = request.args.get('lab_name')
     week_name = request.args.get('week_name')
 
-    # temp error handling
-    if not lab_id or not week_name:
-        html = ''
-        response = make_response(html)
-        return response
+    # Error handling
+    if not week_name or not lab_name or not lab_id: # or not fumehood_name:
+        return render_404()
+    if lab_id not in validate_params('lab_id'):
+        return render_404()
+    if week_name not in report_archive_dates(lab_id):
+        return render_404()
 
     # forms email subject
     email_subject = lab_name + ' ' + week_name + ' Weekly Report'
