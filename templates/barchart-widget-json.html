@@ -193,9 +193,19 @@
   }
 
   function handle_graph_resp(response) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const fumehoodID = urlParams.get("fumehood_id");
     Object.keys(response).forEach((key) => {
       if (key.endsWith("-chart-data")) {
         localStorage.setItem(key, JSON.stringify(response));
+        console.log(fumehoodID);
+        if (fumehoodID) {
+          let id = parseInt(fumehoodID.slice(-1));
+          console.log(response["fumehoods"][id]);
+          buildAllCharts(response["fumehoods"][id]["-chart-data"]);
+          return;
+        }
         buildAllCharts(response[key]);
       }
     });
@@ -216,6 +226,7 @@
     const labId = urlParams.get("lab_id");
     let prevChartData = JSON.parse(localStorage.getItem(labId + "-chart-data"));
     if (prevChartData) {
+      console.log(prevChartData);
       handle_graph_resp(prevChartData);
       return;
     }
