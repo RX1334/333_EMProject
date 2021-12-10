@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request, render_template
-# from flask import redirect, url_for, session, abort
+from flask import redirect, url_for, session, abort
 import requests
 from database import get_fumehood_output
 from lab_query import lab_info, graph_info, report_archive_dates, weekly_report
@@ -107,18 +107,18 @@ def page_not_found(e):
 # Routes
 # ----------------------------------------------------------------------
 
-@app.route('/logout', methods=['GET'])
-def logout():
+#@app.route('/logout', methods=['GET'])
+#def logout():
 
 #     authenticate()
 
     # Delete the user's username from the session.
-    session.pop('username')
+#    session.pop('username')
 
     # Logout, and redirect the browser to the index page.
-    logout_url = (CAS_URL +  'logout?service='
-        + quote(sub('logout', 'index', request.url)))
-    abort(redirect(logout_url))
+#    logout_url = (CAS_URL +  'logout?service='
+#        + quote(sub('logout', 'index', request.url)))
+#    abort(redirect(logout_url))
 
 @app.route('/', methods=['GET'])
 def lab_summaries():
