@@ -277,7 +277,7 @@ def report():
     # compiles widgets
     dashboard_content = render_template('header-widget.html', page_name= lab_name + ', Week of ' + week_name + ' Report', back_arrow_link='/report_archive')
     dashboard_content += render_template('heading-label.html', text='Statistics')
-    dashboard_content += render_template('weekly-lab-summary-widget.html', lab_id='rabinowitz_icahn_201')
+    dashboard_content += render_template('weekly-lab-summary-widget.html', lab_id=lab_id, lab_name=lab_name)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     # dashboard_content += render_template('barchart-widget-json.html', name='PLACEHOLDER', lab_id='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
     dashboard_content += render_template('barchart-report.html', week_name=week_name, lab_id='rabinowitz_icahn_201', type_of_graph='Energy Consumption Trend')
