@@ -11,11 +11,11 @@ function lab_summary() {
 }
 
 const RED_GREEN_THRESH = {
-  "-today-kwh": 550,
+  "-today-kwh": 400,
   "-nrg-trend": 0,
-  "-current-kw": 30,
+  "-current-kw": 33,
   "-number": 2,
-  "-ave-nrg": 19,
+  "-ave-nrg": 37,
   "-kwh": 10,
   "-today": 3,
   "-today": 4,
@@ -333,6 +333,7 @@ function handle_rt_resp(response) {
 function convert_to_money(value) {
   let dollar_equiv = 2.25 * parseFloat(value.replace(/[^\d.-]/g, ""));
   // round to 2 decimal places
+  console.log(dollar_equiv)
   dollar_equiv = dollar_equiv.toFixed(2);
   return "$" + dollar_equiv;
 }
