@@ -161,7 +161,7 @@ def fumehood_summary():
 
     dashboard_content = render_template('header-widget.html', page_name=fumehood_name, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
-    dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
+    dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id, lab_id=lab_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html', name=lab_name,
                                          lab_id=lab_id, type_of_graph='Energy Consumption Trend')

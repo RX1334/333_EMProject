@@ -236,24 +236,18 @@ function handle_rt_resp(response) {
       $("#" + key)
         .children("span")
         .removeClass(closed ? "red" : "green");
-      if (key.endsWith('-mini-status')) {
-      $("#" + key)
-        .children("img")
-        .attr(
-          "src",
-          closed
-            ? "../static/images/GreenDot.svg"
-            : "../static/images/RedDot.svg"
-        );
-        }
+      if (key.endsWith("-mini-status")) {
+        $("#" + key)
+          .children("img")
+          .attr(
+            "src",
+            closed
+              ? "../static/images/GreenDot.svg"
+              : "../static/images/RedDot.svg"
+          );
+      }
       continue;
     }
-    // if (key.endsWith("-status")) {
-    //   console.log('AAAAAAAAAA' + value);
-    //   $("#" + key).addClass(value == "OPEN" ? "red" : "green");
-    //   $("#" + key).removeClass(value == "OPEN" ? "green" : "red");
-    //   continue;
-    // }
     if (key.endsWith("-chart-data")) {
       let end = key.indexOf("-chart-data");
       try {
@@ -265,23 +259,25 @@ function handle_rt_resp(response) {
       let numOpen = 0;
       let i = 0;
       for (const vkey of Object.keys(value)) {
-        $("#fumehood" + i + "-mini-status").removeClass("red");
-        $("#fumehood" + i + "-mini-status").removeClass("green");
+        $("#fumehood" + i + "-mini-status" + "." + labname).removeClass("red");
+        $("#fumehood" + i + "-mini-status" + "." + labname).removeClass(
+          "green"
+        );
         let html;
         if (value[vkey] == "OPEN") {
           html =
             "<p style='font-weight: bold'>" +
             value[vkey] +
             "</p><img src='../static/images/RedDot.svg'></img>";
-          $("#fumehood" + i + "-mini-status").addClass("red");
+          $("#fumehood" + i + "-mini-status" + "." + labname).addClass("red");
         } else {
           html =
             "<p style='font-weight: bold'>" +
             value[vkey] +
             "</p><img src='../static/images/GreenDot.svg'></img>";
-          $("#fumehood" + i + "-mini-status").addClass("green");
+          $("#fumehood" + i + "-mini-status" + "." + labname).addClass("green");
         }
-        $("#fumehood" + i + "-mini-status").html(html);
+        $("#fumehood" + i + "-mini-status" + "." + labname).html(html);
         i += 1;
         if (value[vkey] == "OPEN") {
           numOpen++;
@@ -300,18 +296,25 @@ function handle_rt_resp(response) {
           "." + labname + "-fume-hood-widget-container " + "#" + id + "-name"
         ).text("Fumehood " + fkey.slice(-2));
 
-        console.log(arr);
-        $("#" + id + "-today").text(arr[1][3] + " Hrs");
-        $("#" + id + "-avg-day").text(arr[1][4] + " Hrs");
+        $(
+          "." + labname + "-fumehood-summary-widget " + "#" + id + "-today"
+        ).text(arr[1][3] + " Hrs");
+        $(
+          "." + labname + "-fumehood-summary-widget " + "#" + id + "-avg-day"
+        ).text(arr[1][4] + " Hrs");
 
         if (localStorage.getItem("money_mode_on") === "1") {
           let money_value = convert_to_money(String(fvalue[1]));
-          $("#" + id + "-kwh").text(convert_to_money(String(arr[1][2])));
+          $(
+            "." + labname + "-fumehood-summary-widget " + "#" + id + "-kwh"
+          ).text(convert_to_money(String(arr[1][2])));
           $(
             "." + labname + "-fume-hood-widget-container " + "#" + id + "-kw"
           ).text(money_value);
         } else {
-          $("#" + id + "-kwh").text(arr[1][2] + " kWh");
+          $(
+            "." + labname + "-fumehood-summary-widget " + "#" + id + "-kwh"
+          ).text(arr[1][2] + " kWh");
           $(
             "." + labname + "-fume-hood-widget-container " + "#" + id + "-kw"
           ).text(fvalue[1].toFixed(2) + " kW");
@@ -338,7 +341,7 @@ function handle_rt_resp(response) {
 function convert_to_money(value) {
   let dollar_equiv = 2.25 * parseFloat(value.replace(/[^\d.-]/g, ""));
   // round to 2 decimal places
-  console.log(dollar_equiv)
+  console.log(dollar_equiv);
   dollar_equiv = dollar_equiv.toFixed(2);
   return "$" + dollar_equiv;
 }
