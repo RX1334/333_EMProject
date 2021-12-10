@@ -98,6 +98,9 @@ def render_404():
     response = make_response(html)
     return(response)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_404()
 
 # # ----------------------------------------------------------------------
 # # Routes
