@@ -15,76 +15,8 @@ import random
 # ----------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='./templates', static_folder='./static')
-# app.secret_key = APP_SECRET_KEY
 
 # ----------------------------------------------------------------------
-
-# CAS_URL = 'https://fed.princeton.edu/cas/'
-
-# ----------------------------------------------------------------------
-
-# # Return url after stripping out the "ticket" parameter that was
-# # added by the CAS server.
-
-# def strip_ticket(url):
-#     if url is None:
-#         return "something is badly wrong"
-#     url = sub(r'ticket=[^&]*&?', '', url)
-#     url = sub(r'\?&?$|&$', '', url)
-#     return url
-
-# ----------------------------------------------------------------------
-
-# # Validate a login ticket by contacting the CAS server. If
-# # valid, return the user's username; otherwise, return None.
-
-# def validate(ticket):
-#     val_url = (CAS_URL + "validate"
-#         + '?service=' + quote(strip_ticket(request.url))
-#         + '&ticket=' + quote(ticket))
-#     val_url = CAS_URL
-#     lines = []
-#     with urlopen(val_url) as flo:
-#         lines = flo.readlines()   # Should return 2 lines.
-#     if len(lines) != 2:
-#         return None
-#     first_line = lines[0].decode('utf-8')
-#     second_line = lines[1].decode('utf-8')
-#     if not first_line.startswith('yes'):
-#         return None
-#     return second_line
-
-# ----------------------------------------------------------------------
-
-# # Authenticate the remote user, and return the user's username.
-# # Do not return unless the user is successfully authenticated.
-
-# def authenticate():
-#     return
-#     # If the username is in the session, then the user was
-#     # authenticated previously.  So return the username.
-#     if 'username' in session:
-#         return session.get('username')
-
-#     # If the request does not contain a login ticket, then redirect
-#     # the browser to the login page to get one.
-#     ticket = request.args.get('ticket')
-#     if ticket is None:
-#         login_url = (CAS_URL + 'login?service=' + quote(request.url))
-#         abort(redirect(login_url))
-
-#     # If the login ticket is invalid, then redirect the browser
-#     # to the login page to get a new one.
-#     username = validate(ticket)
-#     if username is None:
-#         login_url = (CAS_URL + 'login?service='
-#             + quote(strip_ticket(request.url)))
-#         abort(redirect(login_url))
-
-#     # The user is authenticated, so store the username in
-#     # the session.
-#     session['username'] = username
-#     return username
 
 def validate_params(param):
     if param == 'lab_id':
@@ -106,19 +38,6 @@ def page_not_found(e):
 # ----------------------------------------------------------------------
 # Routes
 # ----------------------------------------------------------------------
-
-#@app.route('/logout', methods=['GET'])
-#def logout():
-
-#     authenticate()
-
-    # Delete the user's username from the session.
-#    session.pop('username')
-
-    # Logout, and redirect the browser to the index page.
-#    logout_url = (CAS_URL +  'logout?service='
-#        + quote(sub('logout', 'index', request.url)))
-#    abort(redirect(logout_url))
 
 @app.route('/', methods=['GET'])
 def lab_summaries():
@@ -161,7 +80,7 @@ def fumehood_summary():
 
     dashboard_content = render_template('header-widget.html', page_name=fumehood_name, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
     dashboard_content += render_template('heading-label.html', text='Statistics')
-    dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id, lab_id=lab_id)
+    dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
     dashboard_content += render_template('barchart-widget-json.html', name=lab_name,
                                          lab_id=lab_id, type_of_graph='Energy Consumption Trend')
