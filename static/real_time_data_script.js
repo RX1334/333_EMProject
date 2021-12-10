@@ -225,7 +225,7 @@ function handle_rt_resp(response) {
   for (const [key, value] of Object.entries(response)) {
     handle_red_green(key, value);
     // color fumehood open status the correct color
-    if (key.endsWith("-mini-status")) {
+    if (key.endsWith("-status")) {
       let closed = value == "CLOSED";
       $("#" + key)
         .children("span")
@@ -236,6 +236,7 @@ function handle_rt_resp(response) {
       $("#" + key)
         .children("span")
         .removeClass(closed ? "red" : "green");
+      if (key.endsWith('-mini-status')) {
       $("#" + key)
         .children("img")
         .attr(
@@ -244,12 +245,15 @@ function handle_rt_resp(response) {
             ? "../static/images/GreenDot.svg"
             : "../static/images/RedDot.svg"
         );
+        }
       continue;
     }
-    if (key.endsWith("-status")) {
-      $("#" + key).addClass(value == "OPEN" ? "red" : "green");
-      $("#" + key).removeClass(value == "OPEN" ? "green" : "red");
-    }
+    // if (key.endsWith("-status")) {
+    //   console.log('AAAAAAAAAA' + value);
+    //   $("#" + key).addClass(value == "OPEN" ? "red" : "green");
+    //   $("#" + key).removeClass(value == "OPEN" ? "green" : "red");
+    //   continue;
+    // }
     if (key.endsWith("-chart-data")) {
       let end = key.indexOf("-chart-data");
       try {
