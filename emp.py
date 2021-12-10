@@ -19,19 +19,20 @@ app.secret_key = APP_SECRET_KEY
 
 # ----------------------------------------------------------------------
 
-CAS_URL = 'https://fed.princeton.edu/cas/'
+# CAS_URL = 'https://fed.princeton.edu/cas/'
+CAS_URL = 'https://fed.princeton.edu/cas/login?service=http://energymonitor.princeton.edu/'
 
 # ----------------------------------------------------------------------
 
-# Return url after stripping out the "ticket" parameter that was
-# added by the CAS server.
+# # Return url after stripping out the "ticket" parameter that was
+# # added by the CAS server.
 
-def strip_ticket(url):
-    if url is None:
-        return "something is badly wrong"
-    url = sub(r'ticket=[^&]*&?', '', url)
-    url = sub(r'\?&?$|&$', '', url)
-    return url
+# def strip_ticket(url):
+#     if url is None:
+#         return "something is badly wrong"
+#     url = sub(r'ticket=[^&]*&?', '', url)
+#     url = sub(r'\?&?$|&$', '', url)
+#     return url
 
 # ----------------------------------------------------------------------
 
@@ -39,9 +40,10 @@ def strip_ticket(url):
 # valid, return the user's username; otherwise, return None.
 
 def validate(ticket):
-    val_url = (CAS_URL + "validate"
-        + '?service=' + quote(strip_ticket(request.url))
-        + '&ticket=' + quote(ticket))
+#     val_url = (CAS_URL + "validate"
+#         + '?service=' + quote(strip_ticket(request.url))
+#         + '&ticket=' + quote(ticket))
+    val_url = CAS_URL
     lines = []
     with urlopen(val_url) as flo:
         lines = flo.readlines()   # Should return 2 lines.
@@ -65,20 +67,20 @@ def authenticate():
     if 'username' in session:
         return session.get('username')
 
-    # If the request does not contain a login ticket, then redirect
-    # the browser to the login page to get one.
-    ticket = request.args.get('ticket')
-    if ticket is None:
-        login_url = (CAS_URL + 'login?service=' + quote(request.url))
-        abort(redirect(login_url))
+#     # If the request does not contain a login ticket, then redirect
+#     # the browser to the login page to get one.
+#     ticket = request.args.get('ticket')
+#     if ticket is None:
+#         login_url = (CAS_URL + 'login?service=' + quote(request.url))
+#         abort(redirect(login_url))
 
     # If the login ticket is invalid, then redirect the browser
     # to the login page to get a new one.
     username = validate(ticket)
-    if username is None:
-        login_url = (CAS_URL + 'login?service='
-            + quote(strip_ticket(request.url)))
-        abort(redirect(login_url))
+#     if username is None:
+#         login_url = (CAS_URL + 'login?service='
+#             + quote(strip_ticket(request.url)))
+#         abort(redirect(login_url))
 
     # The user is authenticated, so store the username in
     # the session.
@@ -142,7 +144,7 @@ def lab_summaries():
 @app.route('/fumehood_summary', methods=['GET'])
 def fumehood_summary():
 
-    authenticate()
+#     authenticate()
 
     # return fumehoods_usage
     lab_id = request.args.get('lab_id')
@@ -175,7 +177,7 @@ def fumehood_summary():
 @app.route('/lab_summary', methods=['GET'])
 def lab_summary():
 
-    authenticate()
+#     authenticate()
 
     # get lab_id
     lab_id = request.args.get('lab_id')
@@ -228,7 +230,7 @@ def lab_summary():
 @app.route('/report_archive', methods=['GET'])
 def report_archive():
 
-    authenticate()
+#     authenticate()
 
     dashboard_content = render_template('header-widget.html', page_name='Report Archive')
 
@@ -309,7 +311,7 @@ def weekly_report_summary():
 @app.route('/weekly_report', methods=['GET'])
 def printed_weekly_report():
 
-    authenticate()
+#     authenticate()
 
     lab_id = request.args.get('lab_id')
     lab_name = request.args.get('lab_name')
@@ -324,7 +326,7 @@ def printed_weekly_report():
 @app.route('/report', methods=['GET'])
 def report():
 
-    authenticate()
+#     authenticate()
 
     # get lab_id
     lab_id = request.args.get('lab_id')
@@ -397,7 +399,7 @@ def report():
 @app.route('/real_time_data', methods=['GET'])
 def real_time_data():
     lab_id = request.args.get('lab_id')
-    authenticate()
+#     authenticate()
 
     # We assume just one lab_id is being requested
     # lab_id = request.args.get('lab_id')
