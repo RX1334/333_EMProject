@@ -162,10 +162,8 @@ def fumehood_summary():
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
-    dashboard_content += render_template('barchart-report.html',
-                                         name=fumehood_name,
-                                         lab_id=lab_id,
-                                         type_of_graph='Energy Consumption Trend')
+    dashboard_content += render_template('barchart-widget-json.html', name=lab_name,
+                                         lab_id=lab_id, type_of_graph='Energy Consumption Trend')
 
     # renders dashboard with those widgets
     html = render_template('master_template.html', dashboard_content=dashboard_content)
@@ -204,7 +202,7 @@ def lab_summary():
 
     # include the fumehood widgets
     num_fumehoods = 4 # This should be data fetched from the database
-    dashboard_content += '<div class="fume-hood-widget-container widget-container">'
+    dashboard_content += '<div class="fume-hood-widget-container ' + lab_id + '-fume-hood-widget-container ' + 'widget-container">'
     for i in range(num_fumehoods):
         fumehood_id = "fumehood" + str(i)
         dashboard_content += '<span>'
@@ -295,6 +293,7 @@ def report_archive():
 # This gets the summary in the weekly report
 @app.route('/weekly_report_summary', methods=['GET'])
 def weekly_report_summary():
+    print('in weekly report')
     date = request.args.get('date')
     print(date)
     lab_id = request.args.get('lab_id')

@@ -294,13 +294,19 @@ function handle_rt_resp(response) {
         let fvalue = arr[1];
         let id = "fumehood" + fIdx;
 
-        $("#" + id + "-name").text("Fumehood " + fkey.slice(-2));
+        $(
+          "." + labname + "-fume-hood-widget-container " + "#" + id + "-name"
+        ).text("Fumehood " + fkey.slice(-2));
 
         if (localStorage.getItem("money_mode_on") === "1") {
           let money_value = convert_to_money(String(fvalue[1]));
-          $("#" + id + "-kw").text(money_value + " kW");
+          $(
+            "." + labname + "-fume-hood-widget-container " + "#" + id + "-kw"
+          ).text(money_value + " kW");
         } else {
-          $("#" + id + "-kw").text(fvalue[1].toFixed(2) + " kW");
+          $(
+            "." + labname + "-fume-hood-widget-container " + "#" + id + "-kw"
+          ).text(fvalue[1].toFixed(2) + " kW");
         }
         fIdx++;
         $("#" + id + "-kwh").text(3 + " kWh");
