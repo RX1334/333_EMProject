@@ -32,7 +32,6 @@
           oldUrl = $(
             ".{{lab_id}}-fume-hood-widget-container #fumehood" + i + "-href"
           ).attr("href");
-          console.log(oldUrl);
           oldUrl = oldUrl.concat("&fumehood_name=");
           oldUrl = oldUrl.concat(name);
           $("#fumehood" + i + "-href").attr("href", oldUrl);

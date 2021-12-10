@@ -226,7 +226,6 @@
     const labId = urlParams.get("lab_id");
     let prevChartData = JSON.parse(localStorage.getItem(labId + "-chart-data"));
     if (prevChartData) {
-      console.log(prevChartData);
       handle_graph_resp(prevChartData);
       return;
     }

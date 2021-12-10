@@ -213,7 +213,6 @@ function handle_red_green(key, value) {
 const labNames = ["rabinowitz_icahn_201", "rabinowitz_icahn_202"];
 // const labNames = ["rabinowitz_icahn_201"];
 
-// get fumehood # from url params
 // const queryString = window.location.search;
 // const urlParams = new URLSearchParams(queryString);
 // const fumehoodId = urlParams.get('fumehood_id')
@@ -293,25 +292,27 @@ function handle_rt_resp(response) {
         let fkey = arr[0];
         let fvalue = arr[1];
         let id = "fumehood" + fIdx;
-
         $(
           "." + labname + "-fume-hood-widget-container " + "#" + id + "-name"
         ).text("Fumehood " + fkey.slice(-2));
 
+        console.log(arr);
+        $("#" + id + "-today").text(arr[1][3] + " Hrs");
+        $("#" + id + "-avg-day").text(arr[1][4] + " Hrs");
+
         if (localStorage.getItem("money_mode_on") === "1") {
           let money_value = convert_to_money(String(fvalue[1]));
+          $("#" + id + "-kwh").text(convert_to_money(String(arr[1][2])));
           $(
             "." + labname + "-fume-hood-widget-container " + "#" + id + "-kw"
-          ).text(money_value + " kW");
+          ).text(money_value);
         } else {
+          $("#" + id + "-kwh").text(arr[1][2] + " kWh");
           $(
             "." + labname + "-fume-hood-widget-container " + "#" + id + "-kw"
           ).text(fvalue[1].toFixed(2) + " kW");
         }
         fIdx++;
-        $("#" + id + "-kwh").text(3 + " kWh");
-        $("#" + id + "-today").text(4 + " Hrs");
-        $("#" + id + "-avg-day").text(5 + " Hrs");
       });
     }
     // if kW or kWh, convert to money mode

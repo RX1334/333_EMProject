@@ -108,11 +108,19 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
     #         fh_cons[point] = (((get.json()['Properties'])[0])['Value'])['Value']
     #     else:
     #         fh_cons[point] = 0.0
+    i = 0
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
             fh_cons[fh].append(round(random.uniform(10,12), 3))
         else:
             fh_cons[fh].append(0)
+        # Fake random data for today energy, hrs today, ave hrs
+        fh_cons[fh].append(round((3 + i) *random.uniform(0.8,1.2), 2))
+        fh_cons[fh].append(round((4 + i) *random.uniform(0.8,1.2), 2))
+        fh_cons[fh].append(round((5 + i) *random.uniform(0.8,1.2), 2))
+        i += 1
+
+
     return fh_cons
 
 def energy_calc(fh_cons):
