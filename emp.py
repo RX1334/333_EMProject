@@ -201,7 +201,7 @@ def lab_summary():
 
     # include the fumehood widgets
     num_fumehoods = 4 # This should be data fetched from the database
-    dashboard_content += '<div class="fume-hood-widget-container widget-container">'
+    dashboard_content += '<div class="fume-hood-widget-container ' + lab_id + '-fume-hood-widget-container ' + 'widget-container">'
     for i in range(num_fumehoods):
         fumehood_id = "fumehood" + str(i)
         dashboard_content += '<span>'

@@ -18,21 +18,28 @@
   </div>
 </a>
 
-<!-- <script>
+<script>
   function fh_setup() {
     let cached_rt_data = localStorage.getItem("{{lab_id}}_real_time_data");
     if (cached_rt_data) {
       cached_fumes = JSON.parse(cached_rt_data)["fumehoods"];
+      let idx = parseInt("{{fumehood_id}}".slice(-1));
+      let oldUrl;
       let i = 0;
       Object.entries(cached_fumes).forEach((arr) => {
-        let name = "Fumehood " + arr[0].substring(2);
-        let oldUrl = $("#fumehood" + i + "-href").attr("href");
-        oldUrl = oldUrl.concat("&fumehood_name=");
-        oldUrl = oldUrl.concat(name);
-        $("#fumehood" + i + "-href").attr("href", oldUrl);
+        if (i == idx) {
+          let name = "Fumehood " + arr[0].substring(2);
+          oldUrl = $(
+            ".{{lab_id}}-fume-hood-widget-container #fumehood" + i + "-href"
+          ).attr("href");
+          console.log(oldUrl);
+          oldUrl = oldUrl.concat("&fumehood_name=");
+          oldUrl = oldUrl.concat(name);
+          $("#fumehood" + i + "-href").attr("href", oldUrl);
+        }
         i++;
       });
     }
   }
   fh_setup();
-</script> -->
+</script>
