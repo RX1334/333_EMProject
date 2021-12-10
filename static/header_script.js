@@ -179,6 +179,7 @@ function toggleMoneyMode() {
   });
 
   // If a barchart is located on the page, it will update the colors
+  if (window.location.pathname != '/report') {
   try {
     lab_graph_setup();
   } catch {}
@@ -186,6 +187,7 @@ function toggleMoneyMode() {
     // buildAllReportCharts();
     get_report_data();
   } catch {}
+}
 }
 
 function setup() {
