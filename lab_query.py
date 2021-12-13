@@ -221,7 +221,8 @@ def weekly_report(lab_name, week_date):
         energy_cons.append(round(data[0]*random.uniform(0.5,1), 2))
         # dollars.append(round(random.uniform(8,12), 2))
         dollars.append(round(energy_cons[-1] * 2.25, 2))
-        co2.append(round(random.uniform(10,12), 2))
+        # co2.append(round(random.uniform(10,12), 2))
+        co2.append(round(energy_cons[-1] * 0.85, 2))
     mo = week_date.split('.')[0]
     day = week_date.split('.')[1]
     forward_date = datetime(2021, int(mo), int(day))
