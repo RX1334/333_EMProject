@@ -304,7 +304,7 @@ def lab_info(lab_name):
     print(lab_energy)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
-        lab_name+'-current-kw': str(round(lab_energy, 2)) + ' kW',
+        lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kW',
         lab_name+'-today-kwh': str(round(lab_energy*500, 2)) + ' kWh',
         lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
         lab_name+'-fumehood-energy-ratio': lab_ratios[lab_name],
