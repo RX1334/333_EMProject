@@ -45,7 +45,7 @@ def lab_summaries():
 #     authenticate()
 
     # compiles widgets
-    dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard')
+    dashboard_content = render_template('header-widget.html', page_name='Lab Dashboard', money_mode_allowed='true')
     dashboard_content += render_template('heading-label.html', text='Your Monitored Rooms')
     dashboard_content += '<div class="lab-summary-widget-container widget-container">'
     dashboard_content += render_template('lab-summary-widget.html', lab_id='rabinowitz_icahn_201', lab_name='Rabinowitz, Icahn 201')
@@ -78,7 +78,7 @@ def fumehood_summary():
     if fumehood_id not in validate_params('fumehood_id'):
         return render_404()
 
-    dashboard_content = render_template('header-widget.html', page_name=fumehood_name, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name)
+    dashboard_content = render_template('header-widget.html', page_name=fumehood_name, back_arrow_link='/lab_summary?lab_id=' + lab_id + '&lab_name=' + lab_name, money_mode_allowed='true')
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += render_template('fumehood-summary-widget.html', fumehood_id=fumehood_id, lab_id=lab_id)
     dashboard_content += render_template('heading-label.html', text='Visualizations')
@@ -113,7 +113,7 @@ def lab_summary():
         fumehood_names = ['7c', '7d', '8c', '8d']
 
     # render energy and power widgets
-    dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_id=lab_id)
+    dashboard_content = render_template('header-widget.html', page_name=lab_name, lab_id=lab_id, money_mode_allowed='true')
     dashboard_content += render_template('heading-label.html', text='Statistics')
     dashboard_content += '<div class="consumption-widget-container widget-container">'
     dashboard_content += render_template('energy-consumption-widget.html', lab_id=lab_id)
