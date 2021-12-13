@@ -7,7 +7,6 @@ import json, requests, os, time, random
 import string as strng
 from datetime import date, timedelta, datetime
 from push_db import put_fh_db, put_lab_db
-from database import nrg_trend
 from pull_db import pull_fh_data, pull_lab_data, week_report
 
 # disable https warning
