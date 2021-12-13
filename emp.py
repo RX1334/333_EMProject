@@ -1,7 +1,6 @@
 from flask import Flask, make_response, request, render_template
 from flask import redirect, url_for, session, abort
 import requests
-from database import get_fumehood_output
 from lab_query import lab_info, graph_info, report_archive_dates, weekly_report
 import json
 import random
