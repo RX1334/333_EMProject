@@ -61,7 +61,7 @@ def put_fh_db(fh, lab, nrg, hr):
     cursor.execute(stmt_str, [fh])
     data = cursor.fetchall()[0]
     energy = float(data[0])
-    hour = float(data[1]/60/60) # convert to fraction of an hour
+    hour = float(data[1])
     energy += nrg
     hour += hr
     values = [fh, lab, str(energy), str(hour)]

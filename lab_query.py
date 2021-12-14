@@ -95,7 +95,7 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
         fh_cons = {'fh7c': [0], 'fh7d': [0], 'fh8c': [0], 'fh8d':[0]}
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
-            fh_cons[fh][0] = 1
+            fh_cons[fh][0] = 1/720
     # fh_cons['fh5c'].append("System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.FLN_1.B47_FHET1-5C.EXH_FLOW;")
     # fh_cons['fh6c'].append("System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.FLN_1.B47_FHET1-6C.EXH_FLOW;")
     # fh_cons['fh5d'].append("System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.FLN_1.B47_FHET1-5D.EXH_FLOW;")
@@ -108,19 +108,20 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
     #     else:
     #         fh_cons[point] = 0.0
     i = 0
-    fh_day_cons = pull_daily_fh(lab_id)
+    # get daily totals
+    fh_today = pull_daily_fh(lab_id)
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
             curr_val = round(random.uniform(10,12), 3)
             fh_cons[fh].append(curr_val)
-            put_fh_db(fh, lab_id, curr_val, 1/720)
+            put_fh_db(fh, lab_id, curr_val, fh_cons[fh][0])
         else:
             fh_cons[fh].append(0)
         # Fake random data for today energy, hrs today, ave hrs
         # curr today, total today, hours today, hours over year
         # fh_cons[fh].append(round((3 + i) *random.uniform(0.8,1.2), 2))
-        fh_cons[fh].append(fh_day_cons[fh])
-        fh_cons[fh].append(round((4 + i) *random.uniform(0.8,1.2), 2))
+        fh_cons[fh].append(fh_today[fh][0])
+        fh_cons[fh].append(fh_today[fh][1])
         fh_cons[fh].append(round((5 + i) *random.uniform(0.8,1.2), 2))
         i += 1
     return fh_cons

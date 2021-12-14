@@ -133,17 +133,18 @@ def pull_daily_fh(lab_name):
         print("Server error.", ex)
     cursor = mydb.cursor(buffered=True)
     if lab_name == 'rabinowitz_icahn_201':
-        fh_cons = {'fh5c': [0], 'fh5d': [0], 'fh6c': [0], 'fh6d':[0]}
+        fh_cons = {'fh5c': [], 'fh5d': [], 'fh6c': [], 'fh6d':[]}
     elif lab_name == 'rabinowitz_icahn_202':
-        fh_cons = {'fh7c': [0], 'fh7d': [0], 'fh8c': [0], 'fh8d':[0]}
-    stmt_str = "SELECT energy_consumption from today_fhinfo "
+        fh_cons = {'fh7c': [], 'fh7d': [], 'fh8c': [], 'fh8d':[]}
+    stmt_str = "SELECT energy_consumption, hours_open FROM today_fhinfo "
     stmt_str += "WHERE lab_id = %s;"
     input = [lab_name]
     cursor.execute(stmt_str, input)
     output = cursor.fetchall()
     i = 0
     for fh in fh_cons.keys():
-        fh_cons[fh] = float(output[i][0])
+        fh_cons[fh].append(float(output[i][0]))
+        fh_cons[fh].append(float(output[i][1]))
         i+=1
     return fh_cons
 
