@@ -225,10 +225,14 @@
     let prevChartData = JSON.parse(localStorage.getItem(labId + "-chart-data"));
     if (prevChartData) {
       handle_graph_resp(prevChartData);
-      return;
     }
     get_graph_info(labId);
   }
-  // buildAllCharts();
-  lab_graph_setup();
+
+  function outer_setup() {
+    lab_graph_setup();
+    window.setInterval(lab_graph_setup, 60 * 60 * 1000);
+  }
+
+  outer_setup();
 </script>
