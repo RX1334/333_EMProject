@@ -3,11 +3,11 @@
 # Authors: abc123
 # source ~/.virtualenvs/cos333/bin/activate
 #-----------------------------------------------------------------------
-import json, requests, os, time, random
-import string as strng
+import random
 from datetime import date, timedelta, datetime
 from push_db import put_fh_db, put_lab_db
 from pull_db import pull_fh_data, pull_lab_data, week_report
+from pull_db import pull_daily
 
 # disable https warning
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -305,10 +305,12 @@ def lab_info(lab_name):
             put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
         else:
             put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
+    lab_total = pull_daily(lab_name)
+    print(lab_total)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
-        lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kW',
-        lab_name+'-today-kwh': str(round(lab_energy*500, 2)) + ' kWh',
+        lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kWh',
+        lab_name+'-today-kwh': str(round(lab_total, 2)) + ' kWh',
         lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
         lab_name+'-fumehood-energy-ratio': lab_ratios[lab_name],
         lab_name+'-occ' : occ,
