@@ -112,7 +112,7 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
     fh_today = pull_daily_fh(lab_id)
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
-            curr_val = round(random.uniform(10,12), 3)
+            curr_val = round(random.uniform(1,2), 3)
             fh_cons[fh].append(curr_val)
             put_fh_db(fh, lab_id, curr_val, fh_cons[fh][0])
         else:
@@ -313,12 +313,12 @@ def lab_info(lab_name):
     print(lab_total)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
-        lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kWh',
-        lab_name+'-today-kwh': str(round(lab_total, 2)) + ' kWh',
+        lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kW',
+        lab_name+'-today-kwh': str(round(lab_total, 2)) + ' kW',
         lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
         lab_name+'-fumehood-energy-ratio': lab_ratios[lab_name],
         lab_name+'-occ' : occ,
-        lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kWh',
+        lab_name+'-ave-nrg': str(round(lab_energy*1.10002, 2)) + ' kW',
         lab_name+'-nrg-trend': lab_compares[lab_name],
         'fumehoods': []}
     dict['fumehoods'] = fh_cons
