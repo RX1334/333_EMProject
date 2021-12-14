@@ -10,18 +10,25 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-# pull daily total
-$sql_pull = "SELECT SUM(energy_consumption) AS value_sum FROM today_fhinfo";
-$result = $conn->query($sql_pull); 
-$row = mysqli_fetch_assoc($result); 
-$daily_energy_sum = $row['value_sum'];
-echo $daily_energy_sum;
+// # pull daily total
+// $sql_pull = "SELECT SUM(energy_consumption) AS value_sum FROM today_fhinfo";
+// $result = $conn->query($sql_pull); 
+// $row = mysqli_fetch_assoc($result); 
+// $daily_energy_sum = $row['value_sum'];
+// echo $daily_energy_sum;
 
-# wipe today table
+# wipe today fh table
 $sql_wipe1 = "UPDATE today_fhinfo SET energy_consumption = 0";
 $sql_wipe2 = "UPDATE today_fhinfo SET hours_open = 0";
+# wipe today lab table
+$sql_wipe3 = "UPDATE today_labinfo SET fh_consumption = 0";
+$sql_wipe4 = "UPDATE today_labinfo SET climate_consumption = 0";
+$sql_wipe5 = "UPDATE today_labinfo SET total_consumption = 0";
 $conn->query($sql_wipe1); 
 $conn->query($sql_wipe2);
+$conn->query($sql_wipe3);
+$conn->query($sql_wipe4);
+$conn->query($sql_wipe5);
 
 
 #push daily total
