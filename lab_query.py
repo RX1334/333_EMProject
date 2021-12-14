@@ -304,11 +304,11 @@ def lab_info(lab_name):
     lab_energy = total_fh_push + climate
     put_lab_db(lab_name, total_fh_push, climate,lab_energy)
     fh_names = get_fumehoods(lab_name)
-    for fh in fh_names:
-        if fh_opens[fh] == 'OPEN':
-            put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
-        else:
-            put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
+    # for fh in fh_names:
+    #     if fh_opens[fh] == 'OPEN':
+    #         put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
+    #     else:
+    #         put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
     lab_total = pull_daily_lab(lab_name)
     print(lab_total)
     dict = {'labid': lab_name,
@@ -322,7 +322,6 @@ def lab_info(lab_name):
         lab_name+'-nrg-trend': lab_compares[lab_name],
         'fumehoods': []}
     dict['fumehoods'] = fh_cons
-    print(fh_cons)
     return dict
 
 if __name__ == '__main__':
