@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 #-----------------------------------------------------------------------
-# populate_db.py
-# Authors: abc123
-# Populate a dummy database for energy values.
-# Values are randomized but follow approx.
-# the same distribution as observed when connected
-# to the REST API (ie the real values)
+# push_db.py
+# Authors: Lab Energy Monitoring Team
+# Connect and make queries to the MySQL DB.
 #-----------------------------------------------------------------------
 from contextlib import closing
 from random import randrange

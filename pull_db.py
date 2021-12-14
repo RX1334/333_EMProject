@@ -104,7 +104,7 @@ def pull_fh_data(time, lab, fh):
         output['hours'].append(float(i[1]))
     return output
 
-def pull_daily(lab_name):
+def pull_daily_lab(lab_name):
     '''pull day data from today table'''
     try:
         mydb = mysql.connector.connect(
@@ -121,8 +121,35 @@ def pull_daily(lab_name):
     cursor.execute(stmt_str, input)
     return float((cursor.fetchall()[0][0]))
 
+def pull_daily_fh(lab_name):
+    '''pull day data from today table'''
+    try:
+        mydb = mysql.connector.connect(
+        host="energymonitor.princeton.edu",
+        user="labenerg_wolson",
+        password="lab_energy_monitoring_cos333",
+        database ="labenerg_EMDatabase")
+    except Exception as ex:
+        print("Server error.", ex)
+    cursor = mydb.cursor(buffered=True)
+    if lab_name == 'rabinowitz_icahn_201':
+        fh_cons = {'fh5c': [0], 'fh5d': [0], 'fh6c': [0], 'fh6d':[0]}
+    elif lab_name == 'rabinowitz_icahn_202':
+        fh_cons = {'fh7c': [0], 'fh7d': [0], 'fh8c': [0], 'fh8d':[0]}
+    stmt_str = "SELECT energy_consumption from today_fhinfo "
+    stmt_str += "WHERE lab_id = %s;"
+    input = [lab_name]
+    cursor.execute(stmt_str, input)
+    output = cursor.fetchall()
+    i = 0
+    for fh in fh_cons.keys():
+        fh_cons[fh] = float(output[i][0])
+        i+=1
+    return fh_cons
+
 def main():
-    print(pull_daily('rabinowitz_icahn_202'))
+    print(pull_daily_fh('rabinowitz_icahn_201'))
+    # print(pull_daily_lab('rabinowitz_icahn_202'))
     # print(pull_lab_data('daily', 'rabinowitz_icahn_201'))
     # print(pull_lab_data('weekly', 'rabinowitz_icahn_201'))
     # print(pull_lab_data('monthly', 'rabinowitz_icahn_201'))

@@ -7,7 +7,7 @@ import random
 from datetime import date, timedelta, datetime
 from push_db import put_fh_db, put_lab_db
 from pull_db import pull_fh_data, pull_lab_data, week_report
-from pull_db import pull_daily
+from pull_db import pull_daily_lab, pull_daily_fh
 
 # disable https warning
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -108,18 +108,21 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
     #     else:
     #         fh_cons[point] = 0.0
     i = 0
+    fh_day_cons = pull_daily_fh(lab_id)
     for fh in fh_opens.keys():
         if fh_opens[fh] == 'OPEN':
-            fh_cons[fh].append(round(random.uniform(10,12), 3))
+            curr_val = round(random.uniform(10,12), 3)
+            fh_cons[fh].append(curr_val)
+            put_fh_db(fh, lab_id, curr_val, 1/720)
         else:
             fh_cons[fh].append(0)
         # Fake random data for today energy, hrs today, ave hrs
-        fh_cons[fh].append(round((3 + i) *random.uniform(0.8,1.2), 2))
+        # curr today, total today, hours today, hours over year
+        # fh_cons[fh].append(round((3 + i) *random.uniform(0.8,1.2), 2))
+        fh_cons[fh].append(fh_day_cons[fh])
         fh_cons[fh].append(round((4 + i) *random.uniform(0.8,1.2), 2))
         fh_cons[fh].append(round((5 + i) *random.uniform(0.8,1.2), 2))
         i += 1
-
-
     return fh_cons
 
 def energy_calc(fh_cons):
@@ -305,7 +308,7 @@ def lab_info(lab_name):
             put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
         else:
             put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
-    lab_total = pull_daily(lab_name)
+    lab_total = pull_daily_lab(lab_name)
     print(lab_total)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
@@ -318,6 +321,7 @@ def lab_info(lab_name):
         lab_name+'-nrg-trend': lab_compares[lab_name],
         'fumehoods': []}
     dict['fumehoods'] = fh_cons
+    print(fh_cons)
     return dict
 
 if __name__ == '__main__':
