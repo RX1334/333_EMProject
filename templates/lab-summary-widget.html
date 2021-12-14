@@ -181,112 +181,108 @@
     </div>
   </div>
 
+  <script>
+    // On startup
+    function {{lab_id}}_summary_setup() {
 
-<script>
-  // On startup
-  function {{lab_id}}_summary_setup() {
+      let checkboxNames =
+        localStorage.getItem("{{lab_id}}-checked") ??
+        "{{lab_id}}-nrg-cons-check;{{lab_id}}-pwr-cons-check;{{lab_id}}-hood-usage-check";
+      {{lab_id}}_summary_setChecks(checkboxNames);
+      {{lab_id}}_summary_displayInnerWidgets(checkboxNames.split(";"));
+      localStorage.setItem("{{lab_id}}-checked", checkboxNames);
 
-    let checkboxNames =
-      localStorage.getItem("{{lab_id}}-checked") ??
-      "{{lab_id}}-nrg-cons-check;{{lab_id}}-pwr-cons-check;{{lab_id}}-hood-usage-check";
-    {{lab_id}}_summary_setChecks(checkboxNames);
-    {{lab_id}}_summary_displayInnerWidgets(checkboxNames.split(";"));
-    localStorage.setItem("{{lab_id}}-checked", checkboxNames);
+      // requires you to deselect one before you can choose another
+      $('input[type=checkbox].{{lab_id}}-gear-check').change(function(e){
+        if ($('input[type=checkbox].{{lab_id}}-gear-check:checked').length > 3) {
+              $(this).prop('checked', false)
+        }
+      })
+    }
 
-    // requires you to deselect one before you can choose another
-    $('input[type=checkbox].{{lab_id}}-gear-check').change(function(e){
-      if ($('input[type=checkbox].{{lab_id}}-gear-check:checked').length > 3) {
-            $(this).prop('checked', false)
+    function {{lab_id}}_summary_setChecks(checkStr) {
+      let checkArr = checkStr.split(";");
+      let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
+      allCheckboxes.each(function (index) {
+        $(this).prop("checked", false);
+      });
+      checkArr.forEach((id) => {
+        $(".{{lab_id}}-lab-summary-gear-disp #" + id).prop("checked", true);
+      });
+    }
+
+    // arr is an array containing the ids of the inputs
+    // that were checked in the function
+    function {{lab_id}}_summary_displayInnerWidgets(arr) {
+      // First, hide all the displays
+      $(".{{lab_id}}-lab-summary-gear-disp").css("display", "none");
+
+      // Now, just show the relevant displays
+      arr.forEach((id) => {
+        switch (id) {
+          case "{{lab_id}}-nrg-cons-check":
+            $(".{{lab_id}}-lab-summary-today-consumption").css("display", "flex");
+            break;
+          case "{{lab_id}}-pwr-cons-check":
+            $(".{{lab_id}}-lab-summary-current-consumption").css("display", "flex");
+            break;
+          case "{{lab_id}}-hood-usage-check":
+            $(".{{lab_id}}-lab-summary-number-active").css("display", "flex");
+            break;
+          case "{{lab_id}}-occ-ratio-check":
+            $(".{{lab_id}}-lab-summary-occ-ratio").css("display", "flex");
+            break;
+          case "{{lab_id}}-ave-nrg-check":
+            $(".{{lab_id}}-lab-summary-ave-nrg").css("display", "flex");
+            break;
+          case "{{lab_id}}-nrg-trend-check":
+            $(".{{lab_id}}-lab-summary-nrg-trend").css("display", "flex");
+            break;
+        }
+      });
+    }
+
+    function {{lab_id}}_summary_options() {
+      let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
+      let checkboxNames = [];
+
+      // If the gear was clicked when the options weren't displayed, display
+      // them and do nothing more
+      let allOptions = $(".{{lab_id}}-lab-summary-widget .lab-summary-option");
+      if ($(".{{lab_id}}-lab-summary-gear-disp").css("display") == "none") {
+        $(".{{lab_id}}-lab-summary-gear-disp").css("display", "");
+        allOptions.css("display", "none");
+        return;
       }
-    })
-  }
 
-  function {{lab_id}}_summary_setChecks(checkStr) {
-    console.log(checkStr)
-    let checkArr = checkStr.split(";");
-    let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
-    allCheckboxes.each(function (index) {
-      $(this).prop("checked", false);
-    });
-    checkArr.forEach((id) => {
-      console.log(id)
-      $(".{{lab_id}}-lab-summary-gear-disp #" + id).prop("checked", true);
-      console.log($('#' + id).prop("checked"))
-    });
-  }
-
-  // arr is an array containing the ids of the inputs
-  // that were checked in the function
-  function {{lab_id}}_summary_displayInnerWidgets(arr) {
-    // First, hide all the displays
-    $(".{{lab_id}}-lab-summary-gear-disp").css("display", "none");
-
-    // Now, just show the relevant displays
-    arr.forEach((id) => {
-      switch (id) {
-        case "{{lab_id}}-nrg-cons-check":
-          $(".{{lab_id}}-lab-summary-today-consumption").css("display", "flex");
-          break;
-        case "{{lab_id}}-pwr-cons-check":
-          $(".{{lab_id}}-lab-summary-current-consumption").css("display", "flex");
-          break;
-        case "{{lab_id}}-hood-usage-check":
-          $(".{{lab_id}}-lab-summary-number-active").css("display", "flex");
-          break;
-        case "{{lab_id}}-occ-ratio-check":
-          $(".{{lab_id}}-lab-summary-occ-ratio").css("display", "flex");
-          break;
-        case "{{lab_id}}-ave-nrg-check":
-          $(".{{lab_id}}-lab-summary-ave-nrg").css("display", "flex");
-          break;
-        case "{{lab_id}}-nrg-trend-check":
-          $(".{{lab_id}}-lab-summary-nrg-trend").css("display", "flex");
-          break;
+      allCheckboxes.each(function (index) {
+        if ($(this).is(":checked")) {
+          checkboxNames.push($(this).attr("id"));
+        }
+      });
+      if (checkboxNames.length > 3) {
+        return;
       }
-    });
-  }
 
-  function {{lab_id}}_summary_options() {
-    let allCheckboxes = $(".{{lab_id}}-lab-summary-gear-disp input");
-    let checkboxNames = [];
+      // This keeps the old ones checked if there are fewer than 3
+      if (checkboxNames.length < 3) {
+        let oldChecksArr = localStorage.getItem("{{lab_id}}-checked");
+        {{lab_id}}_summary_setChecks(oldChecksArr);
+        {{lab_id}}_summary_displayInnerWidgets(oldChecksArr.split(";"));
+        return;
+      }
 
-    // If the gear was clicked when the options weren't displayed, display
-    // them and do nothing more
-    let allOptions = $(".{{lab_id}}-lab-summary-widget .lab-summary-option");
-    if ($(".{{lab_id}}-lab-summary-gear-disp").css("display") == "none") {
-      $(".{{lab_id}}-lab-summary-gear-disp").css("display", "");
+      // If it gets to this point, it means we have a valid combo of checks;
+      // We can now set these ones to be displayed
+
+      // First, hide all the boxes for simplicity
+
       allOptions.css("display", "none");
-      return;
+      {{lab_id}}_summary_displayInnerWidgets(checkboxNames);
+
+      localStorage.setItem("{{lab_id}}-checked", checkboxNames.join(";"));
     }
 
-    allCheckboxes.each(function (index) {
-      if ($(this).is(":checked")) {
-        checkboxNames.push($(this).attr("id"));
-      }
-    });
-    if (checkboxNames.length > 3) {
-      return;
-    }
-
-    // This keeps the old ones checked if there are fewer than 3
-    if (checkboxNames.length < 3) {
-      let oldChecksArr = localStorage.getItem("{{lab_id}}-checked");
-      {{lab_id}}_summary_setChecks(oldChecksArr);
-      {{lab_id}}_summary_displayInnerWidgets(oldChecksArr.split(";"));
-      return;
-    }
-
-    // If it gets to this point, it means we have a valid combo of checks;
-    // We can now set these ones to be displayed
-
-    // First, hide all the boxes for simplicity
-
-    allOptions.css("display", "none");
-    {{lab_id}}_summary_displayInnerWidgets(checkboxNames);
-
-    localStorage.setItem("{{lab_id}}-checked", checkboxNames.join(";"));
-  }
-
-  $("document").ready({{lab_id}}_summary_setup);
-</script>
+    $("document").ready({{lab_id}}_summary_setup);
+  </script>
 </div>

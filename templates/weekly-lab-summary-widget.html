@@ -23,18 +23,30 @@
     <div class="lab-summary-content">
       <span class="lab-summary-today-consumption">
         <div
-          class="lab-summary-today-kwh this_week_energy_consumption widget-medium"
+          class="
+            lab-summary-today-kwh
+            this_week_energy_consumption
+            widget-medium
+          "
           id="{{lab_id}}-week-kwh"
-        >⠀</div>
+        >
+          ⠀
+        </div>
         <div class="lab-summary-today-text body-small">
           This Week's Energy Consumption
         </div>
       </span>
       <span class="lab-summary-current-consumption">
         <div
-          class="lab-summary-current-kw this_week_avg_power_consumption widget-medium"
+          class="
+            lab-summary-current-kw
+            this_week_avg_power_consumption
+            widget-medium
+          "
           id="{{lab_id}}-average-kw"
-        >⠀</div>
+        >
+          ⠀
+        </div>
         <div class="lab-summary-current-text body-small">
           This Week's Average Power Consumption
         </div>
@@ -43,7 +55,9 @@
         <div
           class="lab-summary-number this_week_avg_fumehood_usage widget-medium"
           id="{{lab_id}}-hours"
-        >⠀</div>
+        >
+          ⠀
+        </div>
         <div class="lab-summary-number-text body-small">
           This Week's Average Fume Hoods Usage Time / Day
         </div>
@@ -57,8 +71,6 @@
     for (const [key, value] of Object.entries(response)) {
       $("." + key).text(value);
     }
-
-    console.log(key);
   }
 
   function get_report_summary_data() {

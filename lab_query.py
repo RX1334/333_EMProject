@@ -196,12 +196,14 @@ def time_dates(date_input=None):
                 year.append(month_tostring(curr_month) + ' ' +str(int(current_year)-1))
             else:
                 year.append(month_tostring(curr_month) + ' ' +current_year)
+        year.reverse()
         return year
     def year_dates():
         current_year = str(date.today().strftime("%y"))
         years = []
         for i in range(5):
-             years.append(int(str(20)+current_year)-i)
+            years.append(int(str(20)+current_year)-i)
+        years.reverse()
         return years
     week = week_dates()
     month = month_dates()
@@ -266,6 +268,8 @@ def graph_info(lab_name):
                     'weekly':  {'labels': weeks, 'time': weekly_fh['energy']},
                     'monthly': {'labels': months, 'time': monthly_fh['energy']},
                     'yearly':  {'labels': years, 'time': yearly_fh['energy']}}})
+    print('-' * 25)
+    print('in graph info')
     return dict
 
 def lab_info(lab_name):
@@ -301,7 +305,6 @@ def lab_info(lab_name):
             put_fh_db(fh, lab_name, fh_cons[fh][1], 1)
         else:
             put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
-    print(lab_energy)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
         lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kW',

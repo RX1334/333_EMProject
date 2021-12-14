@@ -199,10 +199,8 @@
     Object.keys(response).forEach((key) => {
       if (key.endsWith("-chart-data")) {
         localStorage.setItem(key, JSON.stringify(response));
-        console.log(fumehoodID);
         if (fumehoodID) {
           let id = parseInt(fumehoodID.slice(-1));
-          console.log(response["fumehoods"][id]);
           buildAllCharts(response["fumehoods"][id]["-chart-data"]);
           return;
         }
