@@ -254,11 +254,11 @@ def graph_info(lab_name):
     fumehoods = get_fumehoods(lab_name)
     daily_lab = pull_lab_data('daily', lab_name)['total']
     weekly_lab = pull_lab_data('weekly', lab_name)['total']
-    weekly_lab = [round(x * 7, 0) for x in weekly_lab]
+    weekly_lab = [round(x * 7, 2) for x in weekly_lab]
     monthly_lab = pull_lab_data('monthly', lab_name)['total']
-    monthly_lab = [round(x * 30, 0) for x in monthly_lab]
+    monthly_lab = [round(x * 30, 2) for x in monthly_lab]
     yearly_lab = pull_lab_data('yearly', lab_name)['total']
-    yearly_lab = [round(x * 365, 0) for x in yearly_lab]
+    yearly_lab = [round(x * 365, 2) for x in yearly_lab]
     dict = {lab_name+ '-chart-data': {
         'daily':  {'labels': days, 'time': daily_lab},
         'weekly':  {'labels': weeks, 'time':weekly_lab},
@@ -266,15 +266,18 @@ def graph_info(lab_name):
         'yearly':  {'labels': years, 'time': yearly_lab}},
         'fumehoods':[]}
     for fumehood in fumehoods:
-        daily_fh = pull_fh_data('daily', lab_name,fumehood)
-        weekly_fh = pull_fh_data('weekly', lab_name,fumehood)
-        monthly_fh = pull_fh_data('monthly', lab_name,fumehood)
-        yearly_fh = pull_fh_data('yearly', lab_name,fumehood)
+        daily_fh = pull_fh_data('daily', lab_name,fumehood)['energy']
+        weekly_fh = pull_fh_data('weekly', lab_name,fumehood)['energy']
+        weekly_fh = [round(x * 7, 2) for x in weekly_fh]
+        monthly_fh = pull_fh_data('monthly', lab_name,fumehood)['energy']
+        monthly_fh = [round(x * 30, 2) for x in monthly_fh]
+        yearly_fh = pull_fh_data('yearly', lab_name,fumehood)['energy']
+        yearly_fh = [round(x * 365, 2) for x in yearly_fh]
         dict['fumehoods'].append({'id': fumehood,
-        '-chart-data':{'daily':  {'labels': days, 'time': daily_fh['energy']},
-                    'weekly':  {'labels': weeks, 'time': weekly_fh['energy']},
-                    'monthly': {'labels': months, 'time': monthly_fh['energy']},
-                    'yearly':  {'labels': years, 'time': yearly_fh['energy']}}})
+        '-chart-data':{'daily':  {'labels': days, 'time': daily_fh},
+                    'weekly':  {'labels': weeks, 'time': weekly_fh},
+                    'monthly': {'labels': months, 'time': monthly_fh},
+                    'yearly':  {'labels': years, 'time': yearly_fh}}})
     print('-' * 25)
     print('in graph info')
     return dict
