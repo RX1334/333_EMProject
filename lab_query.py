@@ -310,10 +310,9 @@ def lab_info(lab_name):
     #     else:
     #         put_fh_db(fh, lab_name, fh_cons[fh][1], 0)
     lab_total = pull_daily_lab(lab_name)
-    print(lab_total)
     dict = {'labid': lab_name,
         lab_name+'-number': fh_opens,
-        lab_name+'-current-kw': str(round(lab_energy*10, 2)) + ' kW',
+        lab_name+'-current-kw': str(round(total_fh_push*1.3, 2)) + ' kW',
         lab_name+'-today-kwh': str(round(lab_total, 2)) + ' kW',
         lab_name+'-temperature': str(round(random.uniform(71,72))) + ' °F',
         lab_name+'-fumehood-energy-ratio': lab_ratios[lab_name],
