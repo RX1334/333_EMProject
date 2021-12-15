@@ -123,6 +123,7 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
         fh_cons[fh].append(fh_today[fh][0])
         fh_cons[fh].append(fh_today[fh][1])
         fh_cons[fh].append(fh_today[fh][2])
+    print(fh_cons)
     return fh_cons
 
 def energy_calc(fh_cons):
@@ -251,15 +252,18 @@ def get_fumehoods(lab_name):
 def graph_info(lab_name):
     days, weeks, months, years = time_dates()
     fumehoods = get_fumehoods(lab_name)
-    daily_lab = pull_lab_data('daily', lab_name)
-    weekly_lab = pull_lab_data('weekly', lab_name)
-    monthly_lab = pull_lab_data('monthly', lab_name)
-    yearly_lab = pull_lab_data('yearly', lab_name)
+    daily_lab = pull_lab_data('daily', lab_name)['total']
+    weekly_lab = pull_lab_data('weekly', lab_name)['total']
+    weekly_lab = [round(x * 7, 0) for x in weekly_lab]
+    monthly_lab = pull_lab_data('monthly', lab_name)['total']
+    monthly_lab = [round(x * 30, 0) for x in monthly_lab]
+    yearly_lab = pull_lab_data('yearly', lab_name)['total']
+    yearly_lab = [round(x * 365, 0) for x in yearly_lab]
     dict = {lab_name+ '-chart-data': {
-        'daily':  {'labels': days, 'time': daily_lab['total']},
-        'weekly':  {'labels': weeks, 'time':weekly_lab['total']},
-        'monthly': {'labels': months, 'time': monthly_lab['total']},
-        'yearly':  {'labels': years, 'time': yearly_lab['total']}},
+        'daily':  {'labels': days, 'time': daily_lab},
+        'weekly':  {'labels': weeks, 'time':weekly_lab},
+        'monthly': {'labels': months, 'time': monthly_lab},
+        'yearly':  {'labels': years, 'time': yearly_lab}},
         'fumehoods':[]}
     for fumehood in fumehoods:
         daily_fh = pull_fh_data('daily', lab_name,fumehood)
@@ -323,4 +327,4 @@ def lab_info(lab_name):
     return dict
 
 if __name__ == '__main__':
-    lab_info('rabinowitz_icahn_201')
+    print(graph_info('rabinowitz_icahn_201'))
