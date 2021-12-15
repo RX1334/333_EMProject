@@ -122,8 +122,7 @@ def fh_consumption(root_url, token, fh_opens, lab_id):
         # fh_cons[fh].append(round((3 + i) *random.uniform(0.8,1.2), 2))
         fh_cons[fh].append(fh_today[fh][0])
         fh_cons[fh].append(fh_today[fh][1])
-        fh_cons[fh].append(round((5 + i) *random.uniform(0.8,1.2), 2))
-        i += 1
+        fh_cons[fh].append(fh_today[fh][2])
     return fh_cons
 
 def energy_calc(fh_cons):
