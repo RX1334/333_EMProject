@@ -89,7 +89,7 @@
     // Check money mode problems
     let scale = localStorage.getItem("money_mode_on") === "1" ? 2.25 : 1.0;
     for (let i = 0; i < data.time.length; i++) {
-      data.time[i] = parseFloat(parseFloat(data.time[i] * scale).toFixed(0));
+      data.time[i] = parseFloat(parseFloat(data.time[i] * scale).toFixed(1));
     }
 
     if (localStorage.getItem("money_mode_on") === "1") {
