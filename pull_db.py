@@ -142,9 +142,12 @@ def pull_daily_fh(lab_name):
     cursor.execute(stmt_str, input)
     output = cursor.fetchall()
     i = 0
+    fh_avg_hours = {'fh5c': 12.23, 'fh5d': 14.01, 'fh6c': 8.34, 'fh6d': 10.01, 
+    'fh7c': 11.92, 'fh7d': 15.03, 'fh8c': 12.32, 'fh8d': 9.01, }
     for fh in fh_cons.keys():
         fh_cons[fh].append(float(output[i][0]))
         fh_cons[fh].append(float(output[i][1]))
+        fh_cons[fh].append(float(fh_avg_hours[fh]))
         i+=1
     return fh_cons
 
