@@ -33,9 +33,9 @@ def occupancy(root_url, token, lab_id):
         return 3
 
 def fh_open(root_url, token, lab_id):
+    '''returns dict of fumehoods and their open/closed status'''
     # '''dict containing the four fumehoods and their open/closed status as strings
     # note: uses fumehood percent open as a proxy for on/off, with 5% as the threshold'''
-    fh_opens = {'fh5c': 0, 'fh5d':0, 'fh6c':0, 'fh6d':0}
     # points = ["System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_FH5C_FAO;",
     # "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_FH6C_FAO;",
     # "System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-csc-apog306.Local_IO.B47_FH5D_FAO;",
@@ -77,6 +77,7 @@ def lights_open(root_url, token, lab_id):
         return {'west': 1, 'east': 1}
 
 def climate_energy(root_url, token, lab_id):
+    '''calls rest api and computes non-fh energy usage'''
     # '''returns approximate energy usage of climate control devices'''
     # points = ["System1.ManagementView:ManagementView.FieldNetworks.Research_BACnet.Hardware.mec-cscs-apog305.Local_IO.B47_RML2-2_SPT;"]
     # x = requests.get(root_url + points[0], headers={'Authorization': 'Bearer ' + token}, verify=False)
@@ -136,14 +137,8 @@ def energy_calc(fh_cons):
             fh_cons[fh] = float(fh_cons[fh])*CONVERSION_FACTOR/BUSINESS_DAYS/HOURS
     return fh_cons
 
-def lab_energy_calc(fh_cons, climate, lab_id):
-    out = 0.0
-    for fh in fh_cons.keys():
-        out += fh_cons[fh][1]
-    out += climate
-    return out
-
 def report_archive_dates(lab_id):
+    '''returns dates for the weekly report'''
     if (lab_id == 'rabinowitz_icahn_201'):
         lab_id_number = 12
     else:
@@ -216,7 +211,7 @@ def time_dates(date_input=None):
     return week, month, months, years
 
 def weekly_report(lab_name, week_date):
-    # need to add logic for consistent start date (e.g. every sunday)
+    '''makes calls to db interactors and returns dict of weekly data'''
     data = week_report(lab_name, week_date)
     energy, power, usage, energy_cons, dollars, co2 = [[],[],[],[],[],[]]
     for _ in range(7):
@@ -244,12 +239,14 @@ def weekly_report(lab_name, week_date):
     return dict
 
 def get_fumehoods(lab_name):
+    '''returns dict of fumehood names to corresponding lab'''
     if lab_name == 'rabinowitz_icahn_201':
         return ['fh5c', 'fh5d', 'fh6c', 'fh6d']
     if lab_name == 'rabinowitz_icahn_202':
         return ['fh7c', 'fh7d', 'fh8c', 'fh8d']
 
 def graph_info(lab_name):
+    '''makes calls to db interactors to fetch and format chart data'''
     days, weeks, months, years = time_dates()
     fumehoods = get_fumehoods(lab_name)
     daily_lab = pull_lab_data('daily', lab_name)['total']
@@ -297,7 +294,7 @@ def lab_info(lab_name):
     # calculate total occupancy
     occ = occupancy(root_url, token, lab_name)
     fh_opens = fh_open(root_url, token, lab_name)
-    light_opens = lights_open(root_url, token, lab_name)
+    # light_opens = lights_open(root_url, token, lab_name)
     fh_cons = fh_consumption(root_url, token, fh_opens, lab_name)
     climate = climate_energy(root_url, token, lab_name)
     lab_compares = {'rabinowitz_icahn_201': '8.9%',
@@ -309,7 +306,6 @@ def lab_info(lab_name):
         total_fh_push += fh_cons[fh][1]
     lab_energy = total_fh_push + climate
     put_lab_db(lab_name, total_fh_push, climate,lab_energy)
-    fh_names = get_fumehoods(lab_name)
     # for fh in fh_names:
     #     if fh_opens[fh] == 'OPEN':
     #         put_fh_db(fh, lab_name, fh_cons[fh][1], 1)

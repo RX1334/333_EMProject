@@ -4,7 +4,7 @@ $username = "labenerg_wolson";
 $password = "lab_energy_monitoring_cos333";
 $dbname = "labenerg_EMDatabase";
 
-// Conenct, check connection
+// Connect, check connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
@@ -29,7 +29,6 @@ $conn->query($sql_wipe2);
 $conn->query($sql_wipe3);
 $conn->query($sql_wipe4);
 $conn->query($sql_wipe5);
-
 
 #push daily total
 // $stmt = $conn->prepare("INSERT INTO daily_fhinfo (id, fh_id, lab_id, day, energy_consumption, hours_open) VALUES (?, ?, ?, ?, ?)");

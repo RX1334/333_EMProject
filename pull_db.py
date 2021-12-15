@@ -13,7 +13,7 @@ import mysql.connector
 import random
 
 def week_report(lab_name, week):
-    # Connect to database created with direct server connection
+    '''queries and generates weekly report'''
     try:
         mydb = mysql.connector.connect(
         host="energymonitor.princeton.edu",
