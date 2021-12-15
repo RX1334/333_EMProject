@@ -280,6 +280,7 @@ def graph_info(lab_name):
     return dict
 
 def lab_info(lab_name):
+    if not lab_name in ['rabinowitz_icahn_201', 'rabinowitz_icahn_202']: return ('Invalid')
     # root_url = "https://desigocc.princeton.edu/api/api/"
     # username = "testuser"
     # password = "testuser"
