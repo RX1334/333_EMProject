@@ -1,7 +1,7 @@
 # 333_EMProject
 Houses code for the Energy Monitoring Project owned by Princeton University and advised by Behavioral Science Consultancy Evidn.
 
-The web app link is energymonitor.princeton.edu
+The web app link is http://energymonitor.princeton.edu
 
 See the old web app here: https://energy-monitoring-project.herokuapp.com/
 
