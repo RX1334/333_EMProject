@@ -1,7 +1,7 @@
 # 333_EMProject
 Houses code for the Energy Monitoring Project owned by Princeton University and advised by Behavioral Science Consultancy Evidn.
 
-The new web app link (hosted on .princeton.edu) will be posted here soon.
+The web app link is energymonitor.princeton.edu
 
 See the old web app here: https://energy-monitoring-project.herokuapp.com/
 
@@ -12,8 +12,9 @@ A real time, constantly updating, energy monitoring dashboard. At least for the 
 - HTML, CSS, JS
 - Flask
 - Python
-- PostgreSQL (TimescaleDB)
-- Heroku
+- PHP
+- PostgreSQL
+- cPanel
 
 ### Client-Side (HTML, CSS, JS, jQuery)
 - Formats Widgets (Interface in general)
@@ -37,17 +38,15 @@ Files
 - runserver.py (runs the web application)
 - emp.py (provides paths to different files for flask)
 
-### DBMS (TimescaleDB)
+### DBMS
 Lab Information
-- Energy Consumption updates every 30 seconds
-- Power Consumption updates every 30 seconds
-- Occupancy data updates every 15 minutes
+- Metrics are updated every 5 seconds
 
 Fume Hood Information
-- Active State updates every second
-- Time in Use updates every second via Active State
-- Power Consumption updates every second
-- Energy Consumption updates every second
+- Active State 
+- Time in Use 
+- Power Consumption
+- Energy Consumption
 
-Once the day is past, compress the data into averages (or other informative forms) and store them separately, if that is possible given the database schematic. If not innately supported, we can add our own structures.
+Once the day is past, compress the data into averages (or other informative forms) and store them separately.
 
